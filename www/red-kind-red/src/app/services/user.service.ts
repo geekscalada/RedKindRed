@@ -1,0 +1,176 @@
+// nos permitirá definir los servicios y después inyectarlos en otras clases
+import { Injectable } from "@angular/core";
+
+//httpclient para poder hacer las peticiones ajax y httpheaders
+// para poder enviar cabeceraas en cada una de las peticiones ajax
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+
+// Para poder recoger las respuestas que nos devuelve la API
+import { Observable } from "rxjs";
+
+//Archivo que definimos nosotros mismos y que es donde declaramos
+// ciertas variables que usaremos
+import { GLOBAL } from "./global"
+
+// Modelo usuario
+import { User } from "../models/user";
+
+
+// con el decorador injectable le estamos diciendo que esta clase la podemos
+// inyectar como servicio en cualquier componente
+@Injectable()
+export class UserService{
+
+    public url:string;
+    public identity:any;
+    public token:any
+    public stats:any
+
+
+    constructor(
+        public _http: HttpClient
+
+    ){
+        this.url = GLOBAL.url;
+    }
+
+    /* Al usar el método nuevo Httpclient ya no tenemos que mapear
+    respuestas ni nada. Simplemente decirle que lo que va a devolver
+    este método de este servicio es un observable con : Observable 
+    de momento con tipo any, ya que si le ponemos tipo User, y un día
+    la api nos trae más cosas de las que hay en el modelo, eso va a petar
+    */ 
+    register(user:User):Observable<any>{
+       
+        let params = JSON.stringify(user)
+        //seteamos cabeceras, cuando le decimos application/json lo que ocurre es que automáticamente cuando yo 
+        // le envíe un json al backend el node.js ya es capaz de procesarlo, por ejemplo con php muchas veces es 
+        // necesario usar www url encoded y tal
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+
+        // envialos la petición, con esto ya hace la petición ajax al backend y nos guarda
+        // el usuario
+        return this._http.post(this.url+'register', params, {headers:headers} )
+
+    }
+
+    // ponemos any en el user porque al parecer no tenemos propiedad getToken en el modelo
+    // la otra opción es usar gettoken:any = 'null' pero parece una chapuza
+    signUp(user:any, getToken:any = null): Observable<any>{
+          
+        if(getToken != null) {
+            
+            // la propoedad del modelo de la api es con minúscular
+            user.gettoken = getToken;
+
+        }
+
+        let params = JSON.stringify(user)
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+
+        return this._http.post(this.url+'login', params, {headers:headers} )
+
+    }
+
+    // aquí crearemos 2 metodos para rescatar del local storage los datos
+    // identity y token
+    
+    getIdentity(){        
+
+           let identity:any = localStorage.getItem('identity');           
+           identity = JSON.parse(identity);
+
+           if (identity) {
+               this.identity = identity
+           } else {
+               this.identity = null
+           }
+
+           return this.identity          
+        
+    }
+
+    getToken(){
+        
+        let token:any = localStorage.getItem('token');
+           token = JSON.stringify(token);
+
+           if (token != undefined) {
+               this.token = token
+           } else {
+               this.token = null
+           }
+
+           return this.token 
+
+    }
+
+    getStats(){
+        
+        let stats:any = localStorage.getItem('stats')
+        stats = JSON.parse(stats)
+
+        console.log(stats)
+
+        if(stats != "undefined"){
+            this.stats = stats
+        } else {
+            this.stats = null
+        }
+
+        return this.stats
+    }
+
+    getCounters(userId = null): Observable<any> {
+
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+            .set('Authorization', this.getToken())
+
+        if (userId != null) {
+            return this._http.get(this.url + 'counters/' + userId, { headers: headers })
+        } else {
+            return this._http.get(this.url + 'counters/', { headers: headers })
+        }
+    }
+
+    updateUser(user: User): Observable<any>{
+
+    let params = JSON.stringify(user);
+    let headers = new HttpHeaders().set('Content-type', 'application/json')
+    .set('Authorization', this.getToken())
+
+   
+
+    return this._http.put(this.url+'update-user/'+user._id, params,{headers: headers})
+
+    }
+
+    getUsers(page:any): Observable<any>{
+
+        let headers = new HttpHeaders().set('Content-Type', 'aplication-json')
+        .set('Authorization', this.getToken())
+
+        return this._http.get(this.url+'users/'+page, {headers:headers})
+
+    }
+
+    getUser(id:any): Observable<any>{
+
+        let headers = new HttpHeaders().set('Content-Type', 'aplication-json')
+        .set('Authorization', this.getToken())
+
+        return this._http.get(this.url+'users/'+id, {headers:headers})
+
+    }
+
+    
+
+
+}
+
+
+
+
+
+
+

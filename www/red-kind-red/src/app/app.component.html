@@ -1,0 +1,106 @@
+<!-- para que se adapte al total de la pantalla y bootstrap tiene 12 columnas -->
+
+
+<div class="navigation col-lg-12">
+  <!--  esto son clases propias del bstrap -->
+  <nav class="navbar navbar-default"  >
+
+    <div class="container-fluid">
+
+      <div class='navbar-header'>
+        <!-- esto lo que hara es pintar el titulo dentro 
+        de la barra de navegación. -->
+        <a href="#" class="navbar-brand">{{title}}</a>
+
+      </div>
+      <!-- Fijate que identity es una propiedad de la clase app-component
+      es decir que estamos trabajando directamente con esa clase en el front
+      lo hacemos a través además del método ngOnInit que funciona
+      al iniciarse el angular
+      -->
+      <ul class="nav navbar-nav" *ngIf="identity">
+        <li>
+          <a [routerLink]="['/home']">
+            <span class="glyphicon glyphicon-home"></span>
+            Inicio
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/timeline']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-th-list"></span>
+            TimeLine
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/gente']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-user"></span>
+            Gente
+          </a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar navbar-nav navbar-right" *ngIf="!identity">
+        <li>
+          <a [routerLink]="['/login']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-log-in"></span>
+            Login
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/register']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-user"></span>
+            Registro
+          </a>
+        </li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right" *ngIf="identity && identity.name" >
+        <li class="avatar">
+        <!-- cargar foto  del user-->
+        <img src="{{ url + 'get-image-user/' + identity.image}}" *ngIf="identity.image" />
+        </li>
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            {{identity.name}} <span class="caret"></span>
+          </a>
+
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#">
+                <span class="glyphicon glyphicon-user"></span>
+                Mi perfil
+              </a>
+            </li>
+            <li>
+              <a [routerLink]="['/mis-datos']">
+                <span class="glyphicon glyphicon-cog"></span>
+
+                Mis datos
+              </a>
+            </li>
+            <li>
+              <a class="pointer" (click)="logout()" href="#">
+                <span class="glyphicon glyphicon-log-out" ></span>
+                Cerrar sesión
+              </a>
+            </li>
+
+          </ul>
+        </li>
+
+      </ul>
+
+    </div>
+  </nav>
+</div>
+
+<!-- Aquí en vez de hacer <login></login> lo que hacemos es que 
+gracias a la configuración de las rutas, con el <router-outlet>
+  en función de lo que escribamos en la url, nos lleva a un sitio 
+o a otro, en función del "path" de app.routing.ts,
+fijate que en ese archivo hay una home -->
+
+<router-outlet></router-outlet>
+
+

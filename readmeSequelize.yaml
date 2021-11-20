@@ -1,0 +1,32 @@
+# Tienes que crear un archivo .sequelizerc donde va a estar
+# el esqueleto de donde van las carpetas y los archivos
+
+instalamos sequelize-cli
+sudo npx sequelize init para iniciar el sequelize
+
+# Se genera una carpeta de seeders, una carpeta de migraciones,
+# en el config-database es donde está el string de la conexión con la bdd
+
+
+# Creando un modelo
+sudo npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+
+
+# Una vez hechos los modelos, hacemos
+sudo npx sequelize-cli db:migrate
+#esto hará que se cree la BDD como tenga qe ser..
+
+
+#Si queremos echar atrás (es como git) una migración, hacemos
+#undo o undo:all
+sudo npx sequelize-cli db:migrate:undo:all
+
+#para empezar de 0
+
+hacemos db:migrate:undo:all
+
+luego borramos todos los migrates
+
+después hacemos un model:generate --force
+y después un db:migrate
+

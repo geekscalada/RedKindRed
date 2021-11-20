@@ -1,0 +1,99 @@
+bdd-clear
+./bdd-clear
+/volume
+./volume
+/uploads
+./uploads
+./node_modules
+
+# @@@@ngular
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+www/instalacionAngular/dist
+www/instalacionAngular/tmp
+www/instalacionAngular/out-tsc
+# Only exists if Bazel was run
+www/instalacionAngular/bazel-out
+
+# dependencies
+www/instalacionAngular/node_modules
+
+# profiling files
+www/instalacionAngular/chrome-profiler-events*.json
+
+# IDEs and editors
+www/instalacionAngular/.idea
+www/instalacionAngular/.project
+www/instalacionAngular/.classpath
+www/instalacionAngular/.c9/
+www/instalacionAngular/*.launch
+www/instalacionAngular/.settings/
+www/instalacionAngular/*.sublime-workspace
+
+# IDE - VSCode
+www/instalacionAngular/.vscode/*
+www/instalacionAngular/!.vscode/settings.json
+www/instalacionAngular/!.vscode/tasks.json
+www/instalacionAngular/!.vscode/launch.json
+www/instalacionAngular/!.vscode/extensions.json
+www/instalacionAngular/.history/*
+
+# misc
+www/instalacionAngular/.sass-cache
+www/instalacionAngular/connect.lock
+www/instalacionAngular/coverage
+www/instalacionAngular/libpeerconnection.log
+www/instalacionAngular/npm-debug.log
+www/instalacionAngular/yarn-error.log
+www/instalacionAngular/testem.log
+www/instalacionAngular/typings
+
+# System Files
+www/instalacionAngular/.DS_Store
+www/instalacionAngular/Thumbs.db
+
+red-kind-redgular/dist
+www/red-kind-red/tmp
+www/red-kind-red/out-tsc
+# Only exists if Bazel was run
+www/red-kind-red/bazel-out
+
+# dependencies
+www/red-kind-red/node_modules
+
+# profiling files
+www/red-kind-red/chrome-profiler-events*.json
+
+# IDEs and editors
+www/red-kind-red/.idea
+www/red-kind-red/.project
+www/red-kind-red/.classpath
+www/red-kind-red/.c9/
+www/red-kind-red/*.launch
+www/red-kind-red/.settings/
+www/red-kind-red/*.sublime-workspace
+
+# IDE - VSCode
+www/red-kind-red/.vscode/*
+www/red-kind-red/!.vscode/settings.json
+www/red-kind-red/!.vscode/tasks.json
+www/red-kind-red/!.vscode/launch.json
+www/red-kind-red/!.vscode/extensions.json
+www/red-kind-red/.history/*
+
+# misc
+www/red-kind-red/.sass-cache
+www/red-kind-red/connect.lock
+www/red-kind-red/coverage
+www/red-kind-red/libpeerconnection.log
+www/red-kind-red/npm-debug.log
+www/red-kind-red/yarn-error.log
+www/red-kind-red/testem.log
+www/red-kind-red/typings
+
+# System Files
+www/red-kind-red/.DS_Store
+www/red-kind-red/Thumbs.db
+
+

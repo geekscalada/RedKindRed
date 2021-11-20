@@ -1,0 +1,66 @@
+<!-- 
+#cambiar esto porqu necesitamos mostrar más datos de la publicación
+pero la publciación en mi nueva BDD sno tiene estos datos 
+y no estamos populando
+ -->
+
+<div class='col-lg-8'>
+    <h1 class="h1-strong">{{title}}</h1>
+    
+    <div id="publications">
+        <div *ngFor="let publication of publications" class="item-publication">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <!-- <div class="image-user name pull-left">
+                        <a href="#">
+                            <img src="{{ url + 'get-image-user/' + publication.user.image}}" 
+                            *ngIf="publication.user.image"> 
+                            
+                            <img class="avatar-default" src="../../assets/iconoUser.PNG" *ngIf="!publication.user.image"> 
+
+                        </a> 
+                    </div> -->
+
+                   <div>
+                        <!-- esto lo convertimos en spans en vez de en divs
+                    
+                        para que sean elementos que tengan un display inline
+                        y no se floten a ninguna parte
+                    
+                    -->
+                    <!-- <span class="user-name">
+                        {{publication.user.name + ' ' + publication.user.surname }}
+                        
+                    </span> -->
+                    &nbsp;&nbsp; <!-- separacion -->
+                    <!-- aqui deberiamos la libreria moment de angular -->
+                   <span class="date">
+                       {{(publication.createdAt | amFromUnix) |amLocale: 'es' | amTimeAgo }}
+                   </span>
+                   </div>
+
+                    
+                    <h4 class="publication-text pull-left">
+                        {{publication.text}}
+                    </h4>
+                </div>            
+                
+                
+            </div>          
+
+        </div>
+    </div>
+
+    <div class='col-lg-12 text-center'>
+        <p>
+            <button class='btn btn-success' (click)="viewMore()" *ngIf = "!noMore">
+                Ver más publicaciones
+            </button>  
+        </p>
+         
+    </div>
+</div>
+
+<sidebar></sidebar>
+<div class="clearfix"></div>
