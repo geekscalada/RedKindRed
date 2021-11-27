@@ -25,6 +25,7 @@ api.post('/login', userController.loginUser)
 api.get('/pruebas2', middleware_auth.ensureAuth ,userController.pruebas);
 api.get('/user/:id', middleware_auth.ensureAuth, userController.getUser)
 api.get('/users/:page?', middleware_auth.ensureAuth, userController.getUsers)
+api.get('/allusers', middleware_auth.ensureAuth, userController.getAllUsers)
 api.get('/counters/:id?', middleware_auth.ensureAuth, userController.getCounters)
 api.put('/update-user/:id', middleware_auth.ensureAuth, userController.updateUser)
 // array de middlewares

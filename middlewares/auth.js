@@ -32,7 +32,9 @@ exports.ensureAuth = function(req, res, next){
         if (payload.exp <= moment().unix()){
             //añadir una redirección???
             return res.status(401).send({message: 'Expirado'})
-        }
+        }     
+
+        
     } catch(e) {
 
         return res.status(404).send({message: 'Token No valido'})
@@ -41,9 +43,8 @@ exports.ensureAuth = function(req, res, next){
     
     //Como extra lo que hacemos es adjuntar el payload a la request
     // para tener siempre en los controladores el objeto del usuario logueado
-
+    
     req.user = payload;
-
    
     next(); // saltamos al siguiente paso
     

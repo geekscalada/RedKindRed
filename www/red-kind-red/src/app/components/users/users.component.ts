@@ -28,7 +28,7 @@ export class UsersComponent implements OnInit{
     public pages:any;
     public users: User[]
     public status:any
-    public follows:any; //estamos siguiendo
+    public follows:any; //estamos siguiendo    
 
     constructor(
 
@@ -47,6 +47,10 @@ export class UsersComponent implements OnInit{
         // tengo que añadir esto para que me deje
         this.users = []
     }
+
+    filterUsers= ''
+
+
 
     actualPage(){
         //params captura el parámetro de la ruta
@@ -76,6 +80,22 @@ export class UsersComponent implements OnInit{
             this.getUsers(page)
 
         })
+
+    }
+
+    getAllusers(){
+
+        this._userService.getAllUsers().subscribe(
+            (response) => {
+                console.log(response)
+                this.users = response
+            },
+
+            (error) => {
+                console.log('error')
+                console.log(error)
+            }
+        )
 
     }
 
@@ -192,7 +212,9 @@ export class UsersComponent implements OnInit{
 
     ngOnInit(){
         console.log("modulo Gente cargado")
-        this.actualPage();
+        this.getAllusers();
+        //this.actualPage();
+        console.log(this.users)
     }
 
 }

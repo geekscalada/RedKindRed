@@ -12,13 +12,14 @@ let secret = secretKey.SECRET
 exports.createToken = function (user) {
 
     var payload =  {
-        sub: user._id,
+        id: user.id,
         name: user.name,
         surname: user.surname,
         nick: user.nick,
         email: user.email,
         role: user.role,
         image: user.image,
+        prueba: 'prueba',
         iat: moment().unix(), //tiempo de creación del token
         exp: moment().add(30, 'days').unix
     };

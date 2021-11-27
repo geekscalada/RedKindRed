@@ -8,9 +8,9 @@
         <a [routerLink]="['/login']"> Identifícate aquí</a>
     
     </div>
-    <div class="alert alert-danger" *ngIf="status == 'error'" >         
+    <div class="alert alert-danger" *ngIf="status && status != 'success'" >         
         <!-- Enlace dinámico, es un SPA, no recarga página -->
-        Error en el registro <a [routerLink]="['/login']"></a>
+        {{status}} <a [routerLink]="['/login']"></a>
     
     </div>
 
@@ -21,7 +21,7 @@
     <!-- onSubmit es un método que creamos en el componente
     le pasamos por parámetros la variable registerForm para usarla luego
     -->
-    <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="col-lg-12">
+    <form #registerForm="ngForm" (ngSubmit)="registerFormSubmit(registerForm)" class="col-lg-12">
         <p>
             <label>Nombre</label>
             <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" class="form-control" required />

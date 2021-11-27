@@ -12,6 +12,8 @@ var bodyParser = require('body-parser') // cambiar nombre?
 var app = express(); //cambiar nombre
 const cors = require('cors');
 
+const associations = require('./associations')
+
 
 // cargar rutas
 
@@ -100,5 +102,7 @@ app.use('/api', message_routes);
 
 
 //exportamos
+
+
 
 module.exports = app; // exportamos todo lo que tenga app.

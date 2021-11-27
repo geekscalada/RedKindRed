@@ -31,6 +31,9 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 
 
+//importamos pipes
+
+import { FilterPipe } from './pipes/searching-filter.pipe';
 
 
 
@@ -46,7 +49,8 @@ import { TimelineComponent } from './components/timeline/timeline.component';
     UserEditComponent,
     UsersComponent,
     SidebarComponent,
-    TimelineComponent
+    TimelineComponent,
+    FilterPipe
      
    
   ],

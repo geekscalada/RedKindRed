@@ -61,51 +61,40 @@ export class TimelineComponent implements OnInit {
     // si no añadimos ese parámetro, es false
     getPublications(page: any, adding: any = false) {
         this._publicationService.getPublications(this.token, page).subscribe(
-            response => {
-                
-                if (response.publications) {
-                    this.total = response.total_items;
+            (response) => {               
+                try {                   
+                    
+                    if (!response.docs) {
+
+                        throw new Error('Algo ha fallado')
+    
+                    }
+    
+                    this.total = response.total;
                     this.pages = response.pages;
-                    this.itemsPerPage = response.items_per_page
-
-                    console.log(response)
-
-                    // si el parámetro viene a false
+                    this.itemsPerPage = 2
+    
+                    //si no estamos pulsando viewMore
                     if (!adding) {
-
-                        this.publications = response.publications
-
+    
+                        this.publications = response.docs
+    
                     } else {
-
-                        let arrayA = this.publications;
-                        let arrayB = response.publications
-                        // si estamos en la pag 3, en arrayA tendremos pag 1 y 2 y en B la 3                    
-
-                        this.publications = arrayA.concat(arrayB)
-
+    
+                        this.publications = this.publications.concat(response.docs)
+    
                         //añadimos linea JQuery para que nos haga la animación de bajar
                         // le pasamos un objeto json como parametro
                         // con la propiedad del body de scrollTop y 500 milisegundos
-                        $("html, body").animate({ scrollTop: $('body').prop("scrollHeight")}, 500)
-
+                        $("html, body").animate({ scrollTop: $('body').prop("scrollHeight") }, 500)
                     }
-
-
-                    if (page > this.pages) {
-                        //this._router.navigate(['/home'])
-                    }
-
-                } else {
+                    
+                } catch (error) {
                     this.status = 'error'
+                    console.log("Error", error)
                 }
             },
-            error => {
-                // let errorMessage = <any>error
-                // if(errorMessage != null) {
-                //     this.status = 'error' 
-                // }
-
-                // lo cambio por esto
+            (error) => {                
                 this.status = 'error'
                 console.log("Error", error)
 
@@ -114,6 +103,7 @@ export class TimelineComponent implements OnInit {
 
     }
 
+    //#cambiar borrar
     // public noMore = false;
     // viewMore(){
     //             //esta logica no está bien hecha, mirar con mami y sigoamami
@@ -136,7 +126,9 @@ export class TimelineComponent implements OnInit {
     // }
 
     public noMore = false;
-    viewMore() {        
+    viewMore() {       
+        console.log(this.page, this.pages)
+        
         this.page += 1
         if (this.page == this.pages) {
             this.noMore = true;

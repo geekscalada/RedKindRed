@@ -5,7 +5,7 @@ const mongoosePaginate = require('mongoose-pagination')
 
 // Database and sequelize
 const Sequelize = require('sequelize');
-const {DataTypes} = require('sequelize')
+const { DataTypes } = require('sequelize')
 const sequelize = require('../database.js')
 
 
@@ -16,41 +16,39 @@ const Publication = require('../models/publication')(sequelize, Sequelize)
 // const User = require('../models/user-model2')
 // const Follow = require('../models/follow-model')
 
-function probando (req, res) {
-    res.status(200).send({message: "metodo probando"})
+function probando(req, res) {
+    res.status(200).send({ message: "metodo probando" })
 }
 
 //#cambiamos al nuevo
 async function savePublication(req, res) {
 
     try {
-        
         let params = req.body;
-        
-        console.log(params)
+        console.log(req.user)
 
         //#cambiar por un throw
-        if(!params.text) return res.status(200).send({message: 'Por favor, envia todos los campos'})
+        if (!params.text) return res.status(200).send({ message: 'Por favor, envia todos los campos' })
 
         let newPublication = await Publication.build({
 
             text: params.text,
-            surname: params.surname,
+            surname: req.user.surname,
             file: params.file,
-            userID: params.userID
+            userID: req.user.id
 
         })
 
-        let insertPublication = newPublication.save();
+        let insertPublication = await newPublication.save();
 
 
-    } catch (error) {       
+    } catch (error) {
         console.log(error)
         return res.status(404).send({
             message: 'Error al publicar'
-        }) 
+        })
     }
-    
+
 }
 
 // function savePublication (req, res) {
@@ -77,76 +75,117 @@ async function savePublication(req, res) {
 // }
 
 // publicaciones de usuarios que yo sigo (timeline de la pub)
-function  getPublications (req, res) {
+async function getPublications(req, res) {
+    
+    //#ya funciona perfect ahora falta que me traiga
+    //los mios y los de mis colegas
+    
+    
+    try {      
+       
 
-    let page = (function(){
-
-        if(req.params.page){
-            return req.params.page
-        } else {
-            return "1"
+        const options = {
+        
+            page: req.params.page, // Default 1
+            paginate: 2, // Default 25        
+            where: {userID: req.user.id}
         }
-
-    })();
-
-    let itemsPerPage = 4;
-
-    console.log("req.user" ,req.user)
-
-    Follow.find({"user": req.user.sub}).populate('followed').exec()
-    .then((follows) => {
-
-        let follows_clean = []
-
-        follows.forEach((follow) => {
-            follows_clean.push(follow.followed)
-        })       
-        
-        //añadimos nuestras publicaciones para que nos aparezcan en el timeline
-        follows_clean.push(req.user.sub)
-
-
-        // va a buscar dentro del array de follows clean, de esta manera nos
-        // sacará las publicaciones de usuarios a los que seguimos
-        Publication.find({user: {"$in": follows_clean}}).sort('-created_at')
-        .populate('user').paginate(page, itemsPerPage, (err, publications, total) => {
-        
-            if(err) return res.status(500).send({message: 'Error al guardar la publicacion'})
-
-            if(!publications) return res.status(404).send({message: 'No hay publicaciones'})
-
-            return res.status(200).send({
-                total_items: total,
-                pages: Math.ceil(total/itemsPerPage),
-                publications,
-                page: page
-            })
-
-
-
+    
+        const { docs, pages, total } = await Publication.paginate(options)    
+            
+        //#cambiar #arreglar esto
+        return res.status(200).send({             
+            docs,
+            pages,
+            total
         })
 
+    } catch (error) {
+        return res.status(404).send({             
+            Message: 'Ha ocurrido un error en la petición'
+        })
+        
+    }
 
-    }).catch((err) => {
-        if(err) return res.status(500).send({message: err})
-    })
+    
 
 
 }
 
+//#cambiar
+//console.log("de momento lo rompo para que no moleste")
+
+// let page = (function(){
+
+//     if(req.params.page){
+//         return req.params.page
+//     } else {
+//         return "1"
+//     }
+
+// })();
+
+// let itemsPerPage = 4;
+
+// console.log("req.user" ,req.user)
+
+// Follow.find({"user": req.user.sub}).populate('followed').exec()
+// .then((follows) => {
+
+//     let follows_clean = []
+
+//     follows.forEach((follow) => {
+//         follows_clean.push(follow.followed)
+//     })       
+
+//     //añadimos nuestras publicaciones para que nos aparezcan en el timeline
+//     follows_clean.push(req.user.sub)
+
+
+//     // va a buscar dentro del array de follows clean, de esta manera nos
+//     // sacará las publicaciones de usuarios a los que seguimos
+//     Publication.find({user: {"$in": follows_clean}}).sort('-created_at')
+//     .populate('user').paginate(page, itemsPerPage, (err, publications, total) => {
+
+//         if(err) return res.status(500).send({message: 'Error al guardar la publicacion'})
+
+//         if(!publications) return res.status(404).send({message: 'No hay publicaciones'})
+
+//         return res.status(200).send({
+//             total_items: total,
+//             pages: Math.ceil(total/itemsPerPage),
+//             publications,
+//             page: page
+//         })
+
+
+
+//     })
+
+
+// }).catch((err) => {
+//     if(err) return res.status(500).send({message: err})
+// })
+
+
+
+
+
+
 
 // publicaciones por ID
+//#cambiar  probablemetne  no hace falta
 function getPublication(req, res) {
 
     let publicationId = req.params.id;
 
     Publication.findById(publicationId, (err, publication) => {
 
-        if(err) return res.status(500).send({message: 'Error al buscar la publicacion'})
+        if (err) return res.status(500).send({ message: 'Error al buscar la publicacion' })
 
-        if(!publication) return res.status(404).send({message: 'La publicación no existe'})
+        if (!publication) return res.status(404).send({ message: 'La publicación no existe' })
 
-        return res.status(200).send({publication})
+        return res.status(200).send({ publication })
 
 
     })
@@ -161,22 +200,22 @@ function deletePublication(req, res) {
     let publicationId = req.params.id;
 
 
-// hay un metodo que hace remove automaticamente, pero cuidado, porque
-// preferimos hacerlo de otra manera para que podamos comprobar que la publicación
-// es nuestra (y por lo tanto somos los que podemos borrarla)
-// ojo que le añado el _ en el id porque de lo contrario nos borra todas las publis
+    // hay un metodo que hace remove automaticamente, pero cuidado, porque
+    // preferimos hacerlo de otra manera para que podamos comprobar que la publicación
+    // es nuestra (y por lo tanto somos los que podemos borrarla)
+    // ojo que le añado el _ en el id porque de lo contrario nos borra todas las publis
 
-// #### ojo, borra publicaciones de otros usuarios...la autentificacion se la pasa por el forro
+    // #### ojo, borra publicaciones de otros usuarios...la autentificacion se la pasa por el forro
 
-    Publication.find({"user": req.user.sub, "_id": publicationId})
-    .remove((err) => {        
+    Publication.find({ "user": req.user.sub, "_id": publicationId })
+        .remove((err) => {
 
-        if(err) return res.status(500).send({message: 'Error al buscar la publicacion'})
+            if (err) return res.status(500).send({ message: 'Error al buscar la publicacion' })
 
-        return res.status(200).send({message: "Publicacion eliminada correctamente"})
+            return res.status(200).send({ message: "Publicacion eliminada correctamente" })
 
 
-    })
+        })
 
 
 }
@@ -197,7 +236,7 @@ function uploadImage(req, res) {
 
         var ext_split = file_name.split('\.');
         var file_ext = ext_split[1].toLowerCase();
-        
+
 
 
         //añadimos una validación que nos diga si la publicación es nuestra o no
@@ -206,10 +245,10 @@ function uploadImage(req, res) {
             || file_ext == 'gif') {
 
             Publication.findOne({ 'user': req.user.sub, '_id': publicationId }).exec(
-                
+
                 (err, publication) => {
 
-                    if(err) return res.status(500).send({message: 'Error al buscar la publicacion'})
+                    if (err) return res.status(500).send({ message: 'Error al buscar la publicacion' })
 
 
                     if (publication) {
@@ -228,13 +267,13 @@ function uploadImage(req, res) {
                     } else {
 
                         return removeFilesOfUploads(res, file_path, 'No tiens permisos para publicar');
-            
+
                     }
                 })
 
 
         } else {
-           
+
             return removeFilesOfUploads(res, file_path, 'Extensión no válida');
 
         }
@@ -251,28 +290,28 @@ function uploadImage(req, res) {
 // esta función no hace falta que la exportemos como método, simplemente la usamos
 // aquí como parte del método anterior
 // importante que tenga la res como parámetro para poder enviar la respuesta
-function removeFilesOfUploads (res, file_path, message) {
+function removeFilesOfUploads(res, file_path, message) {
 
     fs.unlink(file_path, (err) => {
-        return res.status(200).send({message: message})
+        return res.status(200).send({ message: message })
         // No hace falta comprobar if err
     })
-    
+
 }
 
 function getImageFile(req, res) {
-    
+
     var image_file = req.params.imageFile;
 
-    var path_file = './uploads/publicaciones/'+image_file
+    var path_file = './uploads/publicaciones/' + image_file
 
     //devuelve un callback exists con una respuesta de si o no
     fs.exists(path_file, (exists) => {
 
-        if(exists){
+        if (exists) {
             res.sendFile(path.resolve(path_file))
         } else {
-            res.status(200).send({message: 'No existe ninguna imagen'})
+            res.status(200).send({ message: 'No existe ninguna imagen' })
         }
 
     })
@@ -280,7 +319,7 @@ function getImageFile(req, res) {
 }
 
 
-module.exports =  {
+module.exports = {
     probando,
     savePublication,
     getPublications,

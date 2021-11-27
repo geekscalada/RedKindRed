@@ -3,16 +3,26 @@
 
     <h1 class="h1-strong">
         {{title}}
-    </h1>
+    </h1> 
+    
+    <div class="form-group">
+
+        <input type="text" class="form-control" placeholder="Search..."
+        name="filterUsers" [(ngModel)]="filterUsers">
+
+    </div>
+    
 
     <div class="people">
+
+        
 
         <!-- listado -->
 <!-- 
         FIJATE COMO AQUI ITERAS, Y ESO TE DA EL SOPORTE PARA TODO LO DEMÁS  -->
 
-        <div *ngFor="let user of users" class="item-user">
-            <div class="panel panel-default">
+        <div *ngFor="let user of users | filter: filterUsers" class="item-user">
+            <div class="panel panel-default" >
                 <!-- flotar a la izquierda ?¿ -->
                 <div class="panel-body">
                     <div class="image-user name pull-left">

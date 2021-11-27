@@ -1,3 +1,5 @@
+//#cambiar para no tener surname en la tabla de publicaiones
+const sequelizePaginate = require('sequelize-paginate')
 'use strict';
 const {
   Model
@@ -21,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Publication',
-    logging: false 
   });
+  sequelizePaginate.paginate(Publication)
   return Publication;
 };

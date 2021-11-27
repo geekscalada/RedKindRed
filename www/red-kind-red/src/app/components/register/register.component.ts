@@ -49,36 +49,36 @@ export class RegisterComponent implements OnInit {
     // este es un método que lo que hará es recoger los datos
     // desde el componente cuando rellenemos el formulario 
     
-    onSubmit(registerForm:any){
 
-         /* Muy interesante. ¿Que nos devuelve el método register (servicio)? Un observable.
-         Un observable hace que te puedas suscribir a él y usar sus callbacks, de esta manera podemos
-         escuchar lo que devuelva la API
-         
-         ¿Qué devuelve la API?
-         Pues una respuesta o un error        
-         
-         */
+    //#usarestecomoejemplodecambio
+    registerFormSubmit(registerForm:any){        
+        //console.log(this.user) this.user es aún vacío
         this._userService.register(this.user).subscribe(
+            (response)=>{                               
+                
 
-            response => {
-
-                if(response.user && response.user._id) {                   
+                if(response.newUser && response.newUser.id) {                   
                     //esto lo usaremos en las alertas del componente a nivel de html
                     this.status = "success"
+                    this.user = response.newUser;
+                    console.log(response.newUser)
                     //reseteamos el registro
-                    registerForm.reset();
+                    return registerForm.reset();
+                } 
 
-                } else {
-                    this.status = "error"
-                }
-
+                this.status = "Ha habido algún error en la petición"
+                
             },
+            (error)=>{                
+                console.log(<any>error)
+                this.status = error.error.message
+            }
 
-            error => {console.log(<any>error)}
 
-
-        );
+        )     
+         
+            
+        
 
     }
 

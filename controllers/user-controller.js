@@ -16,7 +16,7 @@ const Publication = require('../models/publication-model');
 
 // Database and sequelize
 const Sequelize = require('sequelize');
-const {DataTypes} = require('sequelize')
+const {DataTypes, Association} = require('sequelize')
 const sequelize = require('../database.js')
 
 
@@ -24,6 +24,16 @@ const sequelize = require('../database.js')
 let User = require('../models/user')(sequelize, Sequelize);
 //#cambiar por publication
 let Publicationa = require('../models/publication')(sequelize, Sequelize);
+
+// si no importas el modelo
+let Key = require('../models/key')(sequelize, Sequelize);
+
+const db = require('../database')
+const associations = require('../associations')
+
+User.hasOne(Key, {foreignKey: 'userId'});
+Key.belongsTo(User, {foreignKey: 'userId'}); 
+
 
 //#cambiar por el nuevo
 var Follow = require('../models/follow-model')
@@ -55,41 +65,46 @@ async function saveUser(req, res) {
 
     try {
 
-    if (!params.name || !params.surname || !params.nick || 
-        !params.email || !params .password) {
+        if (!params.name || !params.surname || !params.nick || 
+        !params.email || !params.password) {
 
-            throw new Error('Por favor, envia todos los campos')
+            return res.status(404).send({
+                message: 'Falta algún campo'
+            })}
 
-        }        
+        let exists = await User.findOne({
+            where: {
+                [Sequelize.Op.or]: [{ nick: params.nick.toLowerCase() }, { email: params.email.toLowerCase() }]
+            }
+        });
 
-    let newUser = await User.build({
-        name: params.name,
-        surname: params.surname,
-        nick: params.nick,
-        email: params.email,
-        password: params.password,
-        role: 'ROLE_USER',
-        image: null
-        })    
+        if (exists) { 
+            return res.status(404).send({
+            message: 'Este usuario ya existe'
+        })}
+        
+        let salt = bcrypt.genSaltSync(8)   
+        let hashPass = bcrypt.hashSync(params.password, salt)
+        
+        let newUser = await User.build({
+            name: params.name,
+            surname: params.surname,
+            nick: params.nick.toLowerCase(),
+            email: params.email.toLowerCase(),        
+            Key: {
+                key: hashPass
+            },
+            role: 'ROLE_USER',
+            image: null
+        },{
+            include: [{ model: Key}]  //, through: 'userId'}]
+        })
 
-    let exists = await User.findOne({
-        where: {
-            [Sequelize.Op.or]: [{nick: newUser.nick }, {email: newUser.email}]
-          }
-    });
-
-    if (exists) {throw new Error('Este usuario ya existe')}
-
-    let salt = bcrypt.genSaltSync(8)   
-
-    let hashPass = bcrypt.hashSync(newUser.password, salt)   
+    let insertUser = await newUser.save();    
     
-    newUser.password = hashPass;
-    let insertUser = await newUser.save();     
-    
-    newUser.password = undefined;    
-    
-    res.status(500).send({newUser})       
+    newUser.Key.key = undefined;
+    console.log(newUser)    
+    res.status(200).send({newUser})       
         
     } catch (error) {       
         console.log(error)
@@ -99,45 +114,48 @@ async function saveUser(req, res) {
     }
 }  
 
-
 async function loginUser(req, res) {
 
         let params = req.body;
         let email = params.email
-        let password = params.password      
-    
+        let password = params.password
 
     try {        
         
         const userBDD = await User.findOne(
-            {where: {email: email}})        
+            {where: {email: email},
+            include : {model: Key}
+        })        
         if (!userBDD) {throw new Error('No existe este user')} // hacer un return new error    
         
         async function compareAsync(password, userBDD_password) {
             return new Promise(function(resolve, reject) {
                 bcrypt.compare(password, userBDD_password, function(err, res) {
-                    if (err) {
+                    if (err) {                        
                          reject(err);
-                    } else {
+                    } else {                        
                          resolve(res);
                     }
                 });
             });
-        }        
+        }
 
-        const checkPass = await compareAsync(password, userBDD.password)
+        let userBDDpass = userBDD['Key']['key']      
+        
+        const checkPass = await compareAsync(password, userBDDpass)
                 
-        if (checkPass) {                       
-           
+        if (checkPass) {
+
+            const userInBDD = await User.findOne(
+                {where: {email: email}})  
             
-            if (req.body.gettoken) {              
-                
-                console.log("aquiiiiiii")                
-                //userBDD.password = undefined;                                            
+            if (req.body.gettoken) {
+
+                console.log(userInBDD)
                 return res.status(200).send({
                     //generamos token                    
-                    token: jwt.createToken(userBDD),
-                    user: userBDD
+                    token: jwt.createToken(userInBDD),
+                    user: userInBDD
                  
                 })
             } else {
@@ -147,14 +165,12 @@ async function loginUser(req, res) {
                 
             }
         } else {
-            console.log("Contra inco")
-            return res.status(404).send({
-                
+            console.log("Contra incorrecta")
+            return res.status(404).send({                
                 message: 'Contraseña incorrecta'
             })
         }
-    } catch (error) {
-        
+    } catch (error) {        
         console.log(error)        
         return res.status(404).send(
             {message: error.message}
@@ -162,7 +178,7 @@ async function loginUser(req, res) {
     }
 }
 
-
+//#cambiar
 function getUser(req, res) {
     
     //nos llega un id por la url, por lo tanto usamos params
@@ -197,6 +213,7 @@ function getUser(req, res) {
 
 //ejemplo de async await para copiar como aprendizaje
 
+//#cambiar con nuevo modelo
 async function followThisUser(identity_user_id, user_id) { 
 
     // este método al usar el async, devuelve una promesa
@@ -234,40 +251,75 @@ async function followThisUser(identity_user_id, user_id) {
 }
 
 //devolver listado de usuarios paginados
+//#cambiar ¿que hacía este método?
+
+async function getAllUsers(req, res){
+    
+    try {
+        let users = await User.findAll()
+
+    if (!users) {
+        throw new Error('Error en la petición')
+    }
+
+    return res.status(200).send(
+        users
+    )
+    } catch (error) {
+
+        return res.status(404).send(
+            {message: error}
+        )
+        
+    }
+
+    
+
+
+}
 
 function getUsers(req, res) {
 
-    // si recuerdas antes hemos bindeado a la request el objeto user
-    // que tiene la info decodificada, ahora la usamos 
-    var identity_user_id = req.user.sub; //aquí es donde se almacena el id del usuario
+    try {
 
-    var page = 1;
-    if (req.params.page) {
-        page = req.params.page;
+        if(3<0){throw error}
+        
+    } catch (error) {
+        return "lo rompo para que no moleste"
     }
 
-    var itemsPerPage = 5; //usuarios por página
+    // si recuerdas antes hemos bindeado a la request el objeto user
+    // que tiene la info decodificada, ahora la usamos 
+    // var identity_user_id = req.user.sub; //aquí es donde se almacena el id del usuario
 
-    User.find().sort('_id').paginate(page, itemsPerPage, (err, users, total) => {
-    //ordena por id
-        if (err) return res.status(500).send({message: 'Error en la peticion'})
+    // var page = 1;
+    // if (req.params.page) {
+    //     page = req.params.page;
+    // }
 
-        if (!users) return res.status(404).send({message: 'No hay usuarios disponibles'})
+    // var itemsPerPage = 5; //usuarios por página
+
+    // User.find().sort('_id').paginate(page, itemsPerPage, (err, users, total) => {
+    // //ordena por id
+    //     if (err) return res.status(500).send({message: 'Error en la peticion'})
+
+    //     if (!users) return res.status(404).send({message: 'No hay usuarios disponibles'})
 
 
-        followUsersId(identity_user_id).then((value) => {
+    //     followUsersId(identity_user_id).then((value) => {
 
-           return res.status(200).send({
-                users,
-                users_following: value.following,
-                users_followed: value.followed,
-                total,
-                pages: Math.ceil(total/itemsPerPage)
-            })
-        });    
-    })
+    //        return res.status(200).send({
+    //             users,
+    //             users_following: value.following,
+    //             users_followed: value.followed,
+    //             total,
+    //             pages: Math.ceil(total/itemsPerPage)
+    //         })
+    //     });    
+    // })
 }
 
+//#cambiar
 async function followUsersId(user_id) {
 
     // desactivamos campos que no queremos
@@ -318,7 +370,7 @@ async function followUsersId(user_id) {
 }
 
 //metodo para contadores
-
+//#cambiar
 function getCounters (req, res) {
 
     // si llega por parametros o si no llega
@@ -335,6 +387,7 @@ function getCounters (req, res) {
 
 }
 
+//#cambiar
 async function getCountFollow(user_id) {
     var following = await Follow.countDocuments({ user: user_id })
         .exec()
@@ -365,7 +418,7 @@ async function getCountFollow(user_id) {
 
 
 //edición de datos de usuario
-
+//#cambiar
 function updateUser (req, res) {
 
     var userId = req.params.id;
@@ -412,7 +465,7 @@ function updateUser (req, res) {
 }
 
 //subir avatares usuarios
-
+//#cambiar
 function uploadImage(req, res) {
     
     var userId = req.params.id;
@@ -515,6 +568,7 @@ module.exports = {
     loginUser,
     getUser,
     getUsers,
+    getAllUsers,
     getCounters,
     updateUser,
     uploadImage,

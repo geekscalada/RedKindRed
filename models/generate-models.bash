@@ -20,6 +20,16 @@ file:string,\
 userID:integer\
 
 
+#Generate Keys model
+sudo npx sequelize-cli model:generate --force --name Key \
+--attributes userID:integer,\
+key:string\
+
+#migrating
+#sudo npx sequelize-cli db:migrate
+
+
+
 
 
 

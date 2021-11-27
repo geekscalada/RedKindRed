@@ -75,6 +75,8 @@ export class UserService{
     // aquí crearemos 2 metodos para rescatar del local storage los datos
     // identity y token
     
+
+    //#cambiar por getPerfil
     getIdentity(){        
 
            let identity:any = localStorage.getItem('identity');           
@@ -151,6 +153,18 @@ export class UserService{
         .set('Authorization', this.getToken())
 
         return this._http.get(this.url+'users/'+page, {headers:headers})
+
+    }
+
+    getAllUsers(): Observable<any> {
+
+        let headers = new HttpHeaders().set('Content-Type', 'aplication-json')
+        .set('Authorization', this.getToken())
+
+        console.log('hola')
+
+        return this._http.get(this.url+'allusers/', {headers:headers})
+
 
     }
 
