@@ -52,7 +52,6 @@ export class RegisterComponent implements OnInit {
 
     //#usarestecomoejemplodecambio
     registerFormSubmit(registerForm:any){        
-        //console.log(this.user) this.user es aún vacío
         this._userService.register(this.user).subscribe(
             (response)=>{                               
                 

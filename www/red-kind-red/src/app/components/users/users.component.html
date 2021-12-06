@@ -48,38 +48,53 @@
 <!-- 
                     este primer IF es para que no nos aparezca a nosotros mismos
                     el boton de seguir/dejar -->
-                    <div class="pull-right" *ngIf="user._id != identity._id">
-                        <button class="btn btn-success" *ngIf="follows.indexOf(user._id)<0 "
-                        (click)="followUser(user._id)"                        
-                        >
+                    <div class="pull-right" *ngIf="user.id != identity.id">
+                        {{user.id}}
+                        <div *ngIf="friends.indexOf(user.id.toString())>=0">
+                            <button class="btn btn-success" 
+                            (click)="sendRequestToFriend(user.id)">
 
-                        <span class="glyphicon glyphicon-plus-sign"></span>
-                        Seguir
-                        </button>
-                        
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                            Amigo
+                            </button>                      
 
-                        <button class="btn btn-primary"
-                        *ngIf="follows.indexOf(user._id)>=0"
-                        (mouseenter)="mouseEnter(user._id)"
-                        (mouseleave)="mouseLeave(user._id)"
-                        [class.btn-danger]="user._id == followUserOver"
-                        (click)="unfollowUser(user._id)" 
+                        </div>
 
-                        >
-                            <span *ngIf="user._id == followUserOver; else following"
-                           >
-                                <span class="glyphicon glyphicon-minus-sign"></span>
-                                Dejar de seguir 
-                            </span> 
-                                                   
-                            <ng-template #following>    
+                        <div *ngIf="ReqFriends.indexOf(user.id.toString())>=0">
+                            <button class="btn btn-success" 
+                            (click)="sendRequestToFriend(user.id)">
+
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                            Quiere ser tu amigo
+                            </button>                      
+
+                        </div>
+
+                        <div *ngIf="ReqFriends.indexOf(user.id.toString())<0 && friends.indexOf(user.id.toString())<0 ">
+                            <button class="btn btn-success" 
+                            (click)="sendRequestToFriend(user.id)">
+
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                            Solicitad amistad
+                            </button>                      
+
+                        </div>
+
+
+                        <ng-template #breakFriend>
+                            <button class="btn btn-red">
+                               
                                 <span class="glyphicon glyphicon-ok-sign"></span>
-                                Siguiendo    
-                            </ng-template>                
+                                Ya no quiero ser tu amigo    
+                                
+                            </button>
+                        </ng-template>
+
                         
 
+                        
+                                          
 
-                        </button>                    
                     </div>
                    
 

@@ -1,3 +1,5 @@
+//# este servicio en principio no se usa
+
 import { Injectable } from "@angular/core";
 import { GLOBAL } from "./global";
 

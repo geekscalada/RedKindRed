@@ -8,6 +8,7 @@ import { GLOBAL } from 'src/app/services/global';
 
 import { FollowService } from 'src/app/services/follow.service';
 import { Follow } from 'src/app/models/follow';
+import { Console } from 'console';
 
 @Component({
     selector: 'users',
@@ -28,7 +29,9 @@ export class UsersComponent implements OnInit{
     public pages:any;
     public users: User[]
     public status:any
-    public follows:any; //estamos siguiendo    
+    public follows:any; //estamos siguiendo
+    public friends:any = []
+    public ReqFriends:any = []     
 
     constructor(
 
@@ -48,6 +51,7 @@ export class UsersComponent implements OnInit{
         this.users = []
     }
 
+    //#cambiar y meterlo en el constructor
     filterUsers= ''
 
 
@@ -98,6 +102,65 @@ export class UsersComponent implements OnInit{
         )
 
     }
+
+    sendRequestToFriend(params:any){
+
+        let insertParams = {
+            'IDtarget': params.toString()
+        }
+       
+
+        this._userService.sendRequestToFriend(insertParams).subscribe(
+            (response) => {
+
+                console.log(response)
+
+            },(error) => {
+
+                console.log('error')
+                console.log(error)
+            }
+        )
+    }
+
+    getFriends(){
+        
+        this._userService.getFriends(this.identity.id).subscribe(
+
+            (response)=>{
+                
+                this.friends = response;
+                console.log(this.friends)
+
+            },(error)=>{
+                console.log(error)
+            }
+
+
+        )
+
+    }
+
+    getMyReqFriends(){
+        
+        this._userService.getMyReqFriends(this.identity.id).subscribe(
+
+            (response)=>{
+                
+                this.ReqFriends = response;
+
+                console.log(this.ReqFriends)
+
+            },(error)=>{
+                console.log(error)
+            }
+
+
+        )
+
+    }
+
+
 
     // aquí hace un = null para hacer default pero a mí
     // no me deja hacerlo
@@ -213,6 +276,8 @@ export class UsersComponent implements OnInit{
     ngOnInit(){
         console.log("modulo Gente cargado")
         this.getAllusers();
+        this.getFriends();
+        this.getMyReqFriends();        
         //this.actualPage();
         console.log(this.users)
     }

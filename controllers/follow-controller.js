@@ -18,6 +18,7 @@ function prueba(req, res) {
 
 
 function saveFollow(req, res) {
+    
     var params = req.body;
     
     var follow = new Follow();

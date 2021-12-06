@@ -29,10 +29,12 @@ api.get('/allusers', middleware_auth.ensureAuth, userController.getAllUsers)
 api.get('/counters/:id?', middleware_auth.ensureAuth, userController.getCounters)
 api.put('/update-user/:id', middleware_auth.ensureAuth, userController.updateUser)
 // array de middlewares
-api.post('/upload-image-user/:id', [middleware_auth.ensureAuth, middleware_upload], userController.uploadImage)
+api.post('/upload-image-user/:id', middleware_upload, userController.uploadImage)
 //probablemente no necesitamos autentificacion (quitar middleware)
 api.get('/get-image-user/:imageFile', userController.getImageFile)
-
+api.post('/sendReqFriend', middleware_auth.ensureAuth, userController.sendRequestToFriend)
+api.get('/getFriends/:id', middleware_auth.ensureAuth, userController.getFriends)
+api.get('/getMyReqFriends/:id', middleware_auth.ensureAuth, userController.getMyReqFriends)
 
 
 //:id es porque le estamos pasando un parámetro por la url

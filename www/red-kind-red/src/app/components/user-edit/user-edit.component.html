@@ -6,8 +6,8 @@
     Se han actualizado los datos correctamente
 </div>
 
-<div class="alert alert-danger" *ngIf="status == 'error'">
-    No se han podido actualizar tus datos
+<div class="alert alert-danger" *ngIf="status != 'success'">
+    {{status}}
 </div>
 
 
@@ -63,4 +63,7 @@
     <input type="submit" value="{{title}}" class="btn btn-warning" [disabled]="!userEditForm.form.valid" />
 
 </form>
+
+
+
 

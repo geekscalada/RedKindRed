@@ -22,17 +22,22 @@ const sequelize = require('../database.js')
 
 // Models
 let User = require('../models/user')(sequelize, Sequelize);
-//#cambiar por publication
+//#cambiar
 let Publicationa = require('../models/publication')(sequelize, Sequelize);
-
-// si no importas el modelo
 let Key = require('../models/key')(sequelize, Sequelize);
+let Friend = require('../models/friend')(sequelize, Sequelize)
+
+
 
 const db = require('../database')
 const associations = require('../associations')
 
 User.hasOne(Key, {foreignKey: 'userId'});
 Key.belongsTo(User, {foreignKey: 'userId'}); 
+User.hasMany(Friend, {foreignKey: 'IDtarget'})
+Friend.belongsTo(User,{foreignKey: 'IDtarget'})
+
+
 
 
 //#cambiar por el nuevo
@@ -62,6 +67,7 @@ function pruebas (req, res) {
 async function saveUser(req, res) {
     
     let params = req.body;
+    console.log(params)
 
     try {
 
@@ -253,10 +259,14 @@ async function followThisUser(identity_user_id, user_id) {
 //devolver listado de usuarios paginados
 //#cambiar ¿que hacía este método?
 
+
 async function getAllUsers(req, res){
     
     try {
-        let users = await User.findAll()
+        
+        let users = await User.findAll(
+            {include: {model: Friend, required: false, left: true}}
+        )        
 
     if (!users) {
         throw new Error('Error en la petición')
@@ -270,12 +280,129 @@ async function getAllUsers(req, res){
         return res.status(404).send(
             {message: error}
         )
-        
     }
+}
 
+async function sendRequestToFriend(req,res) {   
     
+    try {      
+        
+        
+        let toAccept = await Friend.findAll({
+            where: {'IDtarget' : req.user.id.toString(),
+             'IDfriend' : req.body.IDtarget,
+             'status': 'received'}
+        }) 
+        
+
+        if (toAccept[0]){
+            
+            //aceptamos invitación
+            await Friend.update({           
+             'status': 'accepted'
+
+            }, {
+                where: {'IDtarget' : req.user.id,
+                'IDfriend' : req.body.IDtarget }
+            })
+            
+            //creamos linea en el lado inverso
+            await Friend.create({
+
+                'IDtarget' : req.body.IDtarget,
+                'IDfriend': req.user.id.toString(),
+                'status' : 'accepted'
+            })
+
+            return res.status(200).send(
+                {message: 'Dato insertado correctamente'}
+            )
+        }
+
+        let exists = await Friend.findAll({
+            where: {'IDtarget' : req.body.IDtarget,
+             'IDfriend' : req.user.id.toString(),
+             'status': 'received'}
+        }) 
+
+        if (exists[0]) {return new Error('Este usuario ya está solicitado')}
 
 
+        let newRequestTofriend = await Friend.build({            
+            IDtarget: req.body.IDtarget, 
+            IDfriend: req.user.id,
+            status: 'received'
+        })
+
+        await newRequestTofriend.save();
+        
+        return res.status(200).send(
+            {message: 'Dato insertado correctamente'}
+        )
+
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function getFriends(req, res){
+
+    try {
+        let friends = await Friend.findAll(
+            {
+                atributes: ['id'], where: {'IDtarget' : req.user.id, 'status': 'accepted'}            
+            })
+            
+
+            
+            let arrFriends = []
+    
+            for (idFriend in friends){
+                arrFriends.push(
+                    friends[idFriend]['IDfriend']
+                )
+            }
+            
+            console.log(arrFriends)
+            return res.status(200).send(
+                arrFriends
+            )
+
+            
+    
+        //console.log(friends[0]['dataValues'])//['Friend'])//['id'])
+    } catch (error) {
+        console.log(error)
+    }    
+}
+
+async function getMyReqFriends(req, res){
+
+    try {
+        let friends = await Friend.findAll(
+            {
+                atributes: ['id'], where: {'IDtarget' : req.user.id.toString(), 'status': 'received'}            
+            })
+            
+            let arrFriends = []
+    
+            for (idFriend in friends){
+                arrFriends.push(
+                    friends[idFriend]['IDfriend']
+                )                
+            }
+
+            console.log(arrFriends)
+    
+            return res.status(200).send(
+                arrFriends
+            )
+    
+        //console.log(friends[0]['dataValues'])//['Friend'])//['id'])
+    } catch (error) {
+        console.log(error)
+    }    
 }
 
 function getUsers(req, res) {
@@ -319,7 +446,12 @@ function getUsers(req, res) {
     // })
 }
 
-//#cambiar
+//makeFriend
+
+
+
+
+//#cambiar o borrar
 async function followUsersId(user_id) {
 
     // desactivamos campos que no queremos
@@ -387,7 +519,7 @@ function getCounters (req, res) {
 
 }
 
-//#cambiar
+//#cambiar probablemente borrar
 async function getCountFollow(user_id) {
     var following = await Follow.countDocuments({ user: user_id })
         .exec()
@@ -407,8 +539,7 @@ async function getCountFollow(user_id) {
     let publications = await Publication.count({'user' : user_id})
     .exec()
     .then( (count) => {return count})
-    .catch((err) => { return handleError(err); });
-        
+    .catch((err) => { return handleError(err); });        
     
  
     return { following: following, followed: followed, publications: publications }
@@ -418,107 +549,84 @@ async function getCountFollow(user_id) {
 
 
 //edición de datos de usuario
-//#cambiar
-function updateUser (req, res) {
+//#cambiado
+async function updateUser (req, res) {   
 
-    var userId = req.params.id;
+    try {
+
+    let userId = req.user.id; 
+    let update = req.body;    
     
-    var update = req.body;
 
-    delete update.password;
-
-    if(userId != req.user.sub){
+    if(userId != update.id){
+        
         return res.status(500).send({message: 'No tienes permisos para actualizar'})
 
     }
+    
+    //añadir que valide si los datos ya están en uso
 
-    // aqui mejoramos el BE para que no nos deje cambiar datos de usuarios
-    // si el usuario o el email ya existen
-    // lo hacemos algo diferente, a él le da problemas de cabeceras
-    // reenviadas (porque usa find en vez de findOne)
-    // y tiene que gestionar eso
-    User.findOne({
-        $or: [
-            {email: update.email.toLowerCase()},
-            {nick: update.nick.toLowerCase()}
-        ]
-    }).exec((err, user) => {
-        if (user && user._id != userId) return res.status(500).send({message: 'Los datos ya están en uso'})
-        
-            // el new: true es un param opcional para que el metodo findByandUpdate en vez de 
-            // devolvernos el dato nuevo actualizado, por defecto nos da el original
-            User.findByIdAndUpdate(userId, update, {new: true}, (err, userUpdated) => {
-                if(err) return res.status(500).send({message: 'Error en la petición'})
+    await User.update({
 
-                if(!userUpdated) return res.status(400).send({message: 'No se ha podido actualizar'})
+        'name': update.name,
+        'surname' : update.surname,
+        'nick': update.nick,
+        'email' : update.email
 
-                return res.status(200).send({user: userUpdated})
-            }); 
+    }, { where : { 'id' : userId }
+    })
+    
+
+
+    return res.status(200).send({
+        message: 'Datos actualizados'
 
     })
 
-
-    
-
-
-
+    } catch (error) {
+        console.log(error)        
+    }
 }
 
 //subir avatares usuarios
-//#cambiar
-function uploadImage(req, res) {
+//#cambiado
+async function uploadImage(req, res) {         
     
-    var userId = req.params.id;
+    let userId = req.params.id
 
+    console.log(userId)
 
     // El req.files.iamge.size lo pongo yo
-    if(req.files && req.files.image.size != 0){
+    if(req.files){       
 
-       
+        let path = req.files.files.path;
+        let fileSplit = path.split('\/');
 
-        var file_path = req.files.image.path;
-        var file_split = file_path.split('\/');
+        let fileName = fileSplit[(fileSplit.length)-1] //archivo       
 
-        var file_name = file_split[(file_split.length)-1] //archivo
-
-        var ext_split = file_name.split('\.');
-        var file_ext = ext_split[1].toLowerCase();
-
-        console.log(file_ext)
-
-        if (userId != req.user.sub) {
+        console.log(fileName)
+        //# ojo cambiar
+        if (userId != userId) {
             // es importante este return y no solo llamar a la funcion, porque si no lo haces
             // no salimos de la función, así que las siguientes instrucciones se ejecutan
             // y te da un error de cabeceras porque se dice que no puedes setear (enviar?)
             // cabeceras de nuevo una vez se han enviado al cliente
-            return removeFilesOfUploads(res, file_path,  'No tienes permisos')
+            return removeFilesOfUploads(res, path, 'No tienes permisos')
         }
 
         
-        if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' 
-        || file_ext == 'gif' ) {
+        try {
+            await User.update({           
+                'image': fileName
+    
+            }, {
+                   where: {'id' : userId}               
+            })
+        } catch (error) {
 
-           User.findByIdAndUpdate(userId, {image: file_name}, {new: true}, (err, userUpdated) => {
-
-            if(err) return res.status(500).send({message: 'Error en la petición'})
-
-            if(!userUpdated) return res.status(400).send({message: 'No se ha podido actualizar'})
-
-             return res.status(200).send({user: userUpdated})
-
-             //esto es exactamente igual que lo que hay antes
-
-
-           } )
-
-        } else {
+            return res.status(400).send({message: 'No se ha podido actualizar '+ error})
             
-            // mirar la explicación del otro return parecido a este, creo que este no da
-            // tanto problema no ponerlo, pero mejor dejarlo puesto.
-           return removeFilesOfUploads(res, file_path, 'Extensión no válida');   
-
-        }
-        
+        }     
 
 
     } else {
@@ -528,31 +636,28 @@ function uploadImage(req, res) {
 
 }
 
-// esta función no hace falta que la exportemos como método, simplemente la usamos
-// aquí como parte del método anterior
-// importante que tenga la res como parámetro para poder enviar la respuesta
 function removeFilesOfUploads (res, file_path, message) {
 
     fs.unlink(file_path, (err) => {
-        return res.status(200).send({message: message})
-        // No hace falta comprobar if err
+        return res.status(200).send({message: message})        
     })
     
 }
 
+
 function getImageFile(req, res) {
     
-    var image_file = req.params.imageFile;
+    let  image = req.params.imageFile;
 
-    var path_file = './uploads/usuarios/'+image_file
+    let mypath = './uploads/usuarios/'+image
 
     //devuelve un callback exists con una respuesta de si o no
-    fs.exists(path_file, (exists) => {
+    fs.exists(mypath, (exists) => {
 
         if(exists){
-            res.sendFile(path.resolve(path_file))
+            res.sendFile(path.resolve(mypath))
         } else {
-            res.status(200).send({message: 'No existe ninguna imagen'})
+            res.status(200).send({message: 'No hay imagen'})
         }
 
     })
@@ -569,6 +674,9 @@ module.exports = {
     getUser,
     getUsers,
     getAllUsers,
+    sendRequestToFriend,
+    getFriends,
+    getMyReqFriends,
     getCounters,
     updateUser,
     uploadImage,

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import {FormsModule} from '@angular/forms'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 //deprecated -> import { HttpModule } from '@angular/common'
 import {HttpClientModule} from '@angular/common/http'
 
@@ -29,11 +29,13 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UsersComponent } from './components/users/users.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
+import { UploadPageComponent } from './components/user-edit/upload-image.component';
 
 
 //importamos pipes
 
 import { FilterPipe } from './pipes/searching-filter.pipe';
+import { FileUploadComponent } from './components/user-edit/upload-image.component2';
 
 
 
@@ -50,7 +52,9 @@ import { FilterPipe } from './pipes/searching-filter.pipe';
     UsersComponent,
     SidebarComponent,
     TimelineComponent,
-    FilterPipe
+    FilterPipe,
+    UploadPageComponent,
+    FileUploadComponent
      
    
   ],
@@ -59,6 +63,7 @@ import { FilterPipe } from './pipes/searching-filter.pipe';
     AppRoutingModule,
     routing,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     MomentModule,
     

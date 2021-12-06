@@ -28,6 +28,7 @@ export class UserService{
 
 
     constructor(
+        
         public _http: HttpClient
 
     ){
@@ -48,6 +49,8 @@ export class UserService{
         // necesario usar www url encoded y tal
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
 
+        console.log("params de registro", params)
+        
         // envialos la petición, con esto ya hace la petición ajax al backend y nos guarda
         // el usuario
         return this._http.post(this.url+'register', params, {headers:headers} )
@@ -143,7 +146,7 @@ export class UserService{
 
    
 
-    return this._http.put(this.url+'update-user/'+user._id, params,{headers: headers})
+    return this._http.put(this.url+'update-user/'+user.id, params,{headers: headers})
 
     }
 
@@ -158,19 +161,52 @@ export class UserService{
 
     getAllUsers(): Observable<any> {
 
-        let headers = new HttpHeaders().set('Content-Type', 'aplication-json')
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
         .set('Authorization', this.getToken())
-
-        console.log('hola')
+    
 
         return this._http.get(this.url+'allusers/', {headers:headers})
 
 
     }
 
+    sendRequestToFriend(newParams:any): Observable<any> {
+
+        let params = JSON.stringify(newParams)
+        console.log("esto son los params del servicio", params)
+        
+        let headers = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', this.getToken())       
+        
+        return this._http.post(this.url+'sendReqFriend', params, {headers:headers})
+    }
+
+    getFriends(id:any){        
+
+        let headers = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', this.getToken())
+
+        return this._http.get(this.url+'getFriends/'+id, {headers:headers})
+
+    }
+
+    getMyReqFriends(id:any){        
+
+        let headers = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', this.getToken())
+
+        return this._http.get(this.url+'getMyReqFriends/'+id, {headers:headers})
+
+    }
+
+    
+
     getUser(id:any): Observable<any>{
 
-        let headers = new HttpHeaders().set('Content-Type', 'aplication-json')
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
         .set('Authorization', this.getToken())
 
         return this._http.get(this.url+'users/'+id, {headers:headers})
@@ -181,6 +217,7 @@ export class UserService{
 
 
 }
+
 
 
 

@@ -33,6 +33,8 @@ var message_routes = require('./routes/message-routes')
 // ya no se necesita importar bodyParser nunca más
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+
+
     // esto va a servir xa que cada una de las peticiones que hagamos a nuesto BE, lo que recibamos
     // se convierta en un JSON. 
 

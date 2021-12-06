@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const moment = require('moment')
-const mongoosePaginate = require('mongoose-pagination')
+
 
 // Database and sequelize
 const Sequelize = require('sequelize');
@@ -11,6 +11,9 @@ const sequelize = require('../database.js')
 
 // Models
 const Publication = require('../models/publication')(sequelize, Sequelize)
+const Friend = require('../models/friend')(sequelize, Sequelize)
+
+//associations
 
 
 // const User = require('../models/user-model2')
@@ -25,7 +28,7 @@ async function savePublication(req, res) {
 
     try {
         let params = req.body;
-        console.log(req.user)
+        console.log(req)
 
         //#cambiar por un throw
         if (!params.text) return res.status(200).send({ message: 'Por favor, envia todos los campos' })
@@ -51,44 +54,33 @@ async function savePublication(req, res) {
 
 }
 
-// function savePublication (req, res) {
-//     let params = req.body;    
-
-//     if(!params.text) return res.status(200).send({message: 'Debes enviar un texto'})
-
-//     let publication = new Publication();
-
-//     publication.text = params.text;
-//     publication.file = 'null';
-//     publication.user = req.user.sub;
-//     publication.created_at = moment().unix();
-
-//     publication.save((err, publicationStored) => {
-//         if(err) return res.status(500).send({message: 'Error al guardar la publicacion'})
-
-//         if(!publicationStored) return res.status(404).send({message: 'La publicación no ha sido guardada'})
-
-//         return res.status(200).send({publication: publicationStored})
-
-//     })
-
-// }
-
-// publicaciones de usuarios que yo sigo (timeline de la pub)
-async function getPublications(req, res) {
+//#cambiado
+async function getPublications(req, res) {   
     
-    //#ya funciona perfect ahora falta que me traiga
-    //los mios y los de mis colegas
+    let myFriends = await Friend.findAll({
+        where: {'IDtarget' : req.user.id, 'status' : 'accepted'}
+    })
+
+    let myFriendsandme = []
+
+    for(idfriend in myFriends){
+
+        myFriendsandme.push(myFriends[idfriend]['IDfriend'])
+
+    }
+   
+
+    myFriendsandme.push(req.user.id.toString())
+
     
-    
-    try {      
-       
+
+    try {           
 
         const options = {
         
             page: req.params.page, // Default 1
             paginate: 2, // Default 25        
-            where: {userID: req.user.id}
+            where: {userID: myFriendsandme}
         }
     
         const { docs, pages, total } = await Publication.paginate(options)    
@@ -193,6 +185,7 @@ function getPublication(req, res) {
 }
 
 // borrar publicacion
+//#cambiar
 
 
 function deletePublication(req, res) {

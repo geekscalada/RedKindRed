@@ -18,6 +18,7 @@ let secret = secretKey.SECRET
 
 //#cambiar estar funcion
 exports.ensureAuth = function(req, res, next){
+    
 
     if(!req.headers.authorization) {
         return res.status(403).send({message: 'La petición no tiene cabecera'})
@@ -45,6 +46,9 @@ exports.ensureAuth = function(req, res, next){
     // para tener siempre en los controladores el objeto del usuario logueado
     
     req.user = payload;
+
+    
+    
    
     next(); // saltamos al siguiente paso
     
