@@ -1,9 +1,6 @@
 //#cambiar todo el documento
 
 const bcrypt = require('bcrypt-nodejs')
-
-//seguramente no lo necesitamos
-const mongoosePaginate = require('mongoose-pagination');
 const fs = require('fs')
 const path = require('path')
 
@@ -11,13 +8,13 @@ const path = require('path')
 const jwt = require('../services/jwt');
 
 
-
-const Publication = require('../models/publication-model');
-
 // Database and sequelize
 const Sequelize = require('sequelize');
 const {DataTypes, Association} = require('sequelize')
 const sequelize = require('../database.js')
+const db = require('../database')
+const associations = require('../associations')
+
 
 
 // Models
@@ -26,12 +23,9 @@ let User = require('../models/user')(sequelize, Sequelize);
 let Publicationa = require('../models/publication')(sequelize, Sequelize);
 let Key = require('../models/key')(sequelize, Sequelize);
 let Friend = require('../models/friend')(sequelize, Sequelize)
+const Publication = require('../models/publication-model');
 
-
-
-const db = require('../database')
-const associations = require('../associations')
-
+//Associations
 User.hasOne(Key, {foreignKey: 'userId'});
 Key.belongsTo(User, {foreignKey: 'userId'}); 
 User.hasMany(Friend, {foreignKey: 'IDtarget'})
@@ -39,27 +33,6 @@ Friend.belongsTo(User,{foreignKey: 'IDtarget'})
 
 
 
-
-//#cambiar por el nuevo
-var Follow = require('../models/follow-model')
-
-
-// 2 metodos de prueba
-function home (req, res) {
-
-    res.status(200).send({
-        message: 'Pruebas en server'
-    })
-
-};
-
-function pruebas (req, res) {
-
-    res.status(200).send({
-        message: 'Pruebas en server'
-    })
-
-};
 
 //registro
 //#cambiar el role_user
@@ -183,81 +156,6 @@ async function loginUser(req, res) {
         )   
     }
 }
-
-//#cambiar
-function getUser(req, res) {
-    
-    //nos llega un id por la url, por lo tanto usamos params
-    var userId = req.params.id;
-
-    User.findById(userId, (err, user) => {
-        if (err) return res.status(500).send({message: 'Error en la peticion'})
-
-        if (!user) return res.status(404).send({message: 'El usuario no existe'});
-
-        // de paso vamos a ver si seguimos o no seguimos a un usuario
-        // podemos usar then porque nos devuelve una promesa
-        
-        followThisUser(req.user.sub, userId).then((value) => {
-            
-            user.password = undefined;
-            
-            return res.status(200).send({
-                user,
-                following: value.following,
-                followed: value.followed
-            })        
-        })
-
-       
-
-
-       // return res.status(200).send({user})
-
-    })
-}
-
-//ejemplo de async await para copiar como aprendizaje
-
-//#cambiar con nuevo modelo
-async function followThisUser(identity_user_id, user_id) { 
-
-    // este método al usar el async, devuelve una promesa
-    
-    //original que no funcionaba, fíjate en la sutileza del then
-    
-    // var followed = await Follow.findOne({"user":user_id, "followed":identity_user_id})
-    // .exec((err, follow) => {        
-    //     if (err) return handleError(err);
-    //     return follow
-    // })
-
-    //Modificacion
-    let followed = await Follow.findOne({"user":user_id, "followed":identity_user_id})
-    .exec()
-    .then((follow) => {           
-        return follow
-    }).catch(
-        (err) => { return handleError(err)}
-    )
-
-
-    let following = await Follow.findOne({ "user": identity_user_id, "followed": user_id })
-    .exec().then((follow) => {
-        return follow;
-    }).catch((err) => {
-        return handleError(err);
-    });    
-    
-    return {
-        following : following,
-        followed: followed
-    }   
-    
-}
-
-//devolver listado de usuarios paginados
-//#cambiar ¿que hacía este método?
 
 
 async function getAllUsers(req, res){
@@ -405,151 +303,7 @@ async function getMyReqFriends(req, res){
     }    
 }
 
-function getUsers(req, res) {
 
-    try {
-
-        if(3<0){throw error}
-        
-    } catch (error) {
-        return "lo rompo para que no moleste"
-    }
-
-    // si recuerdas antes hemos bindeado a la request el objeto user
-    // que tiene la info decodificada, ahora la usamos 
-    // var identity_user_id = req.user.sub; //aquí es donde se almacena el id del usuario
-
-    // var page = 1;
-    // if (req.params.page) {
-    //     page = req.params.page;
-    // }
-
-    // var itemsPerPage = 5; //usuarios por página
-
-    // User.find().sort('_id').paginate(page, itemsPerPage, (err, users, total) => {
-    // //ordena por id
-    //     if (err) return res.status(500).send({message: 'Error en la peticion'})
-
-    //     if (!users) return res.status(404).send({message: 'No hay usuarios disponibles'})
-
-
-    //     followUsersId(identity_user_id).then((value) => {
-
-    //        return res.status(200).send({
-    //             users,
-    //             users_following: value.following,
-    //             users_followed: value.followed,
-    //             total,
-    //             pages: Math.ceil(total/itemsPerPage)
-    //         })
-    //     });    
-    // })
-}
-
-//makeFriend
-
-
-
-
-//#cambiar o borrar
-async function followUsersId(user_id) {
-
-    // desactivamos campos que no queremos
-    let following = await Follow.find({"user":user_id}).select({'_id':0, 'user':0})
-    .exec()
-    .then((follows) => {
-
-
-        return follows
-
-    }).catch( (err) => {
-        console.log(err)
-    })
-
-    let followed = await Follow.find({"followed":user_id}).select({'_id':0, 'followed':0})
-    .exec()
-    .then((follows) => {        
-
-        return follows
-
-    }).catch( (err) => {
-        console.log(err)
-    })
-
-
-    //Procesar following y followed ids
-
-    let following_clean = [];
-
-        following.forEach((follow) => {
-            following_clean.push(follow.followed)
-
-        })
-
-        
-    let followed_clean = [];
-
-    followed.forEach((follow) => {
-        followed_clean.push(follow.user)
-
-    })
-
-    return {
-        following: following_clean,
-        followed: followed_clean
-    }
-
-}
-
-//metodo para contadores
-//#cambiar
-function getCounters (req, res) {
-
-    // si llega por parametros o si no llega
-    let userId = req.user.sub;
-
-    if(req.params.id) {
-        userId = req.params.id;
-    }
-
-
-    getCountFollow(userId).then( (value) => {
-        return res.status(200).send(value)
-    }); 
-
-}
-
-//#cambiar probablemente borrar
-async function getCountFollow(user_id) {
-    var following = await Follow.countDocuments({ user: user_id })
-        .exec()
-        .then((count) => {
-            console.log(count);
-            return count;
-        })
-        .catch((err) => { return handleError(err); });
- 
-    var followed = await Follow.countDocuments({ followed: user_id })
-        .exec()
-        .then((count) => {
-            return count;
-        })
-        .catch((err) => { return handleError(err); });
-
-    let publications = await Publication.count({'user' : user_id})
-    .exec()
-    .then( (count) => {return count})
-    .catch((err) => { return handleError(err); });        
-    
- 
-    return { following: following, followed: followed, publications: publications }
- 
-}
-
-
-
-//edición de datos de usuario
-//#cambiado
 async function updateUser (req, res) {   
 
     try {
@@ -611,7 +365,7 @@ async function uploadImage(req, res) {
             // no salimos de la función, así que las siguientes instrucciones se ejecutan
             // y te da un error de cabeceras porque se dice que no puedes setear (enviar?)
             // cabeceras de nuevo una vez se han enviado al cliente
-            return removeFilesOfUploads(res, path, 'No tienes permisos')
+            return removeFilesUploads(res, path, 'No tienes permisos')
         }
 
         
@@ -636,9 +390,9 @@ async function uploadImage(req, res) {
 
 }
 
-function removeFilesOfUploads (res, file_path, message) {
+function removeFiles (res, path, message) {
 
-    fs.unlink(file_path, (err) => {
+    fs.unlink(path, (err) => {
         return res.status(200).send({message: message})        
     })
     
@@ -646,14 +400,10 @@ function removeFilesOfUploads (res, file_path, message) {
 
 
 function getImageFile(req, res) {
-
     
     
     let  image = req.params.imageFile;
-
-    let mypath = './uploads/usuarios/'+image
-
-    console.log("mypath  -------------->", mypath )
+    let mypath = './uploads/usuarios/'+image    
 
     //devuelve un callback exists con una respuesta de si o no
     fs.exists(mypath, (exists) => {
@@ -663,25 +413,19 @@ function getImageFile(req, res) {
         } else {
             res.status(200).send({message: 'No hay imagen'})
         }
-
     })
 
 }
 
 
 
-module.exports = {
-    home,
-    pruebas,
+module.exports = {    
     saveUser,
-    loginUser,
-    getUser,
-    getUsers,
+    loginUser,    
     getAllUsers,
     sendRequestToFriend,
     getFriends,
-    getMyReqFriends,
-    getCounters,
+    getMyReqFriends,    
     updateUser,
     uploadImage,
     getImageFile

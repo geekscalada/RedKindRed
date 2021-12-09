@@ -27,7 +27,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UsersComponent } from './components/users/users.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { UploadPageComponent } from './components/user-edit/upload-image.component';
 
@@ -36,6 +35,7 @@ import { UploadPageComponent } from './components/user-edit/upload-image.compone
 
 import { FilterPipe } from './pipes/searching-filter.pipe';
 import { FileUploadComponent } from './components/user-edit/upload-image.component2';
+import { TakePublicationComponent } from './components/sidebar/takepublication.component';
 
 
 
@@ -50,7 +50,7 @@ import { FileUploadComponent } from './components/user-edit/upload-image.compone
     HomeComponent,
     UserEditComponent,
     UsersComponent,
-    SidebarComponent,
+    TakePublicationComponent,
     TimelineComponent,
     FilterPipe,
     UploadPageComponent,

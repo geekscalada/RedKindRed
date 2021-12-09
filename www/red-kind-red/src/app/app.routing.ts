@@ -9,6 +9,7 @@ import { HomeComponent } from "./components/home/home.component";
 import { UserEditComponent } from "./components/user-edit/user-edit.component";
 import { UsersComponent } from './components/users/users.component';
 import { TimelineComponent } from "./components/timeline/timeline.component";
+import { TakePublicationComponent} from "./components/sidebar/takepublication.component"
 import { NativeDate } from "mongoose";
 
 
@@ -19,9 +20,10 @@ const appRoutes: Routes =  [
     {path: 'register', component: RegisterComponent},
     {path: 'home', component: HomeComponent},
     {path: 'mis-datos', component: UserEditComponent},
-    {path: 'gente/:page', component: UsersComponent},
-    {path: 'gente', component: UsersComponent},
-    {path: 'timeline', component: TimelineComponent},
+    {path: 'amigos/:page', component: UsersComponent},
+    {path: 'amigos', component: UsersComponent},
+    {path: 'publicaciones', component: TimelineComponent},
+    {path: 'publicar', component: TakePublicationComponent},
     // ruta si no encuentra nada debe ser la ultima
     {path: '**', component: HomeComponent}
     

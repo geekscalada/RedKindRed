@@ -37,8 +37,7 @@
                     <div class="user-name pull-left">
                         <p class="name-surname">
                             <a href="#">
-                                {{user.name + ' ' +user.surname}}                                
-                                <p>{{url}}{{user.image}}</p>
+                                {{user.name + ' ' +user.surname}}                                                                
                             </a> 
                         </p>
                         <p class="nick-name">
@@ -51,7 +50,6 @@
                     este primer IF es para que no nos aparezca a nosotros mismos
                     el boton de seguir/dejar -->
                     <div class="pull-right" *ngIf="user.id != identity.id">
-                        {{user.id}}
                         <div *ngIf="friends.indexOf(user.id.toString())>=0">
                             <button class="btn btn-success" 
                             (click)="sendRequestToFriend(user.id)">
@@ -133,7 +131,7 @@
 <!-- Limpiar los posibles flotados -->
 
 <div class="clearfix">
-    <sidebar></sidebar>
+    
 </div>
 
     

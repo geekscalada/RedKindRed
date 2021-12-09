@@ -8,36 +8,41 @@
     <div class="container-fluid">
 
       <div class='navbar-header'>
-        <!-- esto lo que hara es pintar el titulo dentro 
-        de la barra de navegación. -->
         <a href="#" class="navbar-brand">{{title}}</a>
 
       </div>
-      <!-- Fijate que identity es una propiedad de la clase app-component
+      <!-- identity es una propiedad de la clase app-component
       es decir que estamos trabajando directamente con esa clase en el front
       lo hacemos a través además del método ngOnInit que funciona
       al iniciarse el angular
       -->
-      <ul class="nav navbar-nav" *ngIf="identity">
+      <ul class="nav navbar-nav" *ngIf="identity">        
         <li>
-          <a [routerLink]="['/home']">
-            <span class="glyphicon glyphicon-home"></span>
-            Inicio
-          </a>
-        </li>
-        <li>
-          <a [routerLink]="['/timeline']" [routerLinkActive]="['active']">
+          <a [routerLink]="['/publicaciones']" [routerLinkActive]="['active']">
             <span class="glyphicon glyphicon-th-list"></span>
-            TimeLine
+            Publicaciones
           </a>
         </li>
         <li>
-          <a [routerLink]="['/gente']" [routerLinkActive]="['active']">
+          <a [routerLink]="['/amigos']" [routerLinkActive]="['active']">
             <span class="glyphicon glyphicon-user"></span>
-            Gente
+            Amigos
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/mis-datos']">
+            <span class="glyphicon glyphicon-home"></span>
+            Mis datos
+          </a>
+        </li>
+        <li>
+        <a [routerLink]="['/publicar']">
+            <span class="glyphicon glyphicon-home"></span>
+            Publicar
           </a>
         </li>
       </ul>
+      
 
       <ul class="nav navbar navbar-nav navbar-right" *ngIf="!identity">
         <li>
