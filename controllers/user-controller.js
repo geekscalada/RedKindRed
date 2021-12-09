@@ -20,10 +20,9 @@ const associations = require('../associations')
 // Models
 let User = require('../models/user')(sequelize, Sequelize);
 //#cambiar
-let Publicationa = require('../models/publication')(sequelize, Sequelize);
+let Publication = require('../models/publication')(sequelize, Sequelize);
 let Key = require('../models/key')(sequelize, Sequelize);
 let Friend = require('../models/friend')(sequelize, Sequelize)
-const Publication = require('../models/publication-model');
 
 //Associations
 User.hasOne(Key, {foreignKey: 'userId'});
@@ -345,9 +344,9 @@ async function updateUser (req, res) {
 //subir avatares usuarios
 //#cambiado
 async function uploadImage(req, res) {         
-    
-    let userId = req.params.id
+  
 
+    let userId = req.params.id
     console.log(userId)
 
     // El req.files.iamge.size lo pongo yo
