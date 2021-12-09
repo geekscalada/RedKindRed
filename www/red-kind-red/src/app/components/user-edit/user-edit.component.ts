@@ -18,8 +18,7 @@ export class UserEditComponent implements OnInit {
     public title: string
     public user: User
     public identity:any
-    public token:any
-    //las comillas las pongo yo
+    public token:any    
     public status:String = ''
     public url:string
 
@@ -81,13 +80,7 @@ export class UserEditComponent implements OnInit {
                         .subscribe((response: any) => {
                             console.log('response received is ', response);
                         })
-                    
-
-
-                    
-
                 }
-
 
             },
             error => {

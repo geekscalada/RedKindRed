@@ -3,6 +3,7 @@
 pero la publciación en mi nueva BDD sno tiene estos datos 
 y no estamos populando
  -->
+ 
 
 <div class='col-lg-8'>
     <h1 class="h1-strong">{{title}}</h1>
@@ -11,6 +12,7 @@ y no estamos populando
         <div *ngFor="let publication of publications" class="item-publication">
             <div class="panel panel-default">
                 <div class="panel-body">
+                    
 
                     <!-- <div class="image-user name pull-left">
                         <a href="#">
@@ -41,9 +43,16 @@ y no estamos populando
                    </div>
 
                     
-                    <h4 class="publication-text pull-left">
-                        {{publication.text}}
+                    <h4 class="publication-text pull-left">                       
                     </h4>
+                    <div class="image-user name pull-left">
+                        <a href="#">
+                            <img src="{{ url + 'get-image-pub/'+ publication.file}}" *ngIf="publication.file"> 
+                            <img class="avatar-default" src="../../assets/iconoUser.PNG" *ngIf="!publication.file"> 
+
+                        </a> 
+                    </div>
+                    
                 </div>            
                 
                 
@@ -61,6 +70,7 @@ y no estamos populando
          
     </div>
 </div>
+
 
 <sidebar></sidebar>
 <div class="clearfix"></div>

@@ -68,7 +68,7 @@
         Publicación enviada correctamente
     </div>
     <div class="alert alert-danger" *ngIf="status == 'error'">
-        Publicación enviada correctamente
+        Error al publicar
     </div>
   
     <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm)" class="col-lg-10" >
@@ -83,7 +83,8 @@
         </p>
         <p>
             <label> Sube tu foto</label>
-            <input type="file" placeholder="Subir imagen">
+            <input type="file" placeholder="Subir imagen"
+            (change)="fileChangeEvent($event)">
         </p>
 
         <input type="submit" value="Enviar" class="btn btn-success" 

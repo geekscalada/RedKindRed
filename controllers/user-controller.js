@@ -646,10 +646,14 @@ function removeFilesOfUploads (res, file_path, message) {
 
 
 function getImageFile(req, res) {
+
+    
     
     let  image = req.params.imageFile;
 
     let mypath = './uploads/usuarios/'+image
+
+    console.log("mypath  -------------->", mypath )
 
     //devuelve un callback exists con una respuesta de si o no
     fs.exists(mypath, (exists) => {

@@ -23,27 +23,32 @@ function probando(req, res) {
     res.status(200).send({ message: "metodo probando" })
 }
 
-//#cambiamos al nuevo
+//#cambiamos al nuevo y añadimos funcionalidad de subir ficheros
 async function savePublication(req, res) {
 
     try {
-        let params = req.body;
-        console.log(req)
+        let publication = JSON.parse(req.body.publication);
+        let path = req.files.files.path;
+        let fileSplit = path.split('\/');
+        let fileName = fileSplit[(fileSplit.length)-1]
 
         //#cambiar por un throw
-        if (!params.text) return res.status(200).send({ message: 'Por favor, envia todos los campos' })
+        if (!publication) return res.status(200).send({ message: 'Por favor, envia todos los campos' })
 
         let newPublication = await Publication.build({
 
-            text: params.text,
+            text: publication['text'],
             surname: req.user.surname,
-            file: params.file,
+            file: fileName,
             userID: req.user.id
 
         })
 
         let insertPublication = await newPublication.save();
 
+        return res.status(200).send({
+            message: 'Publicado!'
+        })
 
     } catch (error) {
         console.log(error)
@@ -67,12 +72,9 @@ async function getPublications(req, res) {
 
         myFriendsandme.push(myFriends[idfriend]['IDfriend'])
 
-    }
-   
+    }   
 
-    myFriendsandme.push(req.user.id.toString())
-
-    
+    myFriendsandme.push(req.user.id.toString())    
 
     try {           
 
@@ -214,7 +216,7 @@ function deletePublication(req, res) {
 }
 
 //subir imagenes usuarios
-
+//#este se puede borrar
 function uploadImage(req, res) {
 
     var publicationId = req.params.id;
@@ -294,17 +296,21 @@ function removeFilesOfUploads(res, file_path, message) {
 
 function getImageFile(req, res) {
 
-    var image_file = req.params.imageFile;
+    let  image = req.params.imageFile;
 
-    var path_file = './uploads/publicaciones/' + image_file
+   
 
-    //devuelve un callback exists con una respuesta de si o no
-    fs.exists(path_file, (exists) => {
+    let mypath = './uploads/publicaciones/'+image
+
+    console.log("mi imagen --------------------->",mypath)
+    
+    fs.exists(mypath, (exists) => {
 
         if (exists) {
-            res.sendFile(path.resolve(path_file))
+            res.sendFile(path.resolve(mypath))
         } else {
-            res.status(200).send({ message: 'No existe ninguna imagen' })
+            console.log("no existe iamgen???")
+            res.status(200).send({ message: 'No hay imagen' })
         }
 
     })

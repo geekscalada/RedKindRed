@@ -15,12 +15,12 @@ var middleware_upload = multipart({uploadDir: './uploads/publicaciones'})
 
 // definimos las rutas y los métodos a los que llamará cada ruta
 api.get('/probando', middleware_auth.ensureAuth, publicationController.probando)
-api.post('/publication', middleware_auth.ensureAuth, publicationController.savePublication)
+api.post('/publication', [middleware_auth.ensureAuth, middleware_upload], publicationController.savePublication)
 api.get('/publications/:page?', middleware_auth.ensureAuth, publicationController.getPublications)
 api.get('/publication/:id', middleware_auth.ensureAuth, publicationController.getPublication)
 api.delete('/publication/:id', middleware_auth.ensureAuth, publicationController.deletePublication)
 api.post('/upload-image-pub/:id', [middleware_auth.ensureAuth, middleware_upload], publicationController.uploadImage)
-api.post('/get-image-pub/:imageFile', middleware_auth.ensureAuth, publicationController.getImageFile)
+api.get('/get-image-pub/:imageFile', publicationController.getImageFile)
 
 
 

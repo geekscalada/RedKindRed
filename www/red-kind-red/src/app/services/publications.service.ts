@@ -24,20 +24,15 @@ export class PublicationService{
         
     }
 
-    addPublication(token:any, publication:any):Observable<any>{
+    addPublication(token:any, form:any):Observable<any>{
+                     
         
-                
-        let params = JSON.stringify(publication)
-
-        
-        
-        // params.identity = JSON.stringify(identity)
-        
-        let headers = new HttpHeaders().set('Content-type', 'Application/json')
+        // params.identity = JSON.stringify(identity)        
+        let headers = new HttpHeaders()
         .set('Authorization', token)
 
         // 'publication' es la ruta de la api
-        return this._http.post(this.url+'publication', params, {headers: headers})
+        return this._http.post(this.url+'publication', form, {headers: headers})
 
     }
 

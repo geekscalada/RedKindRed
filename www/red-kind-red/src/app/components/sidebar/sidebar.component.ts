@@ -45,17 +45,30 @@ export class SidebarComponent implements OnInit{
     }
 
     ngOnInit() {
-        console.log("Sidebar Cargado")
-        console.log("identiti -> " , this.identity)
+        console.log("Sidebar Cargado")        
     }
 
     // aunque no es necesario, te traes el formulario como parámetro
     // de esta manera puedes resetearlo
     onSubmit(form:any) {
         //publication ya va relleno a través del formulario
-        this._publicationService.addPublication(this.token, this.publication).subscribe(
+        
+        console.log(this.publication)        
+
+        let formData = new FormData();
+        
+        for (var i = 0; i < this.filesToUpload.length; i++) {                        
+            console.log(this.filesToUpload[i])
+            formData.append("files", this.filesToUpload[i], this.filesToUpload[i].name);
+        }
+        
+        formData.append("publication", JSON.stringify(this.publication))
+        
+        
+        this._publicationService.addPublication(this.token, formData).subscribe(
             response => {
-                if(response.publication){
+            console.log("respuesta es: ", response)
+                if(response){
 
                     //al meter form como parámetro, ya no necesitas hacer esto:
                     // this.publication = response.publication
@@ -67,13 +80,23 @@ export class SidebarComponent implements OnInit{
                 }
             },
             error => {
+                console.log(error)
                 let errorMessage = <any>error
                 if(errorMessage != null) {
                     this.status = 'error'
                 }
             }
         )        
-    } 
+    }
+    
+    public filesToUpload: Array<File> = []    
+
+    
+    fileChangeEvent(fileInput:any){
+
+        this.filesToUpload = <Array<File>>fileInput.target.files;
+
+    }
 
 
 }
