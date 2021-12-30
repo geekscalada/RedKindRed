@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Friend.init({   
-    IDfriend : DataTypes.STRING,
-    status: DataTypes.STRING,
-           
+    IDfriend : DataTypes.INTEGER,
+    IDtarget: DataTypes.INTEGER,
+    status: DataTypes.STRING           
     
   }, {
     sequelize,

@@ -29,4 +29,4 @@ exports.createToken = function (user) {
 }
 
 // con el método encode se genera un hash gracias al secret, 
-// es imposible sin la clave secreta obteenr ese hash
+// es imposible sin la clave secreta obtener ese hash

@@ -14,6 +14,7 @@ const $ = require('jquery')
 @Component({
     selector: 'timeline',
     templateUrl: './timeline.component.html',
+    styleUrls: ['../../styles/timeline.styles.css'],
     providers: [UserService, PublicationService]
 })
 
@@ -88,6 +89,8 @@ export class TimelineComponent implements OnInit {
                         // con la propiedad del body de scrollTop y 500 milisegundos
                         $("html, body").animate({ scrollTop: $('body').prop("scrollHeight") }, 500)
                     }
+
+                    console.log(this.publications)
                     
                 } catch (error) {
                     this.status = 'error'

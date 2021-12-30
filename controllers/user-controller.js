@@ -71,8 +71,7 @@ async function saveUser(req, res) {
             email: params.email.toLowerCase(),        
             Key: {
                 key: hashPass
-            },
-            role: 'ROLE_USER',
+            },            
             image: null
         },{
             include: [{ model: Key}]  //, through: 'userId'}]
@@ -186,7 +185,7 @@ async function sendRequestToFriend(req,res) {
         
         
         let toAccept = await Friend.findAll({
-            where: {'IDtarget' : req.user.id.toString(),
+            where: {'IDtarget' : req.user.id,
              'IDfriend' : req.body.IDtarget,
              'status': 'received'}
         }) 
@@ -248,7 +247,7 @@ async function getFriends(req, res){
     try {
         let friends = await Friend.findAll(
             {
-                atributes: ['id'], where: {'IDtarget' : req.user.id, 'status': 'accepted'}            
+                atributes: ['id'], where: {'IDtarget' : req.user.id.toString(), 'status': 'accepted'}            
             })
             
 

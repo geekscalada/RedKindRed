@@ -1,111 +1,34 @@
-<!-- para que se adapte al total de la pantalla y bootstrap tiene 12 columnas -->
-
-
-<div class="navigation col-lg-12">
-  <!--  esto son clases propias del bstrap -->
-  <nav class="navbar navbar-default"  >
-
-    <div class="container-fluid">
-
-      <div class='navbar-header'>
-        <a href="#" class="navbar-brand">{{title}}</a>
-
+        
+        <div class="contenedor nav-content">
+          <a [routerLink]="['/login']" href="#" class="links">{{title}}</a>
+          <a [routerLink]="['/publicaciones']" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="links" ><span class="glyphicon glyphicon-camera"></span> Publicaciones</a>
+          <a [routerLink]="['/amigos']" *ngIf="identity" class="links" [routerLink]="['/amigos']" [routerLinkActive]="['active']"><span class="glyphicon glyphicon-user">  </span>Amigos</a>
+          <a [routerLink]="['/mis-datos']" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="links"><span class="glyphicon glyphicon-cog"></span>Mis datos</a>
+          <a [routerLink]="['/publicar']" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="links"><span class="glyphicon glyphicon-upload"> </span>Publicar</a>
+          <div class="space"></div>
+          <a [routerLink]="['/login']" [routerLinkActive]="['active']" *ngIf="!identity" class="links"><span class="glyphicon glyphicon-log-in" ></span>Login</a>
+          <a [routerLink]="['/register']" [routerLinkActive]="['active']" *ngIf="!identity" href="#" class="links"><span class="glyphicon glyphicon-pencil"></span>Registrarse</a>           
+          <a class="avatar" *ngIf="identity">
+            <!-- cargar foto  del user-->
+           <img src="{{ url + 'get-image-user/' + identity.image}}" *ngIf="identity.image" />
+          </a>
+          <a class="links" *ngIf="identity" (click)="logout()" href="#">
+            <span class="glyphicon glyphicon-off" ></span>
+            Cerrar sesión
+          </a>
       </div>
-      <!-- identity es una propiedad de la clase app-component
-      es decir que estamos trabajando directamente con esa clase en el front
-      lo hacemos a través además del método ngOnInit que funciona
-      al iniciarse el angular
-      -->
-      <ul class="nav navbar-nav" *ngIf="identity">        
-        <li>
-          <a [routerLink]="['/publicaciones']" [routerLinkActive]="['active']">
-            <span class="glyphicon glyphicon-th-list"></span>
-            Publicaciones
-          </a>
-        </li>
-        <li>
-          <a [routerLink]="['/amigos']" [routerLinkActive]="['active']">
-            <span class="glyphicon glyphicon-user"></span>
-            Amigos
-          </a>
-        </li>
-        <li>
-          <a [routerLink]="['/mis-datos']">
-            <span class="glyphicon glyphicon-home"></span>
-            Mis datos
-          </a>
-        </li>
-        <li>
-        <a [routerLink]="['/publicar']">
-            <span class="glyphicon glyphicon-home"></span>
-            Publicar
-          </a>
-        </li>
-      </ul>
+
       
-
-      <ul class="nav navbar navbar-nav navbar-right" *ngIf="!identity">
-        <li>
-          <a [routerLink]="['/login']" [routerLinkActive]="['active']">
-            <span class="glyphicon glyphicon-log-in"></span>
-            Login
-          </a>
-        </li>
-        <li>
-          <a [routerLink]="['/register']" [routerLinkActive]="['active']">
-            <span class="glyphicon glyphicon-user"></span>
-            Registro
-          </a>
-        </li>
-      </ul>
-      
-      <ul class="nav navbar-nav navbar-right" *ngIf="identity && identity.name" >
-        <li class="avatar">
-        <!-- cargar foto  del user-->
-        <img src="{{ url + 'get-image-user/' + identity.image}}" *ngIf="identity.image" />
-        </li>
-
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            {{identity.name}} <span class="caret"></span>
-          </a>
-
-          <ul class="dropdown-menu">
-            <li>
-              <a href="#">
-                <span class="glyphicon glyphicon-user"></span>
-                Mi perfil
-              </a>
-            </li>
-            <li>
-              <a [routerLink]="['/mis-datos']">
-                <span class="glyphicon glyphicon-cog"></span>
-
-                Mis datos
-              </a>
-            </li>
-            <li>
-              <a class="pointer" (click)="logout()" href="#">
-                <span class="glyphicon glyphicon-log-out" ></span>
-                Cerrar sesión
-              </a>
-            </li>
-
-          </ul>
-        </li>
-
-      </ul>
-
-    </div>
-  </nav>
-</div>
-
-<!-- Aquí en vez de hacer <login></login> lo que hacemos es que 
-gracias a la configuración de las rutas, con el <router-outlet>
-  en función de lo que escribamos en la url, nos lleva a un sitio 
-o a otro, en función del "path" de app.routing.ts,
-fijate que en ese archivo hay una home -->
 
 <router-outlet></router-outlet>
+  
+  
+
+
+
+
+
+<!-- class="contenedor nav-content" -->
+
 
 

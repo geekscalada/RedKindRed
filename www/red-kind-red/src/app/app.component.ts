@@ -10,7 +10,7 @@ import { GLOBAL } from './services/global';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./styles/navigation.styles.css'],
   providers: [UserService]
 })
 export class AppComponent implements OnInit, DoCheck{
@@ -37,6 +37,7 @@ export class AppComponent implements OnInit, DoCheck{
   ngOnInit(){
 
     this.identity = this._userService.getIdentity();
+    console.log("component cargado")
     //this.token = this._userService.getToken();
 
   }
@@ -53,7 +54,7 @@ export class AppComponent implements OnInit, DoCheck{
   logout(){
     localStorage.clear();
     this.identity = null;
-    this._router.navigate(['/']);
+    this._router.navigate(['/login']);
   }
 
 }

@@ -50,17 +50,17 @@
                     este primer IF es para que no nos aparezca a nosotros mismos
                     el boton de seguir/dejar -->
                     <div class="pull-right" *ngIf="user.id != identity.id">
-                        <div *ngIf="friends.indexOf(user.id.toString())>=0">
+                        <div *ngIf="friends.indexOf(user.id)>=0">
                             <button class="btn btn-success" 
                             (click)="sendRequestToFriend(user.id)">
 
                             <span class="glyphicon glyphicon-plus-sign"></span>
-                            Amigo
+                            Amigo 
                             </button>                      
 
                         </div>
 
-                        <div *ngIf="ReqFriends.indexOf(user.id.toString())>=0">
+                        <div *ngIf="ReqFriends.indexOf(user.id)>=0">
                             <button class="btn btn-success" 
                             (click)="sendRequestToFriend(user.id)">
 
@@ -70,7 +70,7 @@
 
                         </div>
 
-                        <div *ngIf="ReqFriends.indexOf(user.id.toString())<0 && friends.indexOf(user.id.toString())<0 ">
+                        <div *ngIf="ReqFriends.indexOf(user.id)<0 && friends.indexOf(user.id)<0 ">
                             <button class="btn btn-success" 
                             (click)="sendRequestToFriend(user.id)">
 

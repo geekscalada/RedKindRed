@@ -1,0 +1,82 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Raleway', sans-serif;
+    background-color: #E1EBEE 
+    
+}
+
+.publicationscontainer{
+    width: 100%;
+    height: 80vh;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    border: 3px salmon solid;
+}
+
+.publication{
+    border: 3px red solid;  
+    width: 725px;
+    height: 500px;
+    margin: 0.1px;
+    padding: 0.1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.myimg{     
+    width: auto;
+    height: auto;
+    max-height:375px;       
+    margin: auto;    
+    object-fit: cover;
+    border-radius: 8px ;
+    box-shadow: 11px 9px 13px 2px rgba(0,0,0,0.75)    
+}
+
+.mycard {
+    width: 80%;
+    height: 70%;
+    min-height: 20%;    
+    border: 3px solid #23232418;  
+    border-radius: 8px ;
+    box-shadow: 11px 9px 13px 2px rgba(0,0,0,0.75);
+    text-align: center;
+    justify-content: center;
+    overflow:auto
+}
+
+.mycard .nameanddate{
+    margin: auto;    
+    font-size: 1.5em;
+    color: black;
+}
+
+.mycard .mytext{
+    margin: auto;
+    font-size: 1.3em
+    
+}
+
+
+
+@media screen and (max-width: 800px){
+    img{
+        width: 45%;
+    }
+}
+
+@media screen and (max-width: 500px){
+    img{
+        width: 95%;
+    }
+}

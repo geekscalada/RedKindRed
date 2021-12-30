@@ -1,42 +1,34 @@
-<div class="col-lg-5">
-    <h1 class="h1-strong">{{title}}</h1>
 
-
-
-
-    <!-- ALERTAS -->
-    <div class="alert alert-success" *ngIf="status == 'success'">
-        Login!
-
-    </div>
-    <div class="alert alert-danger" *ngIf="status == 'error'">
-
-        Error en el login <a [routerLink]="['/login']"></a>
-
-    </div>
-
-
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="col-lg-12">
-        <p>
-            <label>Mail</label>
-            <input type="email" name="mail" #mail="ngModel" [(ngModel)]="user.email" class="form-control" required
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
-            <span *ngIf="!mail.valid && mail.touched">
+    <div class="mybody">
+       
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="form">
+            <h2 class="form__title">{{title}}</h2>
+             <!-- ALERTAS -->
+        <div class="alert alert-success" *ngIf="status == 'success'">
+            Login!
+    
+        </div>
+        <div class="alert alert-danger" *ngIf="status == 'error'">
+    
+            Error en el login <a [routerLink]="['/login']"></a>
+    
+        </div>  
+            <input type="email" class="form__email input" placeholder="Email:" name="mail" #mail="ngModel" [(ngModel)]="user.email" required
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+            <span class="classspan" *ngIf="!mail.valid && mail.touched">
                 El mail no es válido.
             </span>
-        </p>
-        <p>
-            <label>Password</label>
-            <input type="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control"
-                required />
-            <span *ngIf="!password.valid && password.touched">
-                Password no introducida
-            </span>
-        </p>
+            <input type="password" class="form__email input" placeholder="Password:"name="password" #password="ngModel" [(ngModel)]="user.password" 
+            required />
+        <span class="classspan" *ngIf="!password.valid && password.touched">
+            Password no introducida
+        </span>
+            <input type="submit" value="Login" class="form__submit" [disabled]="!loginForm.form.valid" />
+        </form>
+    </div>    
+   
 
-        <!-- Usamos la directiva disable como atributo disable  -->
-        <input type="submit" value="Login" class="btn btn-succes" [disabled]="!loginForm.form.valid" />
-
-    </form>
-
-</div>
+                       
+                
+              
+        

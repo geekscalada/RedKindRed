@@ -14,8 +14,6 @@ const Publication = require('../models/publication')(sequelize, Sequelize)
 const Friend = require('../models/friend')(sequelize, Sequelize)
 
 //associations
-
-
 async function savePublication(req, res) {    
 
     try {
@@ -31,7 +29,7 @@ async function savePublication(req, res) {
         let newPublication = await Publication.build({
 
             text: publication['text'],
-            surname: req.user.surname,
+            name: req.user.name,
             file: fileName,
             userID: req.user.id
 

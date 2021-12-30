@@ -15,7 +15,7 @@ import { NativeDate } from "mongoose";
 
 //constante appRoutes de tipo Routes
 const appRoutes: Routes =  [
-    {path: '', component: HomeComponent},
+    {path: '', component: LoginComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'home', component: HomeComponent},
@@ -25,7 +25,7 @@ const appRoutes: Routes =  [
     {path: 'publicaciones', component: TimelineComponent},
     {path: 'publicar', component: TakePublicationComponent},
     // ruta si no encuentra nada debe ser la ultima
-    {path: '**', component: HomeComponent}
+    {path: '**', component: LoginComponent}
     
 
 ]

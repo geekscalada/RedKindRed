@@ -15,6 +15,7 @@ import { FormControl } from '@angular/forms';
 @Component({
     selector: 'register',
     templateUrl: './register.component.html',
+    styleUrls: ['../../styles/register.styles.css'],
     providers: [UserService]
 })
 
@@ -38,8 +39,8 @@ export class RegisterComponent implements OnInit {
         
 
     ){
-        this.title = 'Registrate'
-        this.user = new User("","","","","","","ROLE_USER","")
+        this.title = 'Regístrate'
+        this.user = new User("","","","","","","")
     }
 
     ngOnInit(){

@@ -15,8 +15,7 @@ const middlewareUpload = multipart({uploadDir: './uploads/publicaciones'})
 
 
 // definimos las rutas y los métodos a los que llamará cada ruta
-api.post('/publication', [middlewareAuthentification
-    .jwtAuth, middlewareUpload], publicationController.savePublication)
+api.post('/publication', [middlewareAuthentification.jwtAuth, middlewareUpload], publicationController.savePublication)
 api.get('/publications/:page?', middlewareAuthentification.jwtAuth, publicationController.getPublications)
 api.get('/get-image-pub/:imageFile', publicationController.getImageFile)
 

@@ -129,8 +129,7 @@ export class UsersComponent implements OnInit{
 
             (response)=>{
                 
-                this.friends = response;
-                console.log(this.friends)
+                this.friends = response;                
 
             },(error)=>{
                 console.log(error)
@@ -147,9 +146,7 @@ export class UsersComponent implements OnInit{
 
             (response)=>{
                 
-                this.ReqFriends = response;
-
-                console.log(this.ReqFriends)
+                this.ReqFriends = response;                
 
             },(error)=>{
                 console.log(error)

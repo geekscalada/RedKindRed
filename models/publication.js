@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Publication.init({
     text: DataTypes.STRING,
-    surname: DataTypes.STRING,
+    name: DataTypes.STRING,
     file: DataTypes.STRING,
     userID: DataTypes.INTEGER
   }, {

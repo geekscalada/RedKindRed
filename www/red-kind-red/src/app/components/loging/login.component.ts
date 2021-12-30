@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
+    styleUrls: ['../../styles/login.styles.css'],
     providers: [UserService]
 })
 
@@ -28,8 +29,8 @@ export class LoginComponent implements OnInit {
         private _router: Router,
         private _userService: UserService
     ){
-        this.title = 'Identifícate'
-        this.user = new User("","","","","","","ROLE_USER","");        
+        this.title = 'Acceder'
+        this.user = new User("","","","","","","");        
 
     }
 
@@ -63,11 +64,6 @@ export class LoginComponent implements OnInit {
                         // persistir token del usuario
                         console.log("token - >", this.token)
                         localStorage.setItem('token',this.token)
-
-
-                        // conseguir los contadores o stats
-                        this.getCounters();
-                    
                     }
                 }
             },
@@ -79,65 +75,10 @@ export class LoginComponent implements OnInit {
                 }
             }
         )
-    }
-
-    //#cambiar creo que no hace falta
-    // el this.token es undefined, tal vez en el 84 funcione
-    // getToken(){
-    //     this._userService.signUp(this.user, 'true').subscribe(
-    //         response => {
-                
-    //             this.token = response.token                
-    //             if(this.token.length <= 0){
-    //                 this.status = 'error'
-    //             } else {
-    //                 this.status = 'success'
-                    
-    //                 // persistir token del usuario
-    //                 localStorage.setItem('token',this.token)
-
-
-    //                 // conseguir los contadores o stats
-    //                 this.getCounters();                  
-    //             }       
-                
-
-    //         },
-
-    //         error => {
-
-    //             var errorMessage = <any>error
-    //             if(errorMessage != null) {
-    //                 this.status = 'error'
-    //             }
-
-    //         }
-    //     )
-    // }
+    }    
     
     ngOnInit(){
         console.log('Componente de login cargado...')
-    }
-
-    getCounters(){
-
-        this._userService.getCounters().subscribe(
-            response => {
-                    
-                    localStorage.setItem('stats', JSON.stringify(response))
-                    this.status = 'success' 
-                    // este status success hace que se puedan quitar el resto,
-                    // porque al final todo tiene que pasar por el método counters
-                    //#cambiar este navigate
-                    this._router.navigate(['/'])    
-                                        
-                
-            },
-            error => {
-                console.log(error)
-            }
-        )
-
     }
 
 }
