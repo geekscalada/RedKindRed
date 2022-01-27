@@ -305,36 +305,26 @@ async function getMyReqFriends(req, res){
 async function updateUser (req, res) {   
 
     try {
-
     let userId = req.user.id; 
     let update = req.body;    
-    
 
     if(userId != update.id){
-        
-        return res.status(500).send({message: 'No tienes permisos para actualizar'})
-
-    }
-    
+        return res.status(500).send({
+            message: 'No tienes permisos para actualizar'
+        })
+    }    
     //añadir que valide si los datos ya están en uso
-
     await User.update({
-
         'name': update.name,
         'surname' : update.surname,
         'nick': update.nick,
         'email' : update.email
-
     }, { where : { 'id' : userId }
     })
-    
-
-
     return res.status(200).send({
         message: 'Datos actualizados'
 
     })
-
     } catch (error) {
         console.log(error)        
     }

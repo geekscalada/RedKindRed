@@ -1,37 +1,38 @@
 version: '3.1'
 
 services:
-  mongodb2:
-    container_name: mongoDBv2
-    image: mongo
-    restart: always
+  postgres:
+    container_name: postgres
+    image: postgres
     environment:
-      MONGO_INITDB_ROOT_USERNAME: jose-admin
-      MONGO_INITDB_ROOT_PASSWORD: mkl3kj8n48yhn8
-      MONGO_INITDB_DATABASE: admin
+      POSTGRES_USER: jose
+      POSTGRES_PASSWORD: jnh76bgs_874hjf
+      POSTGRES_DB: pruebaSQL2
+      PGDATA: /data/postgres
     volumes:
-        - ./mongoDBscript.js:/docker-entrypoint-initdb.d/mongoDBscript.js
-        - ./volume:/data/db
+       - /postgresVolume:/data/postgres
+       - ./DDL_scripts.sql:/docker-entrypoint-initdb.d/DDL_scripts.sql
+       - ./secretMetabaseUser.sql:/docker-entrypoint-initdb.d/secretMetabaseUser.sql
     ports:
-        - "27018:27017"
+       - "13229:5432"    
+    restart: unless-stopped 
 
-  # postgres:
-  #   container_name: postgres
-  #   image: postgres
-  #   environment:
-  #     POSTGRES_USER: ${POSTGRES_USER}
-  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-  #     POSTGRES_DB: ${POSTGRES_DB}
-  #     PGDATA: /data/postgres
-  #   volumes:
-  #      - /postgresVolume:/data/postgres
-  #      - ./DDL_scripts.sql:/docker-entrypoint-initdb.d/DDL_scripts.sql
-  #      - ./secretMetabaseUser.sql:/docker-entrypoint-initdb.d/secretMetabaseUser.sql
-  #   ports:
-  #      - "5732:5432"
-  #   networks:
-  #     - postgres
-  #   restart: unless-stopped 
+
+#   mongodb2:
+#     container_name: mongoDBv2
+#     image: mongo
+#     restart: always
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: jose-admin
+#       MONGO_INITDB_ROOT_PASSWORD: mkl3kj8n48yhn8
+#       MONGO_INITDB_DATABASE: admin
+#     volumes:
+#         - ./mongoDBscript.js:/docker-entrypoint-initdb.d/mongoDBscript.js
+#         - ./volume:/data/db
+#     ports:
+#         - "27018:27017"
+
+  
 
         
 

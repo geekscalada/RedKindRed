@@ -16,7 +16,7 @@ async function startBackend() {
   try {
     //await db.authenticate();
     app.listen(port, () => {
-      console.log("http://192.168.33.39:3900 is OK")
+      console.log("url in port 3900 is OK")
 
       //Sincronizamos modelos con la base de datos
       db.sync({ force: false }).then(() => {

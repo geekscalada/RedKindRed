@@ -2,30 +2,34 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: #e7dbcb
 }
+
 
 body{
     font-family: 'Raleway', sans-serif;
-    background-color: #E1EBEE 
-    
+    background-color: #e7dbcb;
+    height: auto;       
 }
 
 .publicationscontainer{
     width: 100%;
-    height: 80vh;
+    height: auto;
+    min-height: 83vh;
     max-width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     flex-wrap: wrap;
-    border: 3px salmon solid;
+    /* border: 3px salmon solid; */
 }
 
 .publication{
-    border: 3px red solid;  
-    width: 725px;
-    height: 500px;
-    margin: 0.1px;
+    /* border: 3px red solid;   */
+    width: 49%;
+    height: 550px;
+    margin: 25px 5px 5px 5px;
     padding: 0.1px;
     display: flex;
     flex-direction: column;
@@ -36,8 +40,7 @@ body{
 .myimg{     
     width: auto;
     height: auto;
-    max-height:375px;       
-    margin: auto;    
+    max-height:80%;       
     object-fit: cover;
     border-radius: 8px ;
     box-shadow: 11px 9px 13px 2px rgba(0,0,0,0.75)    
@@ -45,14 +48,18 @@ body{
 
 .mycard {
     width: 80%;
-    height: 70%;
-    min-height: 20%;    
-    border: 3px solid #23232418;  
+    height: auto;
+    min-height: 70px;
+    max-height: 202px;
+    margin: 25px 2px 2px 2px;        
+    /* border: 3px solid #23232418;  
     border-radius: 8px ;
-    box-shadow: 11px 9px 13px 2px rgba(0,0,0,0.75);
+    box-shadow: 11px 9px 13px 2px rgba(0,0,0,0.75); */
     text-align: center;
     justify-content: center;
-    overflow:auto
+    overflow-x: visible;
+    overflow-y: auto;
+    overflow-wrap: anywhere;
 }
 
 .mycard .nameanddate{
@@ -63,8 +70,23 @@ body{
 
 .mycard .mytext{
     margin: auto;
-    font-size: 1.3em
-    
+    font-size: 1.3em;    
+}
+
+.viewmore {
+
+    display: block;
+    width: 250px;
+    margin: auto;
+    font-size: 18px;
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 15px 30px;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 10px;
+
 }
 
 

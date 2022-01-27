@@ -16,7 +16,7 @@ const publications_rt = require('./routes/publication-routes')
 
 // middlewares
     
-    //body-parser new codification
+//body-parser new codification
 app.use(appexpress.urlencoded({extended: true}));
 app.use(appexpress.json());
 // esto va a servir xa que cada una de las peticiones que hagamos a nuesto BE, lo que recibamos

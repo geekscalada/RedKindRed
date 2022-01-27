@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "d925cfd8-e8f3-40ed-916e-3975aaca193c"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -78,7 +81,7 @@
               "browserTarget": "red-kind-red:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "production"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
