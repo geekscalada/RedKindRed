@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient1: linear-gradient(135deg, #667eea86 0%, #764ba28e 100%);
+    --box-shadow: 6px 6px 10px rgba(0,0,0,.6);
+    --width: 100%;
+    --radius: 8px;
+    
+}
+
+.mybody{
+    margin: 1px;
+    padding: 1px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    height: 100vh;
+    width: auto;    
+    background-size: cover;
+    background-position: center;
+}
+
+.form{
+    width: 550px;
+    height: 80%;
+    background: rgb(65, 51, 143);
+    margin: 1em auto;
+    padding: 30px 20px 40px ;
+    text-align: center;
+    border-radius: var(--radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+}
+
+.input{
+    width: var(--width);
+    padding: 15px 5px;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #b39b9b;
+    outline: none;
+}
+
+.input, .form__submit{
+    font-family: inherit;
+}
+
+.form__title{
+    margin-bottom: 40px;
+    font-size: 4rem;
+    color: white;
+    
+}
+
+.form__submit{
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    background-image: var(--gradient);
+    padding: 15px 30px;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.form__submit:hover{
+    background-image: var(--gradient1);
+}
+
+.classspan{
+    color:#fff
+}
+
+.form__submit[disabled] {
+
+    background: rgb(90, 79, 148, 50%); 
+    
+}
+
+.form__submit[disabled]:hover {
+
+    background: rgb(90, 79, 148, 50%);
+    cursor:not-allowed     
+    
+}
+
+label{
+    color: white;
+}
+
+img {
+    height:100px;
+    width: 100px;
+}
+
+
+@media screen and (max-width:768px){
+    body{
+        padding: 60px 0;
+        background-repeat: no-repeat;
+    }
+
+    .form{
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width:425px){
+    body{
+        padding: 40px 0;
+        border: solid salmon 5px;
+    }
+
+    .form{
+        width: 90%;
+    }
+
+    .form__title{
+        font-size: 1.5rem;
+    }
+
+    .form__submit{
+        font-size: 16px;
+    }
+}

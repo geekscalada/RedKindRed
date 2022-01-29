@@ -13,6 +13,7 @@ import { Console } from 'console';
 @Component({
     selector: 'users',
     templateUrl: './users.component.html',
+    styleUrls: ['../../styles/users.styles.css'],
     providers: [UserService, FollowService]
 })
 

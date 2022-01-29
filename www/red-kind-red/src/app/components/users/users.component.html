@@ -1,137 +1,85 @@
 
-<div class="col-lg-8">
-
-    <h1 class="h1-strong">
-        {{title}}
-    </h1> 
-    
-    <div class="form-group">
-
-        <input type="text" class="form-control" placeholder="Search..."
-        name="filterUsers" [(ngModel)]="filterUsers">
-
-    </div>
-    
-
-    <div class="people">
-
-        
-
-        <!-- listado -->
-<!-- 
-        FIJATE COMO AQUI ITERAS, Y ESO TE DA EL SOPORTE PARA TODO LO DEMÁS  -->
-
-        <div *ngFor="let user of users | filter: filterUsers" class="item-user">
-            <div class="panel panel-default" >
-                <!-- flotar a la izquierda ?¿ -->
-                <div class="panel-body">
-                    <div class="image-user name pull-left">
-                        <a href="#">                            
-                            <img src="{{ url + 'get-image-user/' + user.image}}" *ngIf="user.image"> 
-                            <img class="avatar-default" src="../../assets/iconoUser.PNG" *ngIf="!user.image"> 
-                            
-
-                        </a> 
-                    </div>
-                    
-                    <div class="user-name pull-left">
-                        <p class="name-surname">
-                            <a href="#">
-                                {{user.name + ' ' +user.surname}}                                                                
-                            </a> 
-                        </p>
-                        <p class="nick-name">
-                            {{user.nick}}                            
-                        </p>                  
-                    </div>
-                    <!--        seguir dejar de seguir -->
-
-<!-- 
-                    este primer IF es para que no nos aparezca a nosotros mismos
-                    el boton de seguir/dejar -->
-                    <div class="pull-right" *ngIf="user.id != identity.id">
-                        <div *ngIf="friends.indexOf(user.id)>=0">
-                            <button class="btn btn-success" 
-                            (click)="sendRequestToFriend(user.id)">
-
-                            <span class="glyphicon glyphicon-plus-sign"></span>
-                            Amigo 
-                            </button>                      
-
-                        </div>
-
-                        <div *ngIf="ReqFriends.indexOf(user.id)>=0">
-                            <button class="btn btn-success" 
-                            (click)="sendRequestToFriend(user.id)">
-
-                            <span class="glyphicon glyphicon-plus-sign"></span>
-                            Quiere ser tu amigo
-                            </button>                      
-
-                        </div>
-
-                        <div *ngIf="ReqFriends.indexOf(user.id)<0 && friends.indexOf(user.id)<0 ">
-                            <button class="btn btn-success" 
-                            (click)="sendRequestToFriend(user.id)">
-
-                            <span class="glyphicon glyphicon-plus-sign"></span>
-                            Solicitad amistad
-                            </button>                      
-
-                        </div>
 
 
-                        <ng-template #breakFriend>
-                            <button class="btn btn-red">
-                               
-                                <span class="glyphicon glyphicon-ok-sign"></span>
-                                Ya no quiero ser tu amigo    
-                                
-                            </button>
-                        </ng-template>
+    <div class="userscontainer">
 
-                        
-
-                        
-                                          
-
-                    </div>
-                   
-
-
-                </div>
-                
-
-            </div>
-
+        <!-- <h1 class="h1">
+            Busca a tus amigos
+        </h1>  -->
+            
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Busca a tus amigos" name="filterUsers" [(ngModel)]="filterUsers">
         </div>
 
-        <!-- paginacion -->
+        <div *ngFor="let user of users | filter: filterUsers" class="users">
 
-        <ul class="pagination pull-right">
-            <li *ngIf="page > 1">
-                <a [routerLink]="['/gente', prev_page]">
-                Anterior
+            <div class="cardimg">
+                <a href="#">
+                    <img class="imagenuser" src="{{ url + 'get-image-user/' + user.image}}" *ngIf="user.image">
+                    <img class="imagenuser" src="../../assets/iconoUser.PNG" *ngIf="!user.image">
                 </a>
-            </li>
-            <li *ngIf="pages != page">
-                <a [routerLink]="['/gente', next_page]">
-                Siguiente
-                </a>
-            </li>
-        </ul>
+            
+                <p class="name-surname">
+                    <a href="#">
+                        {{user.name + '' +user.surname}}
+                    </a>
+                </p>
+            
+                <p class="nick-name">
+                    {{user.nick}}
+                </p>
+            </div>
 
+            <div class="infofriendcard">
+                <div *ngIf="friends.indexOf(user.id)>=0">
+                    <button class="amigo" 
+                    (click)="sendRequestToFriend(user.id)">
 
-    </div>  
+                    <span class="glyphicon glyphicon-plus-sign"></span>
+                    Amigo 
+                    </button>                    
 
-    
+                </div>
 
-</div>
+                <div *ngIf="ReqFriends.indexOf(user.id)>=0">
+                    <button class="wantfriend" 
+                    (click)="sendRequestToFriend(user.id)">
 
-<!-- Limpiar los posibles flotados -->
+                    <span class="glyphicon glyphicon-plus-sign"></span>
+                    Quiere ser tu amigo
+                    </button>                      
 
-<div class="clearfix">
-    
-</div>
+                </div>
 
-    
+                <!-- Solicitar amistad // dejar de solicitar-->
+                <div *ngIf="ReqFriends.indexOf(user.id)<0 && friends.indexOf(user.id)<0 ">
+                    <button class="requesttofriend" 
+                    (click)="sendRequestToFriend(user.id)">
+
+                    <span class="glyphicon glyphicon-plus-sign"></span>
+                    Solicitad amistad
+                    </button>                    
+
+                </div>
+
+                <ng-template #breakFriend>
+                    <button class="deniedfriend">                           
+                        <span class="glyphicon glyphicon-ok-sign"></span>
+                        Ya no quiero ser tu amigo                             
+                    </button>
+                </ng-template>
+
+                <!--        seguir dejar de seguir -->
+
+                <!-- 
+                este primer IF es para que no nos aparezca a nosotros mismos
+                el boton de seguir/dejar -->
+
+                <div class="pull-right" *ngIf="user.id != identity.id">              
+                </div>
+            </div>
+                    
+                    
+                    
+        </div>
+    </div>

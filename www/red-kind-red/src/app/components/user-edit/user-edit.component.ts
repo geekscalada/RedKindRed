@@ -10,6 +10,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 @Component({
     selector: 'user-edit',
     templateUrl: './user-edit.component.html',
+    styleUrls: ['../../styles/updatedata.styles.css'],
     providers: [UserService, UploadService]
 })
 
