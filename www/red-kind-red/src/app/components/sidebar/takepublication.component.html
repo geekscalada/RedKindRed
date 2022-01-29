@@ -1,35 +1,39 @@
-<div class="col-lg-4 sidebar-32">
-    <h1 class="h1-strong"> Hola, {{identity.name}}</h1>
-</div>
+    
+    <div class="mybody">
+    <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm)" class="form" >
 
+        <div >
+            <h1> Hola, {{identity.name}} </h1>
+        </div>  
 
-<div id="new-publication" class="col-lg-4 pull-left panel panel-default">
-    <div class="alert alert-success" *ngIf="status == 'success'">
-        Publicación enviada correctamente
-    </div>
-    <div class="alert alert-danger" *ngIf="status == 'error'">
-        Error al publicar
-    </div>
-  
-    <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm)" class="col-lg-10" >
+        <div class="alert alert-success" *ngIf="status == 'success'">
+            Publicación enviada correctamente
+        </div>
+        <div class="alert alert-danger" *ngIf="status == 'error'">
+            Error al publicar
+        </div>
+
 
         <p>
-            <label>¿Qué estás pensando hoy?</label>
+            <label>¿Qué quieres publicar?</label>
             <textarea name="text" #text="ngModel" [(ngModel)]="publication.text"
-            class="form-control" required></textarea>
-            <span *ngIf="!text.valid &&text touched">
+            class="form__email textarea" required></textarea>
+            <span *ngIf="!text.valid && text.touched">
                 El texto de la publicación es obligatorio
             </span>                    
         </p>
         <p>
             <label> Sube tu foto</label>
-            <input type="file" placeholder="Subir imagen"
+            <input type="file" class="form__email selectfile" placeholder="Subir imagen"
             (change)="fileChangeEvent($event)">
         </p>
 
-        <input type="submit" value="Enviar" class="btn btn-success" 
+        <input type="submit" value="Enviar" class="form__submit"
         [disabled]="!newPubForm.valid">
 
     </form>
-</div> 
+
+    </div>
+    
+ 
 

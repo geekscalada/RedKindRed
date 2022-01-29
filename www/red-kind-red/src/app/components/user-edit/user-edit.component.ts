@@ -51,8 +51,7 @@ export class UserEditComponent implements OnInit {
     //# aquí estamos llamando a 2 métodos a la vez, separar
     OnSubmit(form:any){       
         this._userService.updateUser(this.user).subscribe(
-            response => {
-                
+            response => {                
                 if(!response.message) {
                     this.status = 'error'
                     throw new Error('No hay usuario en la respuesta')
@@ -85,13 +84,11 @@ export class UserEditComponent implements OnInit {
 
             },
             error => {
-                let errorMessage = <any>error
-                console.log(errorMessage)
-                if (errorMessage != null) {
+                let errorMessage = <any>error                
+                if (errorMessage != null) {                                       
                     return this.status = errorMessage['error']['message']                    
                 }
-
-                return this.status = 'Error'
+                return this.status = 'error'
             }
         )
     }

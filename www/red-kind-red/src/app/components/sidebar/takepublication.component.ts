@@ -10,6 +10,7 @@ import { PublicationService } from "src/app/services/publications.service";
 @Component({
     selector: 'takepublication',
     templateUrl: './takepublication.component.html',
+    styleUrls: ['../../styles/publication.styles.css'],
     providers: [UserService, PublicationService]
 })
 

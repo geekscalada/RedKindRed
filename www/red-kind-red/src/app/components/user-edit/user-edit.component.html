@@ -7,11 +7,9 @@
         Se han actualizado los datos correctamente
     </div>
     
-    <div class="alert alert-danger" *ngIf="status == 'error'">
+    <div class="alert alert-danger" *ngIf="status && status != 'success'">
         {{status}}
-    </div>   
-    
-    
+    </div>
         <p>
             <label>Nombre</label>
             <input class="form__email input" type="text" name="name" #name="ngModel" [(ngModel)]="user.name" required/>
@@ -23,7 +21,7 @@
             <label>Apellidos</label>
             <input class="form__email input" type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname"  required/>
             <span *ngIf="!surname.valid && surname.touched">
-                Los apellidos son obligatorio.
+                Los apellidos son obligatorios.
             </span>
         </p>
         <p>
@@ -42,29 +40,27 @@
             </span>
         </p>
         
+        <label>Sube tu avatar</label>
         <div *ngIf="user.image">
-            <img src="{{url + 'get-image-user/' + user.image}}" />
+            <img class="formimg" src="{{url + 'get-image-user/' + user.image}}" />
         </div>
     
         <p>
             <!-- Aqui vamos a capturar todos los, edntro de la propiedad
             $event va a capurar el evento change y va a capturar
             todos los eventos que hayamos marcado en nuestro input -->
-            <label>Sube tu avatar</label>
-            <input class="form__email input" type="file" placeholder="Sube una imagen"
-             (change)="fileChangeEvent($event)"       
-            />
             
+            <input class="form__email selectfile" type="file" placeholder="Sube una imagen"
+             (change)="fileChangeEvent($event)"       
+            />            
         </p>
        
     
     
         <!-- Usamos la directiva disable como atributo disable  -->
-        <input class="form__email input" type="submit" value="{{title}}" class="btn btn-warning" [disabled]="!userEditForm.form.valid" />
+        <input class="form__submit" type="submit" value="{{title}}" [disabled]="!userEditForm.form.valid" />
     
-    </form>
-    
-    
+    </form>  
     
     
     

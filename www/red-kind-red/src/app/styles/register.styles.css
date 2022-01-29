@@ -24,7 +24,7 @@
 
 .form{
     width: 550px;
-    height: 80%;
+    height: auto;
     background: rgb(65, 51, 143);
     margin: 1em auto;
     padding: 30px 20px 40px ;

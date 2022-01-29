@@ -312,7 +312,20 @@ async function updateUser (req, res) {
         return res.status(500).send({
             message: 'No tienes permisos para actualizar'
         })
-    }    
+    } 
+    
+    let exists = await User.findOne({
+        where: {
+            [Sequelize.Op.or]: [{ nick: update.nick.toLowerCase() }, { email: update.email.toLowerCase() }]
+        }
+    });
+
+    if (exists) { 
+        return res.status(500).send({
+        message: 'Este email o nick ya existen'
+    })}
+    
+    
     //añadir que valide si los datos ya están en uso
     await User.update({
         'name': update.name,
@@ -330,8 +343,7 @@ async function updateUser (req, res) {
     }
 }
 
-//subir avatares usuarios
-//#cambiado
+
 async function uploadImage(req, res) {         
   
 

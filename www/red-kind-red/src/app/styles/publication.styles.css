@@ -95,7 +95,6 @@ label{
     color: white;
 }
 
-
 .formimg {
     height:100px;
     width: 100px;
@@ -116,6 +115,28 @@ label{
     text-align: center;
 }
 
+span {
+    color: rgb(156, 37, 37);
+    font-style: bold;
+}
+
+h1 {
+    color: whitesmoke;
+    margin-bottom: 15px;
+}
+
+textarea{
+    width: var(--width);
+    padding: 15px 5px;
+    display: block;
+    margin-bottom: 20px;
+    border: 6px solid rgb(25, 8, 80);
+    outline: none;
+    margin: 3px;
+    color: black;
+    font-size: 17px;
+    text-align: center;   
+}
 
 @media screen and (max-width:768px){
     body{
