@@ -1,6 +1,5 @@
 
-
-
+<body>
     <div class="userscontainer">
 
         <!-- <h1 class="h1">
@@ -30,56 +29,54 @@
                 </p>
             </div>
 
-            <div class="infofriendcard">
+            <div class="infofriendcard" *ngIf="user.id != identity.id">
                 <div *ngIf="friends.indexOf(user.id)>=0">
                     <button class="amigo" 
                     (click)="sendRequestToFriend(user.id)">
-
-                    <span class="glyphicon glyphicon-plus-sign"></span>
-                    Amigo 
+                    Es tu amigo 
                     </button>                    
 
                 </div>
 
-                <div *ngIf="ReqFriends.indexOf(user.id)>=0">
-                    <button class="wantfriend" 
-                    (click)="sendRequestToFriend(user.id)">
-
-                    <span class="glyphicon glyphicon-plus-sign"></span>
+                
+                    <button *ngIf="ReqFriends.indexOf(user.id)>=0 && friends.indexOf(user.id)<0" class="wantfriend" 
+                        (mouseover)="showAcceptDeniedFunction(true)"
+                        (mouseout)="showAcceptDeniedFunction(false)" 
+                        (click)="sendRequestToFriend(user.id)">
                     Quiere ser tu amigo
-                    </button>                      
+                    </button>
 
-                </div>
+                    <button *ngIf="ReqFriends.indexOf(user.id)>=0 && friends.indexOf(user.id)<0 && showAcceptDenied" class="acceptButton" 
+                        (click)="sendRequestToFriend(user.id)">
+                    Aceptar
+                    </button>
+                    
+                    <button *ngIf="ReqFriends.indexOf(user.id)>=0 && friends.indexOf(user.id)<0 && showAcceptDenied" class="denyButton" >
+                    Denegar
+                    </button>                    
+                    
+
+                
+
+                
 
                 <!-- Solicitar amistad // dejar de solicitar-->
-                <div *ngIf="ReqFriends.indexOf(user.id)<0 && friends.indexOf(user.id)<0 ">
-                    <button class="requesttofriend" 
+                <div *ngIf="ReqFriends.indexOf(user.id)<0 && friends.indexOf(user.id)<0">
+                    <button class="requesttofriend"  
                     (click)="sendRequestToFriend(user.id)">
 
-                    <span class="glyphicon glyphicon-plus-sign"></span>
+                    <span class="glyphicon glyphicon-plus-sign" ></span>
                     Solicitad amistad
                     </button>                    
 
                 </div>
-
-                <ng-template #breakFriend>
-                    <button class="deniedfriend">                           
-                        <span class="glyphicon glyphicon-ok-sign"></span>
-                        Ya no quiero ser tu amigo                             
-                    </button>
-                </ng-template>
-
-                <!--        seguir dejar de seguir -->
-
-                <!-- 
-                este primer IF es para que no nos aparezca a nosotros mismos
-                el boton de seguir/dejar -->
-
-                <div class="pull-right" *ngIf="user.id != identity.id">              
-                </div>
+                
             </div>
                     
                     
                     
         </div>
     </div>
+</body>
+
+   

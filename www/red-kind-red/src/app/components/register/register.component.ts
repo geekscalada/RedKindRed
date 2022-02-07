@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core'
 
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-// importamos el servicio UserService, tambiçen
+// importamos el servicio UserService, también
 // tenemos que usarlo en el constructor
 import { UserService } from 'src/app/services/user.service';
 
@@ -23,20 +23,14 @@ import { FormControl } from '@angular/forms';
 export class RegisterComponent implements OnInit {
 
     public title:string;
-
-    // para el formulario usaremos el objeto User
     public user: User;
+    public status:any; 
 
-    public status:any; //tengo que dejar any porque no me deja string
-
-    
     constructor(
 
         private _route: ActivatedRoute,
         private _router: Router,
         private _userService: UserService,
-        
-        
 
     ){
         this.title = 'Regístrate'

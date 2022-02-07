@@ -1,0 +1,35 @@
+version: '3'
+
+services:  
+  webserver:    
+    image: nginx:1.15.12-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /dist:/var/www/html
+      - ./nginxConf4:/etc/nginx/conf.d
+      - ./certbot-etc6:/etc/letsencrypt
+      #- ./nginxConf/conf:/etc/nginx/nginx.conf
+      #- /docker/wordpress/volumes/certbot-etc:/etc/letsencrypt
+    networks:
+      - app-network
+
+  certbot:
+    depends_on:
+      - webserver
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot-etc6:/etc/letsencrypt
+      - /dist:/var/www/html
+    #command: certonly --webroot -w /var/www/html --email geekscalada@gmail.com --agree-tos --no-eff-email --staging -d joseescalada.com -d www.joseescalada.com
+    command: certonly --webroot -w /var/www/html --email geekscalada@gmail.com --agree-tos --no-eff-email -d joseescalada.com -d www.joseescalada.com
+
+networks:
+  app-network:
+    driver: bridge
+
+    

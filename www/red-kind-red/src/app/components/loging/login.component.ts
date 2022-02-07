@@ -36,12 +36,10 @@ export class LoginComponent implements OnInit {
 
     onSubmit(form:any){
         this._userService.signUp(this.user, 'true').subscribe(            
-            response => {                
-
+            response => {
                 // la response aqui solo te trae el token porque
                 // estás en la parte del signUp que solo te trae 
                 // el token
-                
                 this.identity = response.user
                 
                 if(!this.identity || !this.identity.id){                   
@@ -53,7 +51,6 @@ export class LoginComponent implements OnInit {
                     
                     // local storage no pueede guardar objetos, solo strings
                     localStorage.setItem('identity', JSON.stringify(this.identity))
-
                     // conseguir el token
                     this.token = response.token                
                     if(this.token.length <= 0){

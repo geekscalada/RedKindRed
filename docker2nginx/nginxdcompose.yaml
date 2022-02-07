@@ -1,0 +1,12 @@
+webserver:    
+    image: nginx:1.15.12-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /dist/docker-angular:/var/www/html
+      - ./nginxConf4:/etc/nginx/conf.d
+      #- ./nginxConf/conf:/etc/nginx/nginx.conf
+      #- /docker/wordpress/volumes/certbot-etc:/etc/letsencrypt

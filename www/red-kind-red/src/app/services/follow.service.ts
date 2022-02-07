@@ -24,12 +24,10 @@ export class FollowService{
         let params = JSON.stringify(follow)
 
         let headers = new HttpHeaders()
-        .set('Content-Type', 'application/json' )
+        .set('Content-Type', 'application/json')
         .set('Authorization', token)
 
         return this._http.post(this.url+'follow', params, {headers:headers})
-
-
         
     }
 

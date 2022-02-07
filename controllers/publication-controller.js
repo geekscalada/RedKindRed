@@ -99,6 +99,8 @@ async function getPublications(req, res) {
 
 function getImageFile(req, res) {
 
+    console.log("estamso en el getImageFile")
+
     let  image = req.params.imageFile;   
 
     let mypath = './uploads/publicaciones/'+image    

@@ -32,7 +32,8 @@ export class UsersComponent implements OnInit{
     public status:any
     public follows:any; //estamos siguiendo
     public friends:any = []
-    public ReqFriends:any = []     
+    public ReqFriends:any = []
+    public showAcceptDenied: boolean = false
 
     constructor(
 
@@ -50,10 +51,27 @@ export class UsersComponent implements OnInit{
         this.token = this._userService.getToken();
         // tengo que añadir esto para que me deje
         this.users = []
+        
     }
 
     //#cambiar y meterlo en el constructor
     filterUsers= ''
+
+
+    showAcceptDeniedFunction(value: boolean){
+
+        if(!value){            
+          
+            return setTimeout( ()=> {this.showAcceptDenied = false}, 1000) 
+                                            
+        }
+
+        return this.showAcceptDenied = true
+    }
+
+    setAcceptDenied(){
+        return this.showAcceptDenied = false 
+    }
 
 
 
@@ -101,7 +119,6 @@ export class UsersComponent implements OnInit{
                 console.log(error)
             }
         )
-
     }
 
     sendRequestToFriend(params:any){

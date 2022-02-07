@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+body{
+    background: linear-gradient(135deg, #93a3e7 0%, #2b0550 100%);
+}
+
 .form-control {
     width: 79%;
     margin: 22px auto -9px auto;
@@ -23,9 +27,12 @@
 }
 
 .userscontainer{
-    background: linear-gradient(135deg, #93a3e7 0%, #2b0550 100%);
+    
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+    height: auto;
+    padding-bottom: 28px;
 }
 
 .users{
@@ -55,11 +62,13 @@
     
     display: flex;
     width: 20%;
-    height: 100%;
-    flex-direction: row;
+    height: 60%;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-right: 80px;    
+    justify-content: flex-start;
+    margin-top: 75px;
+    margin-right: 80px;
+    
 
 }
 
@@ -88,6 +97,71 @@
     border: 2px solid black;
     width: 180px;
     height: 40px;
+
+}
+
+.amigo{
+
+    background-color: #571995;
+    border: 2px solid black;
+    width: 180px;
+    height: 40px;
+    color: white;
+
+}
+
+.wantfriend{
+
+    background-color: #951961;
+    border: 2px solid black;
+    width: 180px;
+    height: 40px;
+    font-style: bold;
+    color: white;
+
+}
+
+.wantfriend:hover{
+    background-color: #f5102e;
+    border: 3px rgb(192, 192, 192);
+}
+
+.acceptButton:hover, .denyButton:hover{
+   
+    background-color: #721995;
+    border: 3px silver;
+    
+}
+
+
+.acceptButton{
+
+    background-color: #19954e;
+    border: 2px solid black;
+    width: 69px;
+    height: 28px;
+    font-style: bold;
+    color: #fff;
+    border-radius: 50%; 
+   
+
+}
+
+.denyButton{
+    background-color: #ca1616;
+    border: 2px solid black;
+    width: 69px;
+    height: 28px;
+    font-style: bold;
+    color: #fff;
+    border-radius: 50%;
+}
+
+
+
+button:focus {
+
+    background-color: #cacecb;
 
 }
 
