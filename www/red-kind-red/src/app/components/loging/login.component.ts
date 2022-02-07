@@ -40,9 +40,8 @@ export class LoginComponent implements OnInit {
                 // la response aqui solo te trae el token porque
                 // estás en la parte del signUp que solo te trae 
                 // el token
-                this.identity = response.user
-                
-                if(!this.identity || !this.identity.id){                   
+                this.identity = response.user                
+                if(!this.identity || !this.identity.id){                
                     
                     this.status = 'error'
                     
@@ -61,6 +60,7 @@ export class LoginComponent implements OnInit {
                         // persistir token del usuario
                         console.log("token - >", this.token)
                         localStorage.setItem('token',this.token)
+                        this._router.navigate(['/amigos'])
                     }
                 }
             },
