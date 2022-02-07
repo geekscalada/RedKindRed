@@ -11,8 +11,8 @@ services:
       PGDATA: /data/postgres
     volumes:
        - /postgresVolume:/data/postgres
-       - ./DDL_scripts.sql:/docker-entrypoint-initdb.d/DDL_scripts.sql
-       - ./secretMetabaseUser.sql:/docker-entrypoint-initdb.d/secretMetabaseUser.sql
+      #  - ./DDL_scripts.sql:/docker-entrypoint-initdb.d/DDL_scripts.sql
+      #  - ./secretMetabaseUser.sql:/docker-entrypoint-initdb.d/secretMetabaseUser.sql
     ports:
        - "13229:5432"    
     restart: unless-stopped 

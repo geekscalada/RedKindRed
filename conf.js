@@ -40,5 +40,4 @@ app.use('/api', publications_rt);
 
 
 //exportamos
-
 module.exports = app; // exportamos todo lo que tenga app.
