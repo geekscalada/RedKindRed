@@ -1,9 +1,7 @@
-// este ees un componente que vamos a poder usar en cualquier parte de nuestra web
-
 import { Component, OnInit } from "@angular/core";
-
 import { UserService } from "src/app/services/user.service";
 import { GLOBAL } from "src/app/services/global";
+//Modelo publicación
 import { Publication } from "src/app/models/publication";
 import { PublicationService } from "src/app/services/publications.service";
 
@@ -27,9 +25,6 @@ export class TakePublicationComponent implements OnInit{
 
         private _userService: UserService,
         private _publicationService: PublicationService
-
-
-
     ) {
 
         this.identity = this._userService.getIdentity();
@@ -48,24 +43,19 @@ export class TakePublicationComponent implements OnInit{
     ngOnInit() {
         console.log("Sidebar Cargado")        
     }
-
-    // aunque no es necesario, te traes el formulario como parámetro
-    // de esta manera puedes resetearlo
+    
+    //directiva NgModel rellena el formulario con el modelo 
     onSubmit(form:any) {
-        //publication ya va relleno a través del formulario
-        
-        console.log(this.publication)        
-
+        console.log(this.publication)
         let formData = new FormData();
         
         for (var i = 0; i < this.filesToUpload.length; i++) {                        
             console.log(this.filesToUpload[i])
             formData.append("files", this.filesToUpload[i], this.filesToUpload[i].name);
         }
-        
+
         formData.append("publication", JSON.stringify(this.publication))
-        
-        
+
         this._publicationService.addPublication(this.token, formData).subscribe(
             response => {
             console.log("respuesta es: ", response)
@@ -89,15 +79,11 @@ export class TakePublicationComponent implements OnInit{
             }
         )        
     }
-    
-    public filesToUpload: Array<File> = []    
 
+    public filesToUpload: Array<File> = []
     
     fileChangeEvent(fileInput:any){
-
         this.filesToUpload = <Array<File>>fileInput.target.files;
-
     }
-
 
 }

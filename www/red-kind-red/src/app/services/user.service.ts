@@ -26,11 +26,8 @@ export class UserService{
     public token:any
     public stats:any
 
-
-    constructor(
-        
+    constructor(        
         public _http: HttpClient
-
     ){
         this.url = GLOBAL.url;
     }
@@ -39,7 +36,7 @@ export class UserService{
     respuestas ni nada. Simplemente decirle que lo que va a devolver
     este método de este servicio es un observable con : Observable 
     de momento con tipo any, ya que si le ponemos tipo User, y un día
-    la api nos trae más cosas de las que hay en el modelo, eso va a petar
+    la api nos trae más cosas de las que hay en el modelo se va a romper
     */ 
     register(user:User):Observable<any>{
        
@@ -48,7 +45,6 @@ export class UserService{
         // le envíe un json al backend el node.js ya es capaz de procesarlo, por ejemplo con php muchas veces es 
         // necesario usar www url encoded y tal
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-
         console.log("params de registro", params)
         
         // envialos la petición, con esto ya hace la petición ajax al backend y nos guarda
@@ -59,20 +55,16 @@ export class UserService{
 
     // ponemos any en el user porque al parecer no tenemos propiedad getToken en el modelo
     // la otra opción es usar gettoken:any = 'null' pero parece una chapuza
-    signUp(user:any, getToken:any = null): Observable<any>{
-          
+    signUp(user:any, getToken:any = null): Observable<any>{          
         if(getToken != null) {
-            
             // la propoedad del modelo de la api es con minúscular
             user.gettoken = getToken;
-
         }
 
         let params = JSON.stringify(user)
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
 
         return this._http.post(this.url+'login', params, {headers:headers} )
-
     }
 
     // aquí crearemos 2 metodos para rescatar del local storage los datos

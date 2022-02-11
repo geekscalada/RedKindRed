@@ -10,8 +10,8 @@ services:
       - "443:443"
     volumes:
       - /dist:/var/www/html
-      - ./nginxConf4:/etc/nginx/conf.d
-      - ./certbot-etc6:/etc/letsencrypt
+      - ./nginxConf:/etc/nginx/conf.d
+      - ./certbot-etc:/etc/letsencrypt
       #- ./nginxConf/conf:/etc/nginx/nginx.conf
       #- /docker/wordpress/volumes/certbot-etc:/etc/letsencrypt
     networks:
@@ -23,10 +23,10 @@ services:
     image: certbot/certbot
     container_name: certbot
     volumes:
-      - ./certbot-etc6:/etc/letsencrypt
+      - ./certbot-etc:/etc/letsencrypt
       - /dist:/var/www/html
     #command: certonly --webroot -w /var/www/html --email geekscalada@gmail.com --agree-tos --no-eff-email --staging -d joseescalada.com -d www.joseescalada.com
-    command: certonly --webroot -w /var/www/html --email geekscalada@gmail.com --agree-tos --no-eff-email -d joseescalada.com -d www.joseescalada.com
+    #command: certonly --webroot -w /var/www/html --email geekscalada@gmail.com --agree-tos --no-eff-email -d joseescalada.com -d www.joseescalada.com
 
 networks:
   app-network:

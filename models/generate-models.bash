@@ -1,3 +1,5 @@
+#Is not necessary use this script, models will be generated automatically
+
 #sudo npx sequelize-cli db:migrate:undo:all
 
 #Generate user model

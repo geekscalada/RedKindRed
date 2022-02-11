@@ -10,31 +10,7 @@ services:
       POSTGRES_DB: pruebaSQL2
       PGDATA: /data/postgres
     volumes:
-       - /postgresVolume:/data/postgres
-      #  - ./DDL_scripts.sql:/docker-entrypoint-initdb.d/DDL_scripts.sql
-      #  - ./secretMetabaseUser.sql:/docker-entrypoint-initdb.d/secretMetabaseUser.sql
+       - /postgresVolume:/data/postgres      
     ports:
        - "13229:5432"    
-    restart: unless-stopped 
-
-
-#   mongodb2:
-#     container_name: mongoDBv2
-#     image: mongo
-#     restart: always
-#     environment:
-#       MONGO_INITDB_ROOT_USERNAME: jose-admin
-#       MONGO_INITDB_ROOT_PASSWORD: mkl3kj8n48yhn8
-#       MONGO_INITDB_DATABASE: admin
-#     volumes:
-#         - ./mongoDBscript.js:/docker-entrypoint-initdb.d/mongoDBscript.js
-#         - ./volume:/data/db
-#     ports:
-#         - "27018:27017"
-
-  
-
-        
-
-  # https://qastack.mx/programming/42912755/how-to-create-a-db-for-mongodb-container-on-start-up
-    
+    restart: unless-stopped

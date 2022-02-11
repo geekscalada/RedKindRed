@@ -1,5 +1,4 @@
-//#cambiado
-
+//#userRoutes
 const appexpress = require('express');
 const userController = require('../controllers/user-controller');
 
@@ -10,7 +9,7 @@ const middlewareAuthentication = require('../middlewares/auth')
 
 // aquí cargamos el modulo multiparty que es un middleware para subidas de ficheros
 // después creamos una variable middleware a la que le damos un directorio
-// tenemos que crear las carperas uploads/users
+// tenemos que crear las carpertas uploads/users
 var multipart = require('connect-multiparty')
 var middlewareUpload = multipart({uploadDir: './uploads/usuarios'})
 

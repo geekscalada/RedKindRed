@@ -1,32 +1,26 @@
-//#cambiado
+//#configuration file
 // Aquí tendremos la configuracion de express
 
-const appexpress = require('express') 
+const appexpress = require('express')
+//#don't needed 
 const appbodyParser = require('body-parser')
 const app = appexpress(); 
 const appcors = require('cors');
-
+//#don't needed
 const associations = require('./associations')
-
 
 // cargar rutas
 const user_rt = require('./routes/user-routes');
 const publications_rt = require('./routes/publication-routes')
 
-
-// middlewares
-    
 //body-parser new codification
+// sirve para que las peticiones se conviertan a JSON
 app.use(appexpress.urlencoded({extended: true}));
-app.use(appexpress.json());
-// esto va a servir xa que cada una de las peticiones que hagamos a nuesto BE, lo que recibamos
-// se convierta en un JSON.
- 
+app.use(appexpress.json()); 
 
 // cors
-// esto es para escribir las cabeceras y habilitar el acceso CORS de manera que evitemos los típicos problemas
+// esto es para escribir las cabeceras y habilitar el acceso CORS de manera que evitemos problemas
 // de las peticiones ajax
-
 app.use(appcors({
     methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
     origin: '*'
@@ -40,4 +34,4 @@ app.use('/api', publications_rt);
 
 
 //exportamos
-module.exports = app; // exportamos todo lo que tenga app.
+module.exports = app; // exportamos el objeto app

@@ -1,3 +1,27 @@
+import { PipeTransform, Pipe } from '@angular/core';
+
+@Pipe({
+    name: 'filter'
+})
+
+//filterPipe ya tiene comportamiento por defecto  -> like %%
+export class FilterPipe implements PipeTransform{
+
+    transform(value: any, arg: any): any {
+        
+        const resultUsers = []
+
+        for (const user of value) {
+            if (user.name.toLocaleLowerCase().indexOf(arg.toLocaleLowerCase()) > -1) {
+                resultUsers.push(user)
+            }
+        }
+        
+        return resultUsers
+    }
+
+}
+
 // import { Pipe, PipeTransform } from '@angular/core';
 
 // @Pipe({ name: 'appSearchFilter' })
@@ -47,7 +71,7 @@
 //     }
 // }
 
-import { PipeTransform, Pipe } from '@angular/core';
+
 
 // @Pipe({
 //     name: 'callback',
@@ -62,24 +86,3 @@ import { PipeTransform, Pipe } from '@angular/core';
 //     }
 // }
 
-@Pipe({
-    name: 'filter'
-})
-
-//filterPipe por lo visto ya tiene comportamiento de like %%
-export class FilterPipe implements PipeTransform{
-
-    transform(value: any, arg: any): any {
-        
-        const resultUsers = []
-
-        for (const user of value) {
-            if (user.name.toLocaleLowerCase().indexOf(arg.toLocaleLowerCase()) > -1) {
-                resultUsers.push(user)
-            }
-        }
-        
-        return resultUsers
-    }
-
-}

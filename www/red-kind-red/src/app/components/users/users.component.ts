@@ -5,16 +5,13 @@ import { Router, ActivatedRoute, Params, RouterModule} from '@angular/router'
 import { User } from 'src/app/models/user';
 
 import { GLOBAL } from 'src/app/services/global';
-
-import { FollowService } from 'src/app/services/follow.service';
-import { Follow } from 'src/app/models/follow';
 import { Console } from 'console';
 
 @Component({
     selector: 'users',
     templateUrl: './users.component.html',
     styleUrls: ['../../styles/users.styles.css'],
-    providers: [UserService, FollowService]
+    providers: [UserService]
 })
 
 export class UsersComponent implements OnInit{
@@ -30,7 +27,6 @@ export class UsersComponent implements OnInit{
     public pages:any;
     public users: User[]
     public status:any
-    public follows:any; //estamos siguiendo
     public friends:any = []
     public ReqFriends:any = []
     public showAcceptDenied: boolean = false
@@ -40,7 +36,6 @@ export class UsersComponent implements OnInit{
         private _route: ActivatedRoute,
         private _router: Router,
         private _userService: UserService,
-        private _followService: FollowService
 
 
     ) {
@@ -59,52 +54,16 @@ export class UsersComponent implements OnInit{
 
 
     showAcceptDeniedFunction(value: boolean){
-
-        if(!value){            
-          
-            return setTimeout( ()=> {this.showAcceptDenied = false}, 1000) 
-                                            
+        if(!value){
+            return setTimeout( ()=> {this.showAcceptDenied = false}, 1000)
         }
-
         return this.showAcceptDenied = true
     }
 
     setAcceptDenied(){
         return this.showAcceptDenied = false 
     }
-
-
-
-    actualPage(){
-        //params captura el parámetro de la ruta
-
-        this._route.params.subscribe(params => {
-            // convertimos a entero con el +
-            let page = +params['page']
-            
-            this.page = page;
-
-            if (!page){
-                page = 1
-            }
-            
-            if(!page){
-                page = 1
-            } else {
-                this.next_page = page+1
-                this.prev_page = page-1
-
-                if(this.prev_page <= 0 ){
-                    this.prev_page = 1
-                }
-            }
-
-            //devolver listado usurios
-            this.getUsers(page)
-
-        })
-
-    }
+    
 
     getAllusers(){
 
@@ -152,16 +111,12 @@ export class UsersComponent implements OnInit{
             },(error)=>{
                 console.log(error)
             }
-
-
         )
-
     }
 
     getMyReqFriends(){
         
         this._userService.getMyReqFriends(this.identity.id).subscribe(
-
             (response)=>{
                 
                 this.ReqFriends = response;                
@@ -169,124 +124,9 @@ export class UsersComponent implements OnInit{
             },(error)=>{
                 console.log(error)
             }
-
-
         )
-
-    }
-
-
-
-    // aquí hace un = null para hacer default pero a mí
-    // no me deja hacerlo
-    getUsers(page:any){
-       
-        this._userService.getUsers(page).subscribe(
-            response => {
-                
-
-                if(!response.users){
-                    this.status = 'error'
-                } else {
-                    
-                    this.total = response.total;
-                    this.users = response.users;
-                    this.pages = response.pages;
-                    this.follows = response.users_following;
-
-                    
-                    if(page > this.pages){
-                        this._router.navigate(['/gente/1'])
-                    }
-
-                }
-
-            },
-            error => {
-                
-                let errorMessage = <any>error
-                console.log(errorMessage)
-                
-                if(errorMessage != null){
-                    this.status = 'error'
-                }
-            }
-        )
-    }
-
-    public followUserOver:any;
-    mouseEnter(user_id:any){
-        this.followUserOver = user_id
-    }
-
-    mouseLeave(user_id:any){
-        this.followUserOver = 0
-    }
-
-    followUser (followed:any) {
-
-        //identity_id viene del localstorage
-        let follow = new Follow('', this.identity._id, followed);
-
-        this._followService.addFollow(this.token, follow).subscribe(
-            response => {
-
-                if (!response) {
-                    this.status = 'error'
-                } else {
-                    this.status = 'success'
-                    // aquí añadimos al array de follos un nuevo ID y hará que la
-                    // pag cambie de manera reactiva al hacer el bucle
-                    console.log(this.follows)
-                    this.follows.push(followed);
-                    console.log(this.follows)
-                }
-
-            },
-            error => {
-
-                let errorMessage = <any>error
-                console.log(errorMessage)
-                
-                if(errorMessage != null){
-                    this.status = 'error'
-                }
-            }
-        )
-
-
-    }
-
-    unfollowUser(followed:any) {
-
-        this._followService.deleteFollow(this.token, followed).subscribe(
-            response => {
-
-                console.log(response)
-
-                let search = this.follows.indexOf(followed)
-
-                if (search != -1) {
-                    // además de borrarlo de la DB también lo eliminará del array
-                    // por lo que se refrescará dinámicamente
-                    console.log(this.follows)                    
-                    this.follows.splice(search, 1)
-                    console.log(this.follows)
-                }
-                
-
-            },
-            error => {
-
-                let errorMessage = <any>error
-                console.log(errorMessage)
-                
-                if(errorMessage != null){
-                    this.status = 'error'
-                }
-            }
-        )
-    }
+    }   
+    
 
     ngOnInit(){
         console.log("modulo Gente cargado")

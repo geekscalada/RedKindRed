@@ -2,7 +2,6 @@
 
     <form #userEditForm="ngForm" (ngSubmit)="OnSubmit(userEditForm)" class="form">
 
-
     <div class="alert alert-success" *ngIf="status == 'success'">
         Se han actualizado los datos correctamente
     </div>
@@ -53,8 +52,7 @@
             <input class="form__email selectfile" type="file" placeholder="Sube una imagen"
              (change)="fileChangeEvent($event)"       
             />            
-        </p>
-       
+        </p>      
     
     
         <!-- Usamos la directiva disable como atributo disable  -->

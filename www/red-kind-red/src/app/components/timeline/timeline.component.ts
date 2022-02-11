@@ -35,26 +35,17 @@ export class TimelineComponent implements OnInit {
     // = [] para indicarlo que partimos como vacío
     public publications: Publication[] = []
 
-
     constructor(
 
         private _route: ActivatedRoute,
         private _router: Router,
         private _userService: UserService,
         private _publicationService: PublicationService
-
-
-
-
     ) {
-
         this.title = "Timeline"
         this.url = GLOBAL.url
         this.page = 1
         this.token = this._userService.getToken();
-
-
-
     }
 
     // adding es un parámetro que añadimos para 
@@ -62,28 +53,28 @@ export class TimelineComponent implements OnInit {
     // si no añadimos ese parámetro, es false
     getPublications(page: any, adding: any = false) {
         this._publicationService.getPublications(this.token, page).subscribe(
-            (response) => {               
-                try {                   
-                    
+            (response) => {
+                try {
+
                     if (!response.docs) {
 
                         throw new Error('Algo ha fallado')
-    
+
                     }
-    
+
                     this.total = response.total;
                     this.pages = response.pages;
                     this.itemsPerPage = 2
-    
+
                     //si no estamos pulsando viewMore
                     if (!adding) {
-    
+
                         this.publications = response.docs
-    
+
                     } else {
-    
+
                         this.publications = this.publications.concat(response.docs)
-    
+
                         //añadimos linea JQuery para que nos haga la animación de bajar
                         // le pasamos un objeto json como parametro
                         // con la propiedad del body de scrollTop y 500 milisegundos
@@ -91,13 +82,13 @@ export class TimelineComponent implements OnInit {
                     }
 
                     console.log(this.publications)
-                    
+
                 } catch (error) {
                     this.status = 'error'
                     console.log("Error", error)
                 }
             },
-            (error) => {                
+            (error) => {
                 this.status = 'error'
                 console.log("Error", error)
 
@@ -106,44 +97,21 @@ export class TimelineComponent implements OnInit {
 
     }
 
-    //#cambiar borrar
-    // public noMore = false;
-    // viewMore(){
-    //             //esta logica no está bien hecha, mirar con mami y sigoamami
-
-
-
-
-    //     console.log(this.publications.length)
-    //     console.log(this.total)
-    //     console.log(this.itemsPerPage)
-
-
-    //     if(this.publications.length == this.total){
-    //         this.noMore = true;
-    //     } else {
-    //         this.page += 1;
-    //     }
-
-    //     this.getPublications(this.page, true);
-    // }
-
     public noMore = false;
-    viewMore() {       
+    viewMore() {
         console.log(this.page, this.pages)
-        
+
         this.page += 1
         if (this.page == this.pages) {
             this.noMore = true;
         }
-        console.log("ahora el this.page vale: ", this.page) 
+        console.log("ahora el this.page vale: ", this.page)
         this.getPublications(this.page, true);
     }
 
     ngOnInit() {
-        
         console.log('timeline cargado')
         this.getPublications(this.page, true);
     }
-    
-    }
+
+}

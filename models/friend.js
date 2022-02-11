@@ -1,3 +1,4 @@
+//#friendModel
 'use strict';
 const {
   Model

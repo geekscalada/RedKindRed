@@ -1,4 +1,4 @@
-//#cambiar para no tener surname en la tabla de publicaiones
+//#publicationModel
 const sequelizePaginate = require('sequelize-paginate')
 'use strict';
 const {

@@ -24,31 +24,23 @@ export class UserEditComponent implements OnInit {
     public url:string
 
     constructor (
-
         private _route: ActivatedRoute,
         private _router: Router,
         private _userService: UserService,
         private _uploadService: UploadService,
         private _http: HttpClient
-
-
-
     ) {
-
         this.title = ' Actualizar mis datos'
         this.user = this._userService.getIdentity();
         this.identity = this.user;
         this.token = this._userService.getToken();
         this.url = GLOBAL.url
-
-
     }
 
     ngOnInit(){
         console.log('user-edit component se ha cargado')
     }
-
-    //# aquí estamos llamando a 2 métodos a la vez, separar
+    //# aquí estamos llamando a 2 métodos a la vez
     OnSubmit(form:any){       
         this._userService.updateUser(this.user).subscribe(
             response => {                
@@ -66,22 +58,18 @@ export class UserEditComponent implements OnInit {
                     for (var i = 0; i < this.filesToUpload.length; i++) {                        
                         formData.append("files", this.filesToUpload[i], this.filesToUpload[i].name);
                     }
-                    
 
                     let headers = new HttpHeaders()
                         .set('Authorization', JSON.stringify(this._userService.getToken()))
 
                     let identity = this._userService.getIdentity();
-
                     let userId = identity.id;
-
 
                     this._http.post(this.url+'upload-image-user/' + userId, formData, { headers: headers })
                         .subscribe((response: any) => {
                             console.log('response received is ', response);
                         })
                 }
-
             },
             error => {
                 let errorMessage = <any>error                
@@ -93,21 +81,12 @@ export class UserEditComponent implements OnInit {
         )
     }
 
-    //la inicializamos, diciéndole que está favía
+    //la inicializamos vacía
     public filesToUpload: Array<File> = []
-
-    
-
     
     fileChangeEvent(fileInput:any){
-
         this.filesToUpload = <Array<File>>fileInput.target.files;
-
     }
-
-
-
-
 }
 
 

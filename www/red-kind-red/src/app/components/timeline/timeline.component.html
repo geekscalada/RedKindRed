@@ -8,16 +8,14 @@
                         <div class="mytext">{{publication.text}}</div> 
                     </div>                          
                 
-        </div>         
+        </div>
+        
+        <h1 *ngIf="publications.length==0" style="color:rgb(163, 163, 180)"> Vaya, parece que no hay ninguna publicación :( </h1>
+        
         
     </div>
 
-    <button class='viewmore' (click)="viewMore()" *ngIf="!noMore">
+    <button class='viewmore' (click)="viewMore()" *ngIf="!noMore && publications.length>0">
         Ver más publicaciones
-    </button>
-    
-
-           
-        
-    
+    </button>    
 </body>

@@ -1,15 +1,10 @@
-//#cambiar esto
+//#index.js
 
 const app = require('./conf');
 const { Sequelize } = require('./database');
 const port = 3900;  
 
-
-// si esto no está conectado, el backend no estará comunicado
-// con el frontend
 const db = require('./database')
-//require('./associations')
-const associatons = require('./associations')
 
 async function startBackend() {
 

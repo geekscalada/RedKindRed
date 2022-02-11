@@ -1,4 +1,4 @@
-//#cambiado
+//#publicationRoutes
 const appexpress = require('express');
 const publicationController = require('../controllers/publication-controller');
 

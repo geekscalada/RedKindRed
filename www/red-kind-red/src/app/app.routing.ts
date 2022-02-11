@@ -2,7 +2,6 @@ import { ModuleWithProviders } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router"
 
 // Importamos componentes
-
 import { LoginComponent } from './components/loging/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from "./components/home/home.component";
@@ -26,8 +25,6 @@ const appRoutes: Routes =  [
     {path: 'publicar', component: TakePublicationComponent},
     // ruta si no encuentra nada debe ser la ultima
     {path: '**', component: LoginComponent}
-    
-
 ]
 
 //exportar el provider de rutas y exportar el modulo de rutas
@@ -36,7 +33,6 @@ const appRoutes: Routes =  [
 export const AppRoutingProviders: any[] = []
 
 // le tenemos que pasar por parámetros la constante con la config creada
-// este any lo tengo que hacer yo xa q no me de fallo
 export const routing: ModuleWithProviders<any> = RouterModule.forRoot(appRoutes);
 
 

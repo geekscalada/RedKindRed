@@ -28,17 +28,12 @@ import { HomeComponent } from './components/home/home.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UsersComponent } from './components/users/users.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
-import { UploadPageComponent } from './components/user-edit/upload-image.component';
 
 
 //importamos pipes
 
 import { FilterPipe } from './pipes/searching-filter.pipe';
-import { FileUploadComponent } from './components/user-edit/upload-image.component2';
 import { TakePublicationComponent } from './components/sidebar/takepublication.component';
-
-
-
 
 
 // Añadimos los routings
@@ -53,10 +48,6 @@ import { TakePublicationComponent } from './components/sidebar/takepublication.c
     TakePublicationComponent,
     TimelineComponent,
     FilterPipe,
-    UploadPageComponent,
-    FileUploadComponent
-     
-   
   ],
   imports: [
     BrowserModule,
@@ -66,9 +57,6 @@ import { TakePublicationComponent } from './components/sidebar/takepublication.c
     ReactiveFormsModule,
     HttpClientModule,
     MomentModule,
-    
-   
-     
   ],
   providers: [
     AppRoutingProviders

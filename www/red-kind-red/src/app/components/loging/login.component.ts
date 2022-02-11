@@ -10,17 +10,14 @@ import { UserService } from 'src/app/services/user.service';
     providers: [UserService]
 })
 
-
 export class LoginComponent implements OnInit {
 
     public title:string;
     public user:User;
     public status:any;
-
-    // propiedad identity llevará el objeto del user identificado
-    // token el churro mega string que nos da el jwt
-    // con lo que nos autenticamos en la api
+    // propiedad identity llevará el objeto del user identificado    
     public identity:any;
+    //token jwt que nos trae la api
     public token:any;
 
 
@@ -30,7 +27,7 @@ export class LoginComponent implements OnInit {
         private _userService: UserService
     ){
         this.title = 'Acceder'
-        this.user = new User("","","","","","","");        
+        this.user = new User("","","","","","","");     
 
     }
 
@@ -55,8 +52,7 @@ export class LoginComponent implements OnInit {
                     if(this.token.length <= 0){
                         this.status = 'error'
                     } else {
-                        this.status = 'success'
-                        
+                        this.status = 'success'                        
                         // persistir token del usuario
                         console.log("token - >", this.token)
                         localStorage.setItem('token',this.token)
@@ -65,7 +61,6 @@ export class LoginComponent implements OnInit {
                 }
             },
             error => {
-
                 var errorMessage = <any>error
                 if(errorMessage != null) {
                     this.status = 'error'
