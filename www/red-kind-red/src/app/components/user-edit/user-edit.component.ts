@@ -31,8 +31,8 @@ export class UserEditComponent implements OnInit {
         private _http: HttpClient
     ) {
         this.title = ' Actualizar mis datos'
-        this.user = this._userService.getIdentity();
-        this.identity = this.user;
+        this.identity = this._userService.getIdentity();
+        this.user = this._userService.getIdentity();        
         this.token = this._userService.getToken();
         this.url = GLOBAL.url
     }
@@ -41,9 +41,20 @@ export class UserEditComponent implements OnInit {
         console.log('user-edit component se ha cargado')
     }
     //# aquí estamos llamando a 2 métodos a la vez
-    OnSubmit(form:any){       
-        this._userService.updateUser(this.user).subscribe(
-            response => {                
+    OnSubmit(form:any){        
+
+        console.log(this.user)
+        console.log(this.identity)
+        let userId = this.identity.id;        
+        if (this.user.nick == this.identity.nick && 
+            this.user.email == this.identity.email) {
+            
+           return this.updateAvatar();
+
+        }       
+        
+        return this._userService.updateUser(this.user).subscribe(                
+            response => {
                 if(!response.message) {
                     this.status = 'error'
                     throw new Error('No hay usuario en la respuesta')
@@ -51,24 +62,8 @@ export class UserEditComponent implements OnInit {
                 } else {
                     this.status = 'success'
                     localStorage.setItem('identity', JSON.stringify(this.user))
-                    this.identity = this.user; 
-
-                    let formData = new FormData();
-                    
-                    for (var i = 0; i < this.filesToUpload.length; i++) {                        
-                        formData.append("files", this.filesToUpload[i], this.filesToUpload[i].name);
-                    }
-
-                    let headers = new HttpHeaders()
-                        .set('Authorization', JSON.stringify(this._userService.getToken()))
-
-                    let identity = this._userService.getIdentity();
-                    let userId = identity.id;
-
-                    this._http.post(this.url+'upload-image-user/' + userId, formData, { headers: headers })
-                        .subscribe((response: any) => {
-                            console.log('response received is ', response);
-                        })
+                    this.identity = this.user;
+                    this.updateAvatar();
                 }
             },
             error => {
@@ -81,12 +76,34 @@ export class UserEditComponent implements OnInit {
         )
     }
 
+    updateAvatar() {
+        let userId = this.identity.id;
+        let formData = new FormData();
+
+        for (var i = 0; i < this.filesToUpload.length; i++) {
+            formData.append("files", this.filesToUpload[i], this.filesToUpload[i].name);
+        }
+
+        
+
+        return this._userService.uploadAvatar(userId, formData)
+            .subscribe(
+                (response: any) => {
+                this.status = 'success'
+                console.log('response received is ', response);
+            })
+    }
+
     //la inicializamos vacía
     public filesToUpload: Array<File> = []
     
     fileChangeEvent(fileInput:any){
         this.filesToUpload = <Array<File>>fileInput.target.files;
     }
+
+   
+
+
 }
 
 

@@ -302,12 +302,17 @@ module.exports = class userController {
         }
     }
 
-
     static async updateUser(req, res) {
 
         try {
+
+            console.log(req.user)
+            console.log("asdfasdfasdfasd")
+            console.log(req.body)
+
             let userId = req.user.id;
             let update = req.body;
+            
 
             if (userId != update.id) {
                 return res.status(500).send({
@@ -315,13 +320,30 @@ module.exports = class userController {
                 })
             }
 
-            let exists = await User.findOne({
-                where: {
-                    [Sequelize.Op.or]: [{ nick: update.nick.toLowerCase() }, { email: update.email.toLowerCase() }]
-                }
-            });
+            let existsMail = false
+            let existsNick = false
 
-            if (exists) {
+            if (req.user.nick != req.body.nick){
+
+                existsNick = await User.findOne({
+                    where: {
+                        nick: update.nick.toLowerCase() 
+                    }
+                });
+
+            }
+
+            if (req.user.email != req.body.email){
+
+                existsMail = await User.findOne({
+                    where: {
+                        nick: update.email.toLowerCase() 
+                    }
+                });
+
+            }
+
+            if (existsNick || existsMail) {
                 return res.status(500).send({
                     message: 'Este email o nick ya existen'
                 })
@@ -379,6 +401,9 @@ module.exports = class userController {
                 }, {
                     where: { 'id': userId }
                 })
+
+                return res.status(200).send({ message: 'Avatar actualizazado' })
+
             } catch (error) {
 
                 return res.status(400).send({ message: 'No se ha podido actualizar ' + error })

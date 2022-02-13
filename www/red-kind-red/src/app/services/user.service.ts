@@ -134,12 +134,19 @@ export class UserService{
 
     let params = JSON.stringify(user);
     let headers = new HttpHeaders().set('Content-type', 'application/json')
-    .set('Authorization', this.getToken())
-
+    .set('Authorization', this.getToken())   
    
 
     return this._http.put(this.url+'update-user/'+user.id, params,{headers: headers})
 
+    }
+
+    uploadAvatar(userId: String, formData: FormData ): Observable<any>{
+     
+        let headers = new HttpHeaders()
+            .set('Authorization', JSON.stringify(this.getToken()))
+        return this._http.post(this.url + 'upload-image-user/' + userId, formData, { headers: headers })
+        
     }
 
     getUsers(page:any): Observable<any>{
