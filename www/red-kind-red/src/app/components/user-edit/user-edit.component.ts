@@ -40,9 +40,9 @@ export class UserEditComponent implements OnInit {
     ngOnInit(){
         console.log('user-edit component se ha cargado')
     }
-    //# aquí estamos llamando a 2 métodos a la vez
-    OnSubmit(form:any){        
-
+    //###CAMBIAR
+    // mejorar un poco los métodos a nivel parámetros
+    OnSubmit(form:any){
         console.log(this.user)
         console.log(this.identity)
         let userId = this.identity.id;        

@@ -331,17 +331,19 @@ module.exports = class userController {
                     }
                 });
 
-            }
+            }           
 
-            if (req.user.email != req.body.email){
 
+            if (req.user.email != req.body.email){                
                 existsMail = await User.findOne({
                     where: {
-                        nick: update.email.toLowerCase() 
+                        email: update.email.toLowerCase() 
                     }
                 });
 
             }
+
+            console.log(existsMail)
 
             if (existsNick || existsMail) {
                 return res.status(500).send({
@@ -349,8 +351,6 @@ module.exports = class userController {
                 })
             }
 
-
-            //añadir que valide si los datos ya están en uso
             await User.update({
                 'name': update.name,
                 'surname': update.surname,
