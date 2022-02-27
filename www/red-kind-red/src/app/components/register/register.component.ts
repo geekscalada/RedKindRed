@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
 
     ){
         this.title = 'Regístrate'
-        this.user = new User("","","","","","","")
+        this.user = new User("","","","","","","", "")
     }
 
     ngOnInit(){

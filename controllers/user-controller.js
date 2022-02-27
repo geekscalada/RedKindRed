@@ -6,6 +6,7 @@ const path = require('path')
 
 // Services
 const jwt = require('../services/jwt');
+const pvKey = require('../services/secret')
 
 // Database and sequelize
 const Sequelize = require('sequelize');
@@ -39,7 +40,16 @@ module.exports = class userController {
                 return res.status(404).send({
                     message: 'Falta algún campo'
                 })
+            }   
+
+            console.log(pvKey.pvKey);
+
+            if (params.pvKey != pvKey.pvKey){
+                return res.status(404).send({
+                    message: 'La clave no es correcta'
+                })
             }
+
             let exists = await User.findOne({
                 where: {
                     [Sequelize.Op.or]: [{ nick: params.nick.toLowerCase() }, { email: params.email.toLowerCase() }]

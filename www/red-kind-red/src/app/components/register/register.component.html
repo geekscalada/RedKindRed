@@ -38,7 +38,14 @@
             <span class="classspan" *ngIf="!password.valid && password.touched">
             La contraseña es obligatoria
             </span>
-            <input type="submit" value="ENVIAR" class="form__submit" [disabled]="!registerForm.form.valid" />
+
+            <input type="text" name="pvKey" placeholder="Clave privada: " #pvKey="ngModel" [(ngModel)]="user.pvKey" class="form__email input" required />
+            <span *ngIf="!nick.valid && nick.touched">
+                La clave es obligatoria
+            </span>
+
+            <input type="submit" value="ENVIAR" class="form__submit" [disabled]="!registerForm.form.valid" />        
+                         
         </form>
     </div>    
    

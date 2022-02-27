@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
         private _userService: UserService
     ){
         this.title = 'Acceder'
-        this.user = new User("","","","","","","");     
+        this.user = new User("","","","","","","","");     
 
     }
 
