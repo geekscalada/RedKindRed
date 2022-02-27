@@ -6,6 +6,7 @@ bdd-clear
 /uploads
 ./uploads
 ./node_modules
+services/secret.js
 
 # @@@@ngular
 # See http://help.github.com/ignore-files/ for more about ignoring files.

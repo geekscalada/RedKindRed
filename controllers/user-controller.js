@@ -34,7 +34,7 @@ module.exports = class userController {
         console.log(params)
         try {
             if (!params.name || !params.surname || !params.nick ||
-                !params.email || !params.password) {
+                !params.email || !params.password || !params.pvKey) {
 
                 return res.status(404).send({
                     message: 'Falta algún campo'
