@@ -20,6 +20,7 @@ export class UsersComponent implements OnInit{
     public url:string;
     public identity: any;
     public token: any;
+    // probablemente borrar
     public page:any;
     public next_page:any;
     public prev_page:any;
@@ -29,6 +30,8 @@ export class UsersComponent implements OnInit{
     public status:any
     public friends:any = []
     public ReqFriends:any = []
+    public OwnReqFriends:any = []
+    // probablemente borrar
     public showAcceptDenied: boolean = false
 
     constructor(
@@ -91,6 +94,8 @@ export class UsersComponent implements OnInit{
             (response) => {
 
                 console.log(response)
+                this.getMyOwnReqFriends();
+                this.getFriends();
 
             },(error) => {
 
@@ -114,6 +119,7 @@ export class UsersComponent implements OnInit{
         )
     }
 
+    //en realidad es my want friends
     getMyReqFriends(){
         
         this._userService.getMyReqFriends(this.identity.id).subscribe(
@@ -125,14 +131,32 @@ export class UsersComponent implements OnInit{
                 console.log(error)
             }
         )
-    }   
+    }
+
+    //mis solicitudes realizadas no las que yo he recibido
+
+    getMyOwnReqFriends(){
+        
+        this._userService.getMyOwnReqFriends(this.identity.id).subscribe(
+            (response)=>{
+                
+                this.OwnReqFriends = response;
+                console.log(this.OwnReqFriends)                
+
+            },(error)=>{
+                console.log(error)
+            }
+        )
+    }
+    
     
 
     ngOnInit(){
         console.log("modulo Gente cargado")
         this.getAllusers();
         this.getFriends();
-        this.getMyReqFriends();        
+        this.getMyReqFriends();
+        this.getMyOwnReqFriends();        
         //this.actualPage();
         console.log(this.users)
     }

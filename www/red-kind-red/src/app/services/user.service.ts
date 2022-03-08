@@ -201,6 +201,16 @@ export class UserService{
 
     }
 
+    getMyOwnReqFriends(id:any){        
+
+        let headers = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', this.getToken())
+
+        return this._http.get(this.url+'getMyOwnReqFriends/'+id, {headers:headers})
+
+    }
+
     
 
     getUser(id:any): Observable<any>{

@@ -70,7 +70,7 @@
                     </button> -->
 
 
-
+                    <!-- ESTO BORRARLO -->
                     <button *ngIf="ReqFriends.indexOf(user.id)>=0 && friends.indexOf(user.id)<0 && showAcceptDenied" class="acceptButton" 
                         (click)="sendRequestToFriend(user.id)">
                     Aceptar
@@ -81,7 +81,7 @@
                     </button>
 
                 <!-- Solicitar amistad // dejar de solicitar-->
-                <div *ngIf="ReqFriends.indexOf(user.id)<0 && friends.indexOf(user.id)<0">
+                <div *ngIf="ReqFriends.indexOf(user.id)<0 && friends.indexOf(user.id)<0 && OwnReqFriends.indexOf(user.id)<0">
                     <button class="requesttofriend"  
                     (click)="sendRequestToFriend(user.id)">
 
@@ -89,7 +89,18 @@
                     Solicitad amistad
                     </button>
                 </div>
-                
+
+                <!-- Has solicitado amistad -->
+                <div *ngIf="ReqFriends.indexOf(user.id)<0 && friends.indexOf(user.id)<0 && OwnReqFriends.indexOf(user.id)>=0">
+                    <button class="owntofriend"  
+                    (click)="sendRequestToFriend(user.id)">
+
+                    <span class="glyphicon glyphicon-plus-sign" ></span>
+                    Has pedido ser su amigo
+                    </button>
+                </div>
+
+
             </div>
         </div>
     </div>

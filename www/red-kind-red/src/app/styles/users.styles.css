@@ -99,6 +99,14 @@ body{
 
 }
 
+.owntofriend {
+    background-color: #317e53;
+    border: 2px solid black;
+    width: 180px;
+    height: 40px;
+    font-size: 14px;
+}
+
 .amigo{
 
     background-color: #410a79;
@@ -120,10 +128,6 @@ body{
 
 }
 
-.wantfriend:hover{
-    background-color: #f5102e;
-    border: 3px rgb(192, 192, 192);
-}
 
 .acceptButton:hover, .denyButton:hover{
    

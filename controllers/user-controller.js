@@ -312,6 +312,36 @@ module.exports = class userController {
         }
     }
 
+    static async getMyOwnReqFriends(req, res) {
+
+        try {
+            console.log(req.user.id)
+            let friends = await Friend.findAll(
+                {
+                    atributes: ['id'], where: { 'IDfriend': req.user.id.toString(), 'status': 'received' }
+                })
+            console.log("My own friends****************")      
+            console.log(friends)    
+
+            let arrFriends = []
+
+            for (let idFriend in friends) {
+                arrFriends.push(
+                    friends[idFriend]['IDtarget']
+                )
+            }
+
+            return res.status(200).send(
+                arrFriends
+            )
+
+            //console.log(friends[0]['dataValues'])//['Friend'])//['id'])
+        } catch (error) {
+            console.log("estamos en el error")
+            console.log(error)
+        }
+    }
+
     static async updateUser(req, res) {
 
         try {

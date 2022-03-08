@@ -24,6 +24,7 @@ api.get('/get-image-user/:imageFile', userController.getImageFile)
 api.post('/sendReqFriend', middlewareAuthentication.jwtAuth, userController.sendRequestToFriend)
 api.get('/getFriends/:id', middlewareAuthentication.jwtAuth, userController.getFriends)
 api.get('/getMyReqFriends/:id', middlewareAuthentication.jwtAuth, userController.getMyReqFriends)
+api.get('/getMyOwnReqFriends/:id', middlewareAuthentication.jwtAuth, userController.getMyOwnReqFriends)
 
 
 module.exports = api;
