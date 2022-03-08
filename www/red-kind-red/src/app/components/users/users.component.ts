@@ -52,7 +52,7 @@ export class UsersComponent implements OnInit{
     //#cambiar y meterlo en el constructor
     filterUsers= ''
 
-
+    // esto borrarlo probablemente
     showAcceptDeniedFunction(value: boolean){
         if(!value){
             return setTimeout( ()=> {this.showAcceptDenied = false}, 1000)

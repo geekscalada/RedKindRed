@@ -2,3 +2,10 @@ html, body {
     background-color: rgb(235 235 237);
     font-family: 'Raleway', sans-serif 
 }
+
+img {
+    width: 100%;
+    height: auto;
+}
+/* 
+ @import "~bootstrap/dist/css/bootstrap.css" */

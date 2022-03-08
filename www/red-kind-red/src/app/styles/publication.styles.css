@@ -139,6 +139,16 @@ textarea{
     text-align: center;   
 }
 
+/* MODAL */
+
+.modal-content {
+
+    width: 800px;
+    height: 800px;
+
+}
+
+
 @media screen and (max-width:768px){
     body{
         padding: 60px 0;

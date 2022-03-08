@@ -6,6 +6,7 @@ import { UserService } from "../../services/user.service";
 import { UploadService } from "../../services/upload.service"
 import { GLOBAL } from "../../services/global"
 import { PublicationService } from "../../services/publications.service";
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 const $ = require('jquery')
@@ -15,7 +16,7 @@ const $ = require('jquery')
     selector: 'timeline',
     templateUrl: './timeline.component.html',
     styleUrls: ['../../styles/timeline.styles.css'],
-    providers: [UserService, PublicationService]
+    providers: [UserService, PublicationService, NgbModal]
 })
 
 export class TimelineComponent implements OnInit {
@@ -40,7 +41,8 @@ export class TimelineComponent implements OnInit {
         private _route: ActivatedRoute,
         private _router: Router,
         private _userService: UserService,
-        private _publicationService: PublicationService
+        private _publicationService: PublicationService,
+        private _modalService: NgbModal
     ) {
         this.title = "Timeline"
         this.url = GLOBAL.url
@@ -48,6 +50,12 @@ export class TimelineComponent implements OnInit {
         this.token = this._userService.getToken();
     }
 
+    open(content :any) {
+        console.log(content)
+        this._modalService.open(content);
+    }
+    
+    
     // adding es un parámetro que añadimos para 
     // paginar nuevas publicaciones
     // si no añadimos ese parámetro, es false

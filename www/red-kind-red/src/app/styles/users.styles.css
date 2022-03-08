@@ -101,7 +101,7 @@ body{
 
 .amigo{
 
-    background-color: #571995;
+    background-color: #410a79;
     border: 2px solid black;
     width: 180px;
     height: 40px;
@@ -111,7 +111,7 @@ body{
 
 .wantfriend{
 
-    background-color: #951961;
+    background-color: #b11a72;
     border: 2px solid black;
     width: 180px;
     height: 40px;
@@ -164,7 +164,17 @@ button:focus {
 
 }
 
+/* DROPDOWN BUTTONS */
 
+.myacceptbutton {
+    color: rgba(12, 104, 12, 0.74);
+    font-weight: 400;
+}
+
+.mydenybutton {
+    color: rgba(170, 15, 15, 0.753);
+    font-weight: 400;
+}
 
 
 

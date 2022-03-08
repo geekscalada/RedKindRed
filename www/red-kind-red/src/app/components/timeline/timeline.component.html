@@ -1,21 +1,38 @@
 <body>
     <div class="publicationscontainer">
-        <div class="publication" *ngFor="let publication of publications">        
-                       
-                    <img class="myimg" src="{{ url + 'get-image-pub/'+ publication.file}}" *ngIf="publication.file">
-                    <div class="mycard">
-                        <div class="nameanddate">{{publication.name}}&nbsp;&nbsp;&nbsp;&nbsp; {{(publication.createdAt) | amLocale: 'es' | amTimeAgo}}</div>
-                        <div class="mytext">{{publication.text}}</div> 
-                    </div>                          
+        <div class="publication" *ngFor="let publication of publications">
+
+            <img (click)="open(content)" class="myimg" src="{{ url + 'get-image-pub/'+ publication.file}}"
+                *ngIf="publication.file">
+            <div class="mycard">
+                <div class="nameanddate">{{publication.name}}&nbsp;&nbsp;&nbsp;&nbsp; {{(publication.createdAt) |
+                    amLocale: 'es' | amTimeAgo}}</div>
+                <div class="mytext">{{publication.text}}</div>
+            </div>
+
+            <ng-template class="mycontent" #content let-c="close" let-d="dismiss">
+                <img class="modal-img" src="{{ url + 'get-image-pub/'+ publication.file}}">               
                 
+                <div class="modal-footer">
+                    <button type="button" class="mybtn-outline-dark" (click)="c('Save click')">Ver comentarios</button>
+                    <button type="button" class="mybtn-outline-dark" (click)="c('Save click')">Cerrar</button>
+                </div>
+                            
+            </ng-template>
+            
+           
+
+
+
         </div>
-        
-        <h1 *ngIf="publications.length==0" style="color:rgb(163, 163, 180)"> Vaya, parece que no hay ninguna publicación :( </h1>
-        
-        
+
+        <h1 *ngIf="publications.length==0" style="color:rgb(163, 163, 180)"> Vaya, parece que no hay ninguna publicación
+            :( </h1>
+
+
     </div>
 
     <button class='viewmore' (click)="viewMore()" *ngIf="!noMore && publications.length>0">
         Ver más publicaciones
-    </button>    
+    </button>
 </body>

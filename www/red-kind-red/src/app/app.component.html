@@ -1,6 +1,6 @@
         
         <div class="contenedor nav-content">
-          <a [routerLink]="['/login']" href="#" class="links">{{title}}</a>
+          <a [routerLink]="['/ngbd-modal-options']" href="#" class="links">{{title}}</a>
           <a [routerLink]="['/publicaciones']" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="links" ><span class="glyphicon glyphicon-camera"></span> Publicaciones</a>
           <a [routerLink]="['/amigos']" *ngIf="identity" class="links" [routerLink]="['/amigos']" [routerLinkActive]="['active']"><span class="glyphicon glyphicon-user">  </span>Amigos</a>
           <a [routerLink]="['/mis-datos']" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="links"><span class="glyphicon glyphicon-cog"></span>Mis datos</a>
@@ -25,7 +25,7 @@
 
 
 
-<!-- class="contenedor nav-content" -->
+
 
 
 

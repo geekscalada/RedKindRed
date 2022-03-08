@@ -4,7 +4,7 @@ import { Routes, RouterModule } from "@angular/router"
 // Importamos componentes
 import { LoginComponent } from './components/loging/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { HomeComponent } from "./components/home/home.component";
+import { NgbdModalConfig } from "./components/home/modal-config";
 import { UserEditComponent } from "./components/user-edit/user-edit.component";
 import { UsersComponent } from './components/users/users.component';
 import { TimelineComponent } from "./components/timeline/timeline.component";
@@ -17,7 +17,7 @@ const appRoutes: Routes =  [
     {path: '', component: LoginComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'home', component: HomeComponent},
+    {path: 'ngbd-modal-options', component: NgbdModalConfig},
     {path: 'mis-datos', component: UserEditComponent},
     {path: 'amigos/:page', component: UsersComponent},
     {path: 'amigos', component: UsersComponent},

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 //deprecated -> import { HttpModule } from '@angular/common'
@@ -24,7 +25,7 @@ import { MomentModule } from 'ngx-moment';
 
 import { LoginComponent } from './components/loging/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { HomeComponent } from './components/home/home.component';
+import { NgbdModalConfig } from './components/home/modal-config';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UsersComponent } from './components/users/users.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
@@ -36,13 +37,14 @@ import { FilterPipe } from './pipes/searching-filter.pipe';
 import { TakePublicationComponent } from './components/sidebar/takepublication.component';
 
 
+
 // Añadimos los routings
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent,
+    NgbdModalConfig,
     UserEditComponent,
     UsersComponent,
     TakePublicationComponent,
@@ -57,6 +59,7 @@ import { TakePublicationComponent } from './components/sidebar/takepublication.c
     ReactiveFormsModule,
     HttpClientModule,
     MomentModule,
+    NgbModule,
   ],
   providers: [
     AppRoutingProviders
