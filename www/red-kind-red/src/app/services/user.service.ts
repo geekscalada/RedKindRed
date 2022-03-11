@@ -6,7 +6,8 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 // Para poder recoger las respuestas que nos devuelve la API
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
+
 
 //Archivo que definimos nosotros mismos y que es donde declaramos
 // ciertas variables que usaremos
@@ -14,6 +15,8 @@ import { GLOBAL } from "./global"
 
 // Modelo usuario
 import { User } from "../models/user";
+
+import { BehaviorSubject } from 'rxjs';
 
 
 // con el decorador injectable le estamos diciendo que esta clase la podemos
@@ -31,6 +34,29 @@ export class UserService{
     ){
         this.url = GLOBAL.url;
     }
+
+    // Metodo para enviar mensajes entre componentes
+
+    private subject = new Subject();
+    public subject2 = new Subject();
+    
+    
+
+    sendMessage(message :any) {
+        console.log("vamos a enviar el mensaje")        
+        this.subject2.next(message);
+    }
+
+    private messageSource = new BehaviorSubject('default message');
+    currentMessage = this.messageSource.asObservable();
+
+  
+
+    changeMessage(message: string) {
+        this.messageSource.next(message)
+    }
+    
+
 
     /* Al usar el método nuevo Httpclient ya no tenemos que mapear
     respuestas ni nada. Simplemente decirle que lo que va a devolver
@@ -84,6 +110,18 @@ export class UserService{
            }
 
            return this.identity          
+        
+    }
+
+    getIdentityFromDB(user: any): Observable<any>{
+
+        console.log("myuserrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr" ,user)
+
+        let params = JSON.stringify(user)
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+
+        return this._http.post(this.url+'getIdentityFromDB', params, {headers:headers} )
+
         
     }
 

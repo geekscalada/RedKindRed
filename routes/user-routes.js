@@ -25,6 +25,7 @@ api.post('/sendReqFriend', middlewareAuthentication.jwtAuth, userController.send
 api.get('/getFriends/:id', middlewareAuthentication.jwtAuth, userController.getFriends)
 api.get('/getMyReqFriends/:id', middlewareAuthentication.jwtAuth, userController.getMyReqFriends)
 api.get('/getMyOwnReqFriends/:id', middlewareAuthentication.jwtAuth, userController.getMyOwnReqFriends)
+api.post('/getIdentityFromDB', userController.getIdentityFromDB)
 
 
 module.exports = api;

@@ -6,6 +6,7 @@ import { User } from 'src/app/models/user';
 
 import { GLOBAL } from 'src/app/services/global';
 import { Console } from 'console';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
     selector: 'users',
@@ -39,6 +40,7 @@ export class UsersComponent implements OnInit{
         private _route: ActivatedRoute,
         private _router: Router,
         private _userService: UserService,
+        public dataService: DataService
 
 
     ) {
@@ -51,6 +53,8 @@ export class UsersComponent implements OnInit{
         this.users = []
         
     }
+
+    
 
     //#cambiar y meterlo en el constructor
     filterUsers= ''
@@ -158,7 +162,8 @@ export class UsersComponent implements OnInit{
         this.getMyReqFriends();
         this.getMyOwnReqFriends();        
         //this.actualPage();
-        console.log(this.users)
+        console.log(this.users)        
+        
     }
 
 }

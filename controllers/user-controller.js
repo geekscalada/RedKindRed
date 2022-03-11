@@ -93,6 +93,7 @@ module.exports = class userController {
     }
 
     static async loginUser(req, res) {
+        
 
         let params = req.body;
         let email = params.email
@@ -465,6 +466,19 @@ module.exports = class userController {
             return res.status(200).send({ message: message })
         })
 
+    }
+
+    static async getIdentityFromDB(req, res){
+
+
+        let email = req.body.email
+
+        const userInBDD = await User.findOne(
+             { where: { email: email } })
+
+        console.log("++++++++++++++++",userInBDD)
+
+        return res.status(200).send({ userInBDD })
     }
 
 

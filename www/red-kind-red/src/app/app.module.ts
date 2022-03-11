@@ -7,7 +7,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {HttpClientModule} from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent } from './components/header-app-component/app.component';
 
 // Aquí tenemos que importar lo que hemos hecho en el fichero
 // app.routing.ts

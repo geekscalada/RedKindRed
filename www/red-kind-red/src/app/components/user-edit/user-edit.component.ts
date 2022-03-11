@@ -6,6 +6,8 @@ import { UserService } from "src/app/services/user.service";
 import { UploadService } from "src/app/services/upload.service";
 import {GLOBAL}  from "../../services/global"
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { DataService } from "src/app/services/data.service";
+
 
 @Component({
     selector: 'user-edit',
@@ -28,23 +30,24 @@ export class UserEditComponent implements OnInit {
         private _router: Router,
         private _userService: UserService,
         private _uploadService: UploadService,
-        private _http: HttpClient
+        private _http: HttpClient,
+        private dataService: DataService
     ) {
         this.title = ' Actualizar mis datos'
         this.identity = this._userService.getIdentity();
         this.user = this._userService.getIdentity();        
         this.token = this._userService.getToken();
-        this.url = GLOBAL.url
-    }
+        this.url = GLOBAL.url    }
+
+    
 
     ngOnInit(){
-        console.log('user-edit component se ha cargado')
+        console.log('user-edit component se ha cargado')   
+
     }
     //###CAMBIAR
     // mejorar un poco los métodos a nivel parámetros
-    OnSubmit(form:any){
-        console.log(this.user)
-        console.log(this.identity)
+    OnSubmit(form:any){        
         let userId = this.identity.id;        
         if (this.user.nick == this.identity.nick && 
             this.user.email == this.identity.email) {
@@ -82,15 +85,14 @@ export class UserEditComponent implements OnInit {
 
         for (var i = 0; i < this.filesToUpload.length; i++) {
             formData.append("files", this.filesToUpload[i], this.filesToUpload[i].name);
-        }
-
-        
+        }        
 
         return this._userService.uploadAvatar(userId, formData)
             .subscribe(
                 (response: any) => {
-                this.status = 'success'
-                console.log('response received is ', response);
+                this.status = 'success'                
+                this.dataService.sendMessage("Mensaje de Avatar cambiado");
+                
             })
     }
 
@@ -101,7 +103,7 @@ export class UserEditComponent implements OnInit {
         this.filesToUpload = <Array<File>>fileInput.target.files;
     }
 
-   
+    
 
 
 }
