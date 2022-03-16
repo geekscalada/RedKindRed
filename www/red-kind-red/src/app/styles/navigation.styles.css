@@ -126,6 +126,7 @@ body {
     overflow: hidden;
     display: flex;
     height: auto;
+    max-height: 61px;
     background: #09083d;
 
 }

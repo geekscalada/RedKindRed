@@ -68,11 +68,11 @@
                   <div class="space"></div>
                   <a mat-list-item [routerLink]="['/login']" (click)="sidenav.close();clickoutsidemenu()" [routerLinkActive]="['active']" *ngIf="!identity" class="linkSideMenu"><span class="glyphicon glyphicon-log-in" ></span>Login</a>
                   <a mat-list-item [routerLink]="['/register']" (click)="sidenav.close();clickoutsidemenu()" [routerLinkActive]="['active']" *ngIf="!identity" href="#" class="linkSideMenu"><span class="glyphicon glyphicon-pencil"></span>Registrarse</a>           
-                  <a mat-list-item class="linkSideMenu" *ngIf="identity" (click)="logout();sidenav.toggle();clickoutsidemenu()" href="#">
+                  <a mat-list-item class="linkSideMenu" *ngIf="identity" (click)="logout();sidenav.toggle()" href="#">
                     Cerrar sesión
                   </a>
                   <div class="spacemenu"></div>
-                  <a class="closemenu" (click)="sidenav.close()" mat-list-item>Cerrar menú</a>
+                  <a class="closemenu" (click)="sidenav.close();clickoutsidemenu()" mat-list-item>Cerrar menú</a>
               </mat-nav-list>
             </mat-sidenav>
             <mat-sidenav-content fxFlexFill>
