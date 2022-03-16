@@ -7,6 +7,7 @@ import { Router, ActivatedRoute, Params, RouterModule} from '@angular/router'
 import { GLOBAL } from 'src/app/services//global';
 import { DataService } from 'src/app/services/data.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

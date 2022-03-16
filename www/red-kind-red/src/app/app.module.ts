@@ -21,6 +21,9 @@ import { MomentModule } from 'ngx-moment';
 
 
 
+
+
+
 //Cargando componente
 
 import { LoginComponent } from './components/loging/login.component';
@@ -36,6 +39,15 @@ import { TimelineComponent } from './components/timeline/timeline.component';
 import { FilterPipe } from './pipes/searching-filter.pipe';
 import { TakePublicationComponent } from './components/sidebar/takepublication.component';
 
+//Importando Angular material 
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 
 // Añadimos los routings
@@ -60,6 +72,14 @@ import { TakePublicationComponent } from './components/sidebar/takepublication.c
     HttpClientModule,
     MomentModule,
     NgbModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatButtonModule,
+    FlexLayoutModule
   ],
   providers: [
     AppRoutingProviders

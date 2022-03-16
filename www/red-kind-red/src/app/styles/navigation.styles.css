@@ -9,7 +9,14 @@ body {
     font-family: 'Raleway', sans-serif 
 }
 
+.mat-primary{
+
+    background: #09083d;
+
+}
+
 .contenedor{
+    display: flex;
     width: 100%;    
     margin: 0.01px;
     padding: 1px;    
@@ -36,12 +43,25 @@ body {
     margin: 0.5px;
     text-decoration: none;
     padding: 2%;
-    color: #fff;
+    color: rgb(255, 255, 255);
     display: inline-block;
     text-align: center;
     font-size: 1.2em;
     font-weight: bold;   
     
+   
+}
+
+.linkSideMenu{
+    width: auto;
+    margin: 0.5px;
+    text-decoration: none;
+    padding: 2%;
+    color: rgb(82, 59, 172);
+    display: inline-block;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
    
 }
 
@@ -82,12 +102,43 @@ body {
     justify-content: right;
 }
 
+/* ANGULAR MATERIAL */
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+    display: flex;
+    /* box-sizing: border-box;
+    padding: 0 16px;
+    width: 100%;
+    flex-direction: row;
+    align-items: center; */
+
+     
+    margin: 0.01px;
+    padding: 1px;    
+    overflow: hidden;
+    display: flex;
+    height: 70px;
+    background: #09083d;
+
+}
+
+.closemenu {
+    color: red;
+    font-weight: bold;
+}
+
+.spacemenu{
+    height: 17px;
+}
 
 
 
-@media screen and (max-width:800px){
+
+
+/* @media screen and (max-width:800px){
     .nav-content{
         justify-content: space-evenly;
+        display: none
     }
 
     .links{
@@ -96,5 +147,5 @@ body {
 
     
    
-}
+} */
 
