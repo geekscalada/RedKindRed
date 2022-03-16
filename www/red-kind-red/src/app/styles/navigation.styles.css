@@ -72,6 +72,10 @@ body {
     
 }
 
+.mynav {
+    position: fixed;
+}
+
 
 .avatar{
     min-width: 45px;
@@ -104,6 +108,10 @@ body {
 
 /* ANGULAR MATERIAL */
 
+.oscurecer {
+   opacity: 32%;
+}
+
 .mat-toolbar-row, .mat-toolbar-single-row {
     display: flex;
     /* box-sizing: border-box;
@@ -112,14 +120,29 @@ body {
     flex-direction: row;
     align-items: center; */
 
-     
+    position: fixed;
     margin: 0.01px;
     padding: 1px;    
     overflow: hidden;
     display: flex;
-    height: 70px;
+    height: auto;
     background: #09083d;
 
+}
+
+.mat-drawer {
+    position: relative;
+    z-index: 4;
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 3;
+    outline: 0;
+    box-sizing: border-box;
+    /* overflow-y: ; */
+    height: 1000px;
+    transform: translate3d(-100%, 0, 0);
 }
 
 .closemenu {

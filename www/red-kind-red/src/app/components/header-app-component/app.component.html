@@ -19,69 +19,86 @@
       </div> --> 
 
       <div>
-        <mat-toolbar color="primary">
-          <mat-toolbar-row>
-            <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-md>
-              <mat-icon>menu</mat-icon>
-            </button>            
-            <span class="menu-spacer"></span>            
-              <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-              
-                <a fxShow="true" fxHide.lt-lg [routerLink]="['/ngbd-modal-options']" href="#" class="links">{{title}}</a>
-                <a fxShow="true" fxHide.lt-lg [routerLink]="['/publicaciones']" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="links" ><span class="glyphicon glyphicon-camera"></span> Publicaciones</a>
-                <a fxShow="true" fxHide.lt-lg  [routerLink]="['/amigos']" *ngIf="identity" class="links" [routerLink]="['/amigos']" [routerLinkActive]="['active']"><span class="glyphicon glyphicon-user">  </span>Amigos</a>
-                <a fxShow="true" fxHide.lt-lg [routerLink]="['/mis-datos']" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="links"><span class="glyphicon glyphicon-cog"></span>Mis datos</a>
-                <a fxShow="true" fxHide.lt-lg [routerLink]="['/publicar']" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="links"><span class="glyphicon glyphicon-upload"> </span>Publicar</a>
-                <div fxShow="true" fxHide.lt-lg class="space"></div>
-                <a fxShow="true" fxHide.lt-lg [routerLink]="['/login']" [routerLinkActive]="['active']" *ngIf="!identity" class="links"><span class="glyphicon glyphicon-log-in" ></span>Login</a>
-                <a fxShow="true" fxHide.lt-lg [routerLink]="['/register']" [routerLinkActive]="['active']" *ngIf="!identity" href="#" class="links"><span class="glyphicon glyphicon-pencil"></span>Registrarse</a>           
-                
-                <a class="avatar" *ngIf="identity">
-                  <!-- cargar foto  del user-->
-                 <img src="{{ url + 'get-image-user/' + identity.image}}" *ngIf="identity.image" />
-                </a>
-                <a fxShow="true" fxHide.lt-lg class="links" *ngIf="identity" (click)="logout()" href="#">
-                  <span class="glyphicon glyphicon-off" ></span>
-                  Cerrar sesión
-                </a>
-              
-              
-             
-            <!-- end fxshow -->
-          </mat-toolbar-row>
-        </mat-toolbar>
-      
-        <mat-sidenav-container fxFlexFill>
-          <mat-sidenav #sidenav>
-            <mat-nav-list>
-              
-              <a href="#" *ngIf="identity" class="linkSideMenu">{{identity.name}}</a>
-                <a mat-list-item [routerLink]="['/publicaciones']" (click)="sidenav.toggle()" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="linkSideMenu" ><span class="glyphicon glyphicon-camera"></span> Publicaciones</a>
-                <a mat-list-item [routerLink]="['/amigos']" (click)="sidenav.toggle()" *ngIf="identity" class="linkSideMenu" [routerLink]="['/amigos']" [routerLinkActive]="['active']"><span class="glyphicon glyphicon-user">  </span>Amigos</a>
-                <a mat-list-item [routerLink]="['/mis-datos']" (click)="sidenav.toggle()" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="linkSideMenu"><span class="glyphicon glyphicon-cog"></span>Mis datos</a>
-                <a mat-list-item [routerLink]="['/publicar']" (click)="sidenav.toggle()" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="linkSideMenu"><span class="glyphicon glyphicon-upload"> </span>Publicar</a>
-                <div class="space"></div>
-                <a mat-list-item [routerLink]="['/login']" (click)="sidenav.toggle()" [routerLinkActive]="['active']" *ngIf="!identity" class="linkSideMenu"><span class="glyphicon glyphicon-log-in" ></span>Login</a>
-                <a mat-list-item [routerLink]="['/register']" (click)="sidenav.toggle()" [routerLinkActive]="['active']" *ngIf="!identity" href="#" class="linkSideMenu"><span class="glyphicon glyphicon-pencil"></span>Registrarse</a>           
-                <a mat-list-item class="linkSideMenu" *ngIf="identity" (click)="logout();sidenav.toggle()" href="#">
-                  Cerrar sesión
-                </a>
-                <div class="spacemenu"></div>
-                <a class="closemenu" (click)="sidenav.toggle()" href="" mat-list-item>Cerrar menú</a>
-            </mat-nav-list>
-          </mat-sidenav>
-          <mat-sidenav-content fxFlexFill>
 
-            <!-- AQUI VA NUESTRO CONTENIDO QUE VIENE POR RUTAS
-            HA DE ESTAR DENTRO DEL MAT-SIDENAV PORQUE TIENE
-            EL MISMO TAMAÑO QUE LA VENTANA LATERAL QUE SE ABRE -->
+        <div>
+
+          <mat-toolbar color="primary">
+            <mat-toolbar-row>
+              <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-md>
+                <mat-icon (click)="clickmenu()">menu</mat-icon>
+              </button>            
+              <span class="menu-spacer"></span>            
+                <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+                
+                  <a fxShow="true" fxHide.lt-lg [routerLink]="['/ngbd-modal-options']" href="#" class="links">{{title}}</a>
+                  <a fxShow="true" fxHide.lt-lg [routerLink]="['/publicaciones']" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="links" ><span class="glyphicon glyphicon-camera"></span> Publicaciones</a>
+                  <a fxShow="true" fxHide.lt-lg  [routerLink]="['/amigos']" *ngIf="identity" class="links" [routerLink]="['/amigos']" [routerLinkActive]="['active']"><span class="glyphicon glyphicon-user">  </span>Amigos</a>
+                  <a fxShow="true" fxHide.lt-lg [routerLink]="['/mis-datos']" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="links"><span class="glyphicon glyphicon-cog"></span>Mis datos</a>
+                  <a fxShow="true" fxHide.lt-lg [routerLink]="['/publicar']" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="links"><span class="glyphicon glyphicon-upload"> </span>Publicar</a>
+                  <div fxShow="true" fxHide.lt-lg class="space"></div>
+                  <a fxShow="true" fxHide.lt-lg [routerLink]="['/login']" [routerLinkActive]="['active']" *ngIf="!identity" class="links"><span class="glyphicon glyphicon-log-in" ></span>Login</a>
+                  <a fxShow="true" fxHide.lt-lg [routerLink]="['/register']" [routerLinkActive]="['active']" *ngIf="!identity" href="#" class="links"><span class="glyphicon glyphicon-pencil"></span>Registrarse</a>           
+                  
+                  <a class="avatar" *ngIf="identity">
+                    <!-- cargar foto  del user-->
+                   <img src="{{ url + 'get-image-user/' + identity.image}}" *ngIf="identity.image" />
+                  </a>
+                  <a fxShow="true" fxHide.lt-lg class="links" *ngIf="identity" (click)="logout()" href="#">
+                    <span class="glyphicon glyphicon-off" ></span>
+                    Cerrar sesión
+                  </a>            
+                
+               
+              <!-- end fxshow -->
+            </mat-toolbar-row>
+          </mat-toolbar>
+
+        </div>        
+        
+        <div>
+          <mat-sidenav-container fxFlexFill>
+            <mat-sidenav #sidenav>
+              <mat-nav-list>
+                
+                <a href="#" *ngIf="identity" class="linkSideMenu">{{identity.name}}</a>
+                  <a mat-list-item [routerLink]="['/publicaciones']" (click)="sidenav.close();clickoutsidemenu()" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="linkSideMenu" ><span class="glyphicon glyphicon-camera"></span> Publicaciones</a>
+                  <a mat-list-item [routerLink]="['/amigos']" (click)="sidenav.close();clickoutsidemenu()" *ngIf="identity" class="linkSideMenu" [routerLink]="['/amigos']" [routerLinkActive]="['active']"><span class="glyphicon glyphicon-user">  </span>Amigos</a>
+                  <a mat-list-item [routerLink]="['/mis-datos']" (click)="sidenav.close();clickoutsidemenu()" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="linkSideMenu"><span class="glyphicon glyphicon-cog"></span>Mis datos</a>
+                  <a mat-list-item [routerLink]="['/publicar']" (click)="sidenav.close();clickoutsidemenu()" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="linkSideMenu"><span class="glyphicon glyphicon-upload"> </span>Publicar</a>
+                  <div class="space"></div>
+                  <a mat-list-item [routerLink]="['/login']" (click)="sidenav.close();clickoutsidemenu()" [routerLinkActive]="['active']" *ngIf="!identity" class="linkSideMenu"><span class="glyphicon glyphicon-log-in" ></span>Login</a>
+                  <a mat-list-item [routerLink]="['/register']" (click)="sidenav.close();clickoutsidemenu()" [routerLinkActive]="['active']" *ngIf="!identity" href="#" class="linkSideMenu"><span class="glyphicon glyphicon-pencil"></span>Registrarse</a>           
+                  <a mat-list-item class="linkSideMenu" *ngIf="identity" (click)="logout();sidenav.toggle();clickoutsidemenu()" href="#">
+                    Cerrar sesión
+                  </a>
+                  <div class="spacemenu"></div>
+                  <a class="closemenu" (click)="sidenav.close()" mat-list-item>Cerrar menú</a>
+              </mat-nav-list>
+            </mat-sidenav>
+            <mat-sidenav-content fxFlexFill>
+              <!-- AQUI PODEMOS METER NUESTRO CONTENIDO QUE VIENE POR RUTAS (ROUTER-OUTLET)
+              así al estar DENTRO DEL MAT-SIDENAV PORQUE TIENE
+              EL MISMO TAMAÑO QUE LA VENTANA LATERAL QUE SE ABRE -->  
+              
+              <!-- OTRA OPCIÓN ES NO METER NADA AQUÍ Y DARLE UN TAMAÑO AL MAT-DRAWER PARA QUE SE 
+              ABRA DE MANERA QUE PODAMOS PONER EL PROPIO NAVBAR FIXED.
+              SI LO HACEMOS ASÍ, TENEMOS QUE HACER UNA PROPIEDAD PARA OSCURECER 
+              YA QUE PERDEMOS LA CAPACIDAD DE QUE LO HAGA EL FXFLEXFILL -->
+              
             
-            <router-outlet></router-outlet>
-          
-          </mat-sidenav-content>
-        </mat-sidenav-container>
+            </mat-sidenav-content>
+          </mat-sidenav-container>
+
+        </div>
+        
       </div>
 
+      <div (click)="sidenav.close();clickoutsidemenu()" [ngClass]="{oscurecer: toggle}">
+        <router-outlet ></router-outlet>
+      </div>
+      
+
+     
         
       
         

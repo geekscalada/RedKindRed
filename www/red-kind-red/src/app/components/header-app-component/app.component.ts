@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Router, ActivatedRoute, Params, RouterModule} from '@angular/router'
 import { GLOBAL } from 'src/app/services//global';
 import { DataService } from 'src/app/services/data.service';
+import { convertTypeAcquisitionFromJson } from 'typescript';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit, DoCheck{
   public identity:any = null;
   //public token:any
   public url:string
+  public toggle = false;
   
   
   constructor(
@@ -86,6 +88,16 @@ export class AppComponent implements OnInit, DoCheck{
         
       }
     )
+
+  }
+
+  clickmenu(){
+    this.toggle = true;
+  }
+
+  clickoutsidemenu(){
+    
+    this.toggle = false;
 
   }
 
