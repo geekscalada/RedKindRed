@@ -114,6 +114,8 @@
 }  
 
 
+/* Normal section */
+
 :root{
     margin: 0;
     padding: 0;
@@ -123,7 +125,7 @@
 
 body{
     font-family: 'Raleway', sans-serif;
-    background-color: rgb(235 235 237);
+    background-color: #cacaef;
     height: auto;       
 }
 
@@ -141,21 +143,21 @@ body{
 }
 
 .publication{
-    /* border: 3px red solid;   */
     width: 49%;
-    height: 550px;
-    margin: 25px 5px 5px 5px;
+    height: auto;
+    margin: 25px 5px 5px;
     padding: 0.1px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center;    
 }
 
 .myimg{     
     width: auto;
     height: auto;
-    max-height:80%;       
+    max-height: 439.84px;
+    max-width: 586.45px;       
     object-fit: cover;
     border-radius: 8px ;
     box-shadow: 11px 9px 13px 2px rgba(0,0,0,0.75)    
@@ -164,17 +166,13 @@ body{
 .mycard {
     width: 80%;
     height: auto;
-    min-height: 70px;
-    max-height: 202px;
-    margin: 25px 2px 2px 2px;        
-    /* border: 3px solid #23232418;  
-    border-radius: 8px ;
-    box-shadow: 11px 9px 13px 2px rgba(0,0,0,0.75); */
+    min-height: 70px;    
+    margin: 25px 2px 2px;
     text-align: center;
     justify-content: center;
     overflow-x: visible;
     overflow-y: auto;
-    overflow-wrap: anywhere;
+    overflow-wrap: anywhere;    
 }
 
 .mycard .nameanddate{
