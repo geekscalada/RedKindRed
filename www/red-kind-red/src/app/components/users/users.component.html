@@ -38,28 +38,21 @@
                 </div> -->
 
 
-                <div class="row" *ngIf="friends.indexOf(user.id)>=0">
-                    <div class="col">
-                      <div ngbDropdown class="d-inline-block">
-                        <button class="amigo" id="dropdownBasic1" ngbDropdownToggle>Es tu amigo</button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                          <button class="mydenybutton" ngbDropdownItem>Dejar de ser su amigo</button>                          
-                        </div>
-                      </div>
+                <div ngbDropdown *ngIf="friends.indexOf(user.id)>=0">
+                    <button class="amigo" id="dropdownBasic1" ngbDropdownToggle>Es tu amigo</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button class="mydenybutton" ngbDropdownItem>Dejar de ser su amigo</button>
                     </div>
                 </div>
-
-                <div class="row" *ngIf="ReqFriends.indexOf(user.id)>=0 && friends.indexOf(user.id)<0">
-                    <div class="col">
-                      <div ngbDropdown class="d-inline-block">
-                        <button class="wantfriend" id="dropdownBasic1" ngbDropdownToggle>Quiere ser tu amigo</button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                          <button class="myacceptbutton" ngbDropdownItem (click)="sendRequestToFriend(user.id)">Aceptar solicitud</button>
-                          <button class="mydenybutton" ngbDropdownItem>Denegar solicitud</button>                           
-                        </div>
-                      </div>
+                
+                
+                <div ngbDropdown *ngIf="ReqFriends.indexOf(user.id)>=0 && friends.indexOf(user.id)<0">
+                    <button class="wantfriend" id="dropdownBasic1" ngbDropdownToggle>Quiere ser tu amigo</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button class="myacceptbutton" ngbDropdownItem (click)="sendRequestToFriend(user.id)">Aceptar solicitud</button>
+                        <button class="mydenybutton" ngbDropdownItem>Denegar solicitud</button>
                     </div>
-                </div>
+                </div>                 
 
                 
                     <!-- <button *ngIf="ReqFriends.indexOf(user.id)>=0 && friends.indexOf(user.id)<0" class="wantfriend" 

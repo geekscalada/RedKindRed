@@ -180,6 +180,12 @@ button:focus {
     font-weight: 400;
 }
 
+/* para evitar que los botones pasen por encima del navbar
+al hacer scrol */
+.dropdown {
+    position: unset;
+}
+
 
 
 
