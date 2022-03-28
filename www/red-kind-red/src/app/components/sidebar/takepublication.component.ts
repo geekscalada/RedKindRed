@@ -21,6 +21,13 @@ export class TakePublicationComponent implements OnInit{
     public status:any
     public publication:Publication
 
+
+    // esto cambiarlo por un over o un debounce
+
+    public activateSubmit:boolean;
+
+
+
     constructor (
 
         private _userService: UserService,
@@ -38,7 +45,10 @@ export class TakePublicationComponent implements OnInit{
             this.identity.id,
           ""  
         )
+        this.activateSubmit=true;
     }
+
+
 
     ngOnInit() {
         console.log("Sidebar Cargado")        
@@ -46,7 +56,11 @@ export class TakePublicationComponent implements OnInit{
     
     //directiva NgModel rellena el formulario con el modelo 
     onSubmit(form:any) {
-        console.log(this.publication)
+        
+        if (!this.activateSubmit) return this.status='error';
+
+        this.activateSubmit = false;        
+        
         let formData = new FormData();
         
         for (var i = 0; i < this.filesToUpload.length; i++) {                        
@@ -56,7 +70,7 @@ export class TakePublicationComponent implements OnInit{
 
         formData.append("publication", JSON.stringify(this.publication))
 
-        this._publicationService.addPublication(this.token, formData).subscribe(
+        return this._publicationService.addPublication(this.token, formData).subscribe(
             response => {
             console.log("respuesta es: ", response)
                 if(response){
@@ -65,17 +79,17 @@ export class TakePublicationComponent implements OnInit{
                     // this.publication = response.publication
                    
                     this.status = 'success'
-                    form.reset();
+                    form.reset();                    
+                    return this.activateSubmit = true;
                 } else {
-                    this.status = 'error'
+                   return this.status = 'error'
                 }
             },
             error => {
                 console.log(error)
                 let errorMessage = <any>error
-                if(errorMessage != null) {
-                    this.status = 'error'
-                }
+                return this.status = 'error'
+                
             }
         )        
     }
@@ -83,7 +97,19 @@ export class TakePublicationComponent implements OnInit{
     public filesToUpload: Array<File> = []
     
     fileChangeEvent(fileInput:any){
-        this.filesToUpload = <Array<File>>fileInput.target.files;
+        
+        this.filesToUpload = <Array<File>>fileInput.target.files;   
+        
+        
+      
+        //borrar el archivo del formulario. 
+        //this.filesToUpload = []
+        // Esta línea no tiene efecto, probablemente porque estamos haciendo
+        // referencia a este array en el código, habría que hacerlo
+        // con splice o bien hacer un getter arriba para no hacer
+        // referencia a la propia variable. 
+        
     }
+    
 
 }
