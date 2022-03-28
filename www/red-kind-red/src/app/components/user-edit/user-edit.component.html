@@ -49,7 +49,10 @@
             $event va a capurar el evento change y va a capturar
             todos los eventos que hayamos marcado en nuestro input -->
             
-            <input class="form__email selectfile" type="file" placeholder="Sube una imagen"
+            <input class="form__email selectfile" 
+            type="file" 
+            placeholder="Sube una imagen"
+            accept="image/*"
              (change)="fileChangeEvent($event)"       
             />            
         </p>      
