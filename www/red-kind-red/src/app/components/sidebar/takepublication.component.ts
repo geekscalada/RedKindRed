@@ -55,12 +55,9 @@ export class TakePublicationComponent implements OnInit{
     }
     
     //directiva NgModel rellena el formulario con el modelo 
-    onSubmit(form:any) {
-        
+    onSubmit(form:any) {        
         if (!this.activateSubmit) return this.status='error';
-
-        this.activateSubmit = false;        
-        
+        this.activateSubmit = false;
         let formData = new FormData();
         
         for (var i = 0; i < this.filesToUpload.length; i++) {                        
@@ -74,12 +71,8 @@ export class TakePublicationComponent implements OnInit{
             response => {
             console.log("respuesta es: ", response)
                 if(response){
-
-                    //al meter form como parámetro, ya no necesitas hacer esto:
-                    // this.publication = response.publication
-                   
                     this.status = 'success'
-                    form.reset();                    
+                    form.reset();                                     
                     return this.activateSubmit = true;
                 } else {
                    return this.status = 'error'
@@ -88,8 +81,7 @@ export class TakePublicationComponent implements OnInit{
             error => {
                 console.log(error)
                 let errorMessage = <any>error
-                return this.status = 'error'
-                
+                return this.status = 'error'                
             }
         )        
     }
@@ -98,18 +90,12 @@ export class TakePublicationComponent implements OnInit{
     
     fileChangeEvent(fileInput:any){
         
-        this.filesToUpload = <Array<File>>fileInput.target.files;   
-        
-        
-      
-        //borrar el archivo del formulario. 
-        //this.filesToUpload = []
-        // Esta línea no tiene efecto, probablemente porque estamos haciendo
-        // referencia a este array en el código, habría que hacerlo
-        // con splice o bien hacer un getter arriba para no hacer
-        // referencia a la propia variable. 
+        this.filesToUpload = <Array<File>>fileInput.target.files; 
+    
         
     }
+
+    
     
 
 }
