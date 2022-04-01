@@ -30,7 +30,7 @@
               <span class="menu-spacer"></span>            
                 <!-- The following menu items will be hidden on both SM and XS screen sizes -->
                 
-                  <a fxShow="true" fxHide.lt-lg [routerLink]="['/ngbd-modal-options']" href="#" class="links">{{title}}</a>
+                  <a fxShow="true" fxHide.lt-lg [routerLink]="['/product-add.component']" href="#" class="links">{{title}}</a>
                   <a fxShow="true" fxHide.lt-lg [routerLink]="['/publicaciones']" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="links" ><span class="glyphicon glyphicon-camera"></span> Publicaciones</a>
                   <a fxShow="true" fxHide.lt-lg  [routerLink]="['/amigos']" *ngIf="identity" class="links" [routerLink]="['/amigos']" [routerLinkActive]="['active']"><span class="glyphicon glyphicon-user">  </span>Amigos</a>
                   <a fxShow="true" fxHide.lt-lg [routerLink]="['/mis-datos']" [routerLinkActive]="['active']" *ngIf="identity" href="#" class="links"><span class="glyphicon glyphicon-cog"></span>Mis datos</a>

@@ -49,6 +49,9 @@ import {MatListModule} from '@angular/material/list';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
+//Importando image-cropper
+import { ImageCropperModule } from 'ngx-image-cropper';
+
 
 // Añadimos los routings
 @NgModule({
@@ -79,7 +82,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     MatListModule,
     MatIconModule,
     MatButtonModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ImageCropperModule
   ],
   providers: [
     AppRoutingProviders

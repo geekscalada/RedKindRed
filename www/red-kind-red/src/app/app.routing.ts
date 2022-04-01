@@ -10,6 +10,7 @@ import { UsersComponent } from './components/users/users.component';
 import { TimelineComponent } from "./components/timeline/timeline.component";
 import { TakePublicationComponent} from "./components/sidebar/takepublication.component"
 import { NativeDate } from "mongoose";
+import { ProductAddcomponent } from "./components/home/product-add.component";
 
 
 //constante appRoutes de tipo Routes
@@ -17,7 +18,7 @@ const appRoutes: Routes =  [
     {path: '', component: LoginComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'ngbd-modal-options', component: NgbdModalConfig},
+    {path: 'product-add.component', component: ProductAddcomponent},
     {path: 'mis-datos', component: UserEditComponent},
     {path: 'amigos/:page', component: UsersComponent},
     {path: 'amigos', component: UsersComponent},

@@ -1,0 +1,25 @@
+<h2>Add New PRoduct</h2>
+
+
+<form >
+
+    <label>
+        Name
+        <input type="text" formControlName="name">
+    </label>
+
+    <input type="file" (change)="uploadFile($event)" accept="image/*">
+
+    <button type="submit">Add</button>
+
+    >
+
+</form>
+
+<image-cropper 
+[imageChangedEvent]="imageChangedEvent"
+[aspectRatio]="4 / 4"
+format="png"
+(imageCropped)="imageCropped($event)"
+
+></image-cropper>
