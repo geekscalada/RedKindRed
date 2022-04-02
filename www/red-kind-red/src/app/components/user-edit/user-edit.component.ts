@@ -7,6 +7,7 @@ import { UploadService } from "src/app/services/upload.service";
 import {GLOBAL}  from "../../services/global"
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { DataService } from "src/app/services/data.service";
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -21,7 +22,7 @@ import { base64ToFile, ImageCroppedEvent, ImageCropperModule } from 'ngx-image-c
     selector: 'user-edit',
     templateUrl: './user-edit.component.html',
     styleUrls: ['../../styles/updatedata.styles.css'],
-    providers: [UserService, UploadService]
+    providers: [UserService, UploadService, NgbModal] 
 })
 
 export class UserEditComponent implements OnInit {
@@ -35,9 +36,8 @@ export class UserEditComponent implements OnInit {
 
 
     public imageChangedEvent: any = '';
-    public fileToUpload: File | undefined;
-
-    public croppedImage: any = '';    
+    public croppedImage: any = ''; 
+    
 
 
 
@@ -47,7 +47,8 @@ export class UserEditComponent implements OnInit {
         private _userService: UserService,
         private _uploadService: UploadService,
         private _http: HttpClient,
-        private dataService: DataService
+        private dataService: DataService,
+        private _modalService: NgbModal 
     ) {
         this.title = ' Actualizar mis datos'
         this.identity = this._userService.getIdentity();
@@ -98,9 +99,7 @@ export class UserEditComponent implements OnInit {
     changeFile(event: any) {
 
         this.imageChangedEvent = event;
-
-        // This going away soon bye bye
-        this.fileToUpload = event.target.files[0]      
+           
 
     }
     
@@ -125,14 +124,21 @@ export class UserEditComponent implements OnInit {
                 (response: any) => {
                 this.status = 'success'                
                 this.dataService.sendMessage("Mensaje de Avatar cambiado");
-                console.log("response", response)
-                
-        })
-            
+                console.log("response", response)                
+        })       
             
         
     }
 
+    openModal(content :any) {        
+        this._modalService.open(content);
+    }
+
+
+    borrar() {
+        this.croppedImage = '';
+        this._modalService.dismissAll(); //cerrar modal
+    }
     
 
     
