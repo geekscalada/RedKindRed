@@ -9,6 +9,14 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { DataService } from "src/app/services/data.service";
 
 
+
+import { base64ToFile, ImageCroppedEvent, ImageCropperModule } from 'ngx-image-cropper';
+
+// Aquí no es necesario trabajar con un múdulo que nos traiga el
+// cropper porque vamos a inyectarlo directamente en el mismo
+// componente, no vamos a usar 2 componentes (?)
+//import { ProductAddModule } from '../home/product-add.module';
+
 @Component({
     selector: 'user-edit',
     templateUrl: './user-edit.component.html',
@@ -24,6 +32,14 @@ export class UserEditComponent implements OnInit {
     public token:any    
     public status:String = ''
     public url:string
+
+
+    public imageChangedEvent: any = '';
+    public fileToUpload: File | undefined;
+
+    public croppedImage: any = '';    
+
+
 
     constructor (
         private _route: ActivatedRoute,
@@ -79,29 +95,45 @@ export class UserEditComponent implements OnInit {
         )
     }
 
+    changeFile(event: any) {
+
+        this.imageChangedEvent = event;
+
+        // This going away soon bye bye
+        this.fileToUpload = event.target.files[0]      
+
+    }
+    
+    imageCropped(event: ImageCroppedEvent) {        
+        //Preview
+        this.croppedImage = event.base64;
+    }
+
     updateAvatar() {
+        console.log("ejecutando update avatar")
         let userId = this.identity.id;
         let formData = new FormData();
-
-        for (var i = 0; i < this.filesToUpload.length; i++) {
-            formData.append("files", this.filesToUpload[i], this.filesToUpload[i].name);
-        }        
+        
+        
+        formData.append("files", base64ToFile(this.croppedImage),
+        this.imageChangedEvent.target.files[0].name) 
+        
+        console.log(this.imageChangedEvent.target.files[0].name)
 
         return this._userService.uploadAvatar(userId, formData)
             .subscribe(
                 (response: any) => {
                 this.status = 'success'                
                 this.dataService.sendMessage("Mensaje de Avatar cambiado");
+                console.log("response", response)
                 
-            })
+        })
+            
+            
+        
     }
 
-    //la inicializamos vacía
-    public filesToUpload: Array<File> = []
     
-    fileChangeEvent(fileInput:any){
-        this.filesToUpload = <Array<File>>fileInput.target.files;
-    }
 
     
 
