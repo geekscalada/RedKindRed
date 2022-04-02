@@ -40,9 +40,15 @@
         </p>
         
         <label>Sube tu avatar</label>
-        <div *ngIf="user.image">
+        <div *ngIf="user.image && croppedImage == ''">
             <img class="formimg" src="{{url + 'get-image-user/' + user.image}}" />
         </div>
+
+        <div *ngIf="user.image && croppedImage != ''">
+            <img class="formimg" src="{{croppedImage}}" />
+        </div>
+
+
     
         <p>
             <!-- Aqui vamos a capturar todos los, edntro de la propiedad
@@ -53,7 +59,7 @@
             type="file" 
             placeholder="Sube una imagen"
             accept="image/*"
-            (change)="changeFile($event)"      
+            (change)="changeFile($event);openModal(content)"      
             />            
         </p>      
     
@@ -64,14 +70,24 @@
     </form>    
  
 
-<image-cropper 
+  
+    
+
+</div>
+
+
+<ng-template class="mycontent" #content let-c="close" let-d="dismiss">
+         
+<image-cropper class="modal-img"
 [imageChangedEvent]="imageChangedEvent"
 [aspectRatio]="4 / 4"
 format="png"
 (imageCropped)="imageCropped($event)"
 
-></image-cropper>   
+></image-cropper> 
     
-
-</div>
-
+    <div class="modal-footer">
+        <button type="button" class="mybtn-outline-dark" (click)="borrar()">Borrar</button>
+        <button type="button" class="mybtn-outline-dark" (click)="c('Save click')">Guardar</button>
+    </div>                            
+</ng-template>
