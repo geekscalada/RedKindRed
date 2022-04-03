@@ -35,6 +35,7 @@ body {
 .nav-content{    
     align-items: center;
     justify-content: flex-start;
+    z-index: 10;
   
 }
 

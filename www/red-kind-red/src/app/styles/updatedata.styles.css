@@ -226,6 +226,13 @@ label{
 }
 
 
+/* otra aproximación para que el scroll no haga aparecer las alertas 
+por encima del navbar y al navbar le damos más*/
+.alert {
+    position: unset;
+}
+
+
 @media screen and (max-width:768px){
     body{
         padding: 60px 0;
