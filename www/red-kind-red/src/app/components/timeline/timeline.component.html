@@ -4,11 +4,11 @@
 
             <img (click)="open(content)" class="myimg" src="{{ url + 'get-image-pub/'+ publication.file}}"
                 *ngIf="publication.file">
-            <div class="mycard">
+            <!-- <div class="mycard">
                 <div class="nameanddate">{{publication.name}}&nbsp;&nbsp;&nbsp;&nbsp; {{(publication.createdAt) |
                     amLocale: 'es' | amTimeAgo}}</div>
                 <div class="mytext">{{publication.text}}</div>
-            </div>
+            </div> -->
 
             <ng-template class="mycontent" #content let-c="close" let-d="dismiss">
                 <img class="modal-img" src="{{ url + 'get-image-pub/'+ publication.file}}">               

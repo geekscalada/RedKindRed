@@ -72,7 +72,7 @@ module.exports = class publicationController {
             const options = {
             
                 page: req.params.page, // Default 1
-                paginate: 2, // Default 25        
+                paginate: 4, // Default 25        
                 where: {userID: myFriendsandme}
             }
         

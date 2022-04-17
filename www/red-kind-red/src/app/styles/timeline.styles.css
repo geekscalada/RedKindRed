@@ -130,37 +130,37 @@ body{
 }
 
 .publicationscontainer{
-    width: 100%;
-    height: auto;
-    min-height: 83vh;
-    max-width: 100%;
-    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(286px,4fr));    
+    gap: 10px;
+    /* grid-auto-rows: 340px; */
+    width: 80%;
+    margin: 15px auto 0 auto;
+
+
+    /* flex
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: wrap; */
     /* border: 3px salmon solid; */
 }
 
 .publication{
-    width: 49%;
-    height: auto;
-    margin: 25px 5px 5px;
-    padding: 0.1px;
+       
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;    
+    justify-content: center;
+    background: #131340;   
 }
 
 .myimg{     
     width: auto;
     height: auto;
-    max-height: 439.84px;
-    max-width: 586.45px;       
-    object-fit: cover;
-    border-radius: 8px ;
-    box-shadow: 11px 9px 13px 2px rgba(0,0,0,0.75)    
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover; 
 }
 
 .mycard {
@@ -205,7 +205,7 @@ body{
 
 
 
-@media screen and (max-width: 800px){
+/* @media screen and (max-width: 800px){
     .myimg{
         width: 45%;
     }
@@ -215,4 +215,4 @@ body{
     .myimg{
         width: 95%;
     }
-}
+} */
