@@ -1,6 +1,6 @@
 <body>
     <div class="publicationscontainer">
-        <div class="publication" *ngFor="let publication of publications">
+        <div *ngFor="let publication of publications">
 
             <img (click)="open(content)" class="myimg" src="{{ url + 'get-image-pub/'+ publication.file}}"
                 *ngIf="publication.file">
