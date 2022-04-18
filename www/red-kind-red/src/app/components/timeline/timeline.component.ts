@@ -119,7 +119,12 @@ export class TimelineComponent implements OnInit {
 
     ngOnInit() {
         console.log('timeline cargado')
+        // Trick para que nos muestre en la primera carga las 
+        // dos primeras páginas, pero habría que arreglar la 
+        // api para que te permita cargar las páginas que quieras
+        // y de hecho crear un lazy load
         this.getPublications(this.page, true);
+        this.viewMore();
     }
 
 }
