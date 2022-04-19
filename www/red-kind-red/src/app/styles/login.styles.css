@@ -16,7 +16,7 @@
     margin: 1px;
     padding: 1px;
     font-family: 'Raleway', sans-serif;
-    height: 100vh;
+    height: 90vh;
     width: auto;    
     background-size: cover;
     background-position: center;
@@ -47,10 +47,9 @@
 }
 
 .form__title{
-    margin-bottom: 40px;
-    font-size: 4rem;
-    color: white;
-    
+    margin-bottom: 40px;   
+    color: #fff;    
+    font-size: clamp(12px, 14.4vw, 64px);    
 }
 
 .form__message{
@@ -82,17 +81,16 @@
 
 
 
-@media screen and (max-width:768px){
-    body{
-        padding: 60px 0;
-        background-repeat: no-repeat;
-    }
-
+@media screen and (max-width:460px){
+    
     .form{
-        margin: 0 auto;
+        width: 91%;
     }
+    
 }
 
+
+/* 
 @media screen and (max-width:425px){
     body{
         padding: 40px 0;
@@ -110,4 +108,4 @@
     .form__submit{
         font-size: 16px;
     }
-}
+} */
