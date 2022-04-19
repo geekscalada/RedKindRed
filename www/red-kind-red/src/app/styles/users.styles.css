@@ -32,18 +32,24 @@ body{
     min-height: 100vh;
     height: auto;
     padding-bottom: 28px;
+    max-width: 1550px;
+    margin: auto;
 }
 
 .users{
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     background: rgb(235 235 237);
-    height: 270px;
-    margin: 15px auto 2px auto;
-    padding: 5px;
+    min-height: 315px;
+    max-height: 330px;
+    margin: 15px auto 2px;
+    padding: 6px 90px 6px 90px;
     width: 80%;
     border: #09083d 2px solid;
-    box-shadow: 11px 9px 13px 2px rgba(0,0,0,0.75) 
+    box-shadow: 11px 9px 13px 2px #000000bf;
+    align-content: center;
+    align-items: center;
 }
 
 .cardimg{
@@ -51,22 +57,25 @@ body{
     flex-direction: column;
     width: auto;
     max-width: 40%;
-    height: 92%;    
-    margin: auto 10px auto 80px;
+    height: 92%;
+    max-height: 232px;    
+    min-width: 162px;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
+    margin: 10px;
 }
 
 .infofriendcard{
     
     display: flex;
-    width: 20%;
-    height: 60%;
+    max-width: 200px;
+    height: 43px;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    margin-top: 75px;
-    margin-right: 80px;
+    /* margin-top: 75px; */
+    /* margin-right: 80px; */    
+    min-width: 184px;
     
 
 }
@@ -186,6 +195,12 @@ al hacer scrol */
     position: unset;
 }
 
+
+@media screen and (max-width: 769px){
+    .users{        
+        justify-content: center;
+    }
+}
 
 
 
