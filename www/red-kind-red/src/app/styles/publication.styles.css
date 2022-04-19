@@ -18,18 +18,19 @@
     font-family: 'Raleway', sans-serif;
     background-color: #cacaef;
     font-size: 20px;
-    height: auto;
+    height: 89vh;
     width: auto;    
     background-size: cover;
     background-position: center;
 }
 
 .form{
-    width: 550px;
+    width: 90%;
+    max-width: 508px;
     height: auto;
-    background: rgb(65, 51, 143);
-    margin: 1em auto 1em auto;
-    padding: 30px 20px 40px ;
+    background: rgb(65,51,143);
+    margin: 8.5em auto;
+    padding: 30px 20px 40px;
     text-align: center;
     border-radius: var(--radius);
     box-shadow: var(--box-shadow);
@@ -149,7 +150,7 @@ textarea{
 }
 
 
-@media screen and (max-width:768px){
+/* @media screen and (max-width:768px){
     body{
         padding: 60px 0;
         background-repeat: no-repeat;
@@ -177,4 +178,4 @@ textarea{
     .form__submit{
         font-size: 16px;
     }
-}
+} */
