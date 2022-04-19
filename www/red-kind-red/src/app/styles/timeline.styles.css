@@ -13,6 +13,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 92vh;
 }
 
 
@@ -111,7 +112,7 @@
     max-width: 100%;
     border-radius: calc(.3rem - 1px);
     max-height: 83vh;
-    max-width: 92%;
+    max-width: 102%;
 }  
 
 
@@ -122,8 +123,6 @@
     padding: 0;
     box-sizing: border-box;
     background-color: rgb(235 235 237);
-    
-
 }
 
 body{
