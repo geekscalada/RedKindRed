@@ -63,11 +63,8 @@ export class TimelineComponent implements OnInit {
         this._publicationService.getPublications(this.token, page).subscribe(
             (response) => {
                 try {
-
                     if (!response.docs) {
-
                         throw new Error('Algo ha fallado')
-
                     }
 
                     this.total = response.total;
@@ -80,7 +77,6 @@ export class TimelineComponent implements OnInit {
                         this.publications = response.docs
 
                     } else {
-
                         this.publications = this.publications.concat(response.docs)
 
                         //añadimos linea JQuery para que nos haga la animación de bajar
@@ -99,10 +95,8 @@ export class TimelineComponent implements OnInit {
             (error) => {
                 this.status = 'error'
                 console.log("Error", error)
-
             }
         )
-
     }
 
     public noMore = false;

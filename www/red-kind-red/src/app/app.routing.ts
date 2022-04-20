@@ -10,7 +10,9 @@ import { UsersComponent } from './components/users/users.component';
 import { TimelineComponent } from "./components/timeline/timeline.component";
 import { TakePublicationComponent} from "./components/sidebar/takepublication.component"
 import { NativeDate } from "mongoose";
-import { ProductAddcomponent } from "./components/home/product-add.component";
+
+//usado para pruebas
+// import { ProductAddcomponent } from "./components/home/product-add.component";
 
 
 //constante appRoutes de tipo Routes
@@ -18,14 +20,14 @@ const appRoutes: Routes =  [
     {path: '', component: LoginComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'product-add.component', component: ProductAddcomponent},
+    // {path: 'product-add.component', component: ProductAddcomponent},
     {path: 'mis-datos', component: UserEditComponent},
     {path: 'amigos/:page', component: UsersComponent},
     {path: 'amigos', component: UsersComponent},
     {path: 'publicaciones', component: TimelineComponent},
     {path: 'publicar', component: TakePublicationComponent},
     // ruta si no encuentra nada debe ser la ultima
-    {path: '**', component: LoginComponent}
+    {path: '**', component: UsersComponent}
 ]
 
 //exportar el provider de rutas y exportar el modulo de rutas

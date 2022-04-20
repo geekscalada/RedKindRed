@@ -152,18 +152,19 @@ export class UsersComponent implements OnInit{
             }
         )
     }
-    
-    
 
     ngOnInit(){
         console.log("modulo Gente cargado")
-        this.getAllusers();
-        this.getFriends();
-        this.getMyReqFriends();
-        this.getMyOwnReqFriends();        
-        //this.actualPage();
-        console.log(this.users)        
-        
-    }
 
+        if (!this.identity) {
+            this._router.navigate(['/login'])
+        } else {
+            this.getAllusers();
+            this.getFriends();
+            this.getMyReqFriends();
+            this.getMyOwnReqFriends();        
+            //this.actualPage();
+            console.log(this.users) 
+        }
+    }
 }

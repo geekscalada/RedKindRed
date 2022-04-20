@@ -134,6 +134,7 @@
 
 .form{
     width: 550px;
+    max-width: 468px;
     height: auto;
     background: rgb(65, 51, 143);
     margin: 1em auto 1em auto;

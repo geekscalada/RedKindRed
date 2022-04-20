@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit {
                 // la response aqui solo te trae el token porque
                 // estás en la parte del signUp que solo te trae 
                 // el token
-                this.identity = response.user                
+                this.identity = response.user
+                console.log('este es el identity del on submit', this.identity)                
                 if(!this.identity || !this.identity.id){                
                     
                     this.status = 'error'
@@ -54,7 +55,7 @@ export class LoginComponent implements OnInit {
                     } else {
                         this.status = 'success'                        
                         // persistir token del usuario
-                        console.log("token - >", this.token)
+                        // console.log("token - >", this.token)
                         localStorage.setItem('token',this.token)
                         this._router.navigate(['/amigos'])
                     }
@@ -69,8 +70,20 @@ export class LoginComponent implements OnInit {
         )
     }    
     
-    ngOnInit(){
+    async ngOnInit(){
         console.log('Componente de login cargado...')
+        
+        // esto es para conseguir que si estamos logeados no vayamos
+        // a la página de login
+        // probablemente mejor traer el identity del componente navbar
+        this.identity = await this._userService.getIdentity(); 
+        console.log('este es el identity del oninit', this.identity)
+
+
+
+        if (this.identity) {            
+            this._router.navigate(['/amigos'])
+        } 
     }
 
 }
