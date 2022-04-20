@@ -7,6 +7,8 @@ bdd-clear
 ./uploads
 ./node_modules
 services/secret.js
+/docker
+/config
 
 # @@@@ngular
 # See http://help.github.com/ignore-files/ for more about ignoring files.
