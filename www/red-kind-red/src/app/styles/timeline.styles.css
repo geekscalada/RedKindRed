@@ -54,7 +54,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     padding: 0.75rem;
     border-top: none;
     border-bottom-right-radius: none;
@@ -143,7 +143,8 @@ body{
     min-height: 83%;
     align-content: center;
     margin: auto auto 10px;
-    justify-content: center;   
+    justify-content: center;
+    padding: 30px 1px 30px 1px;   
 }
 
 .myimg{     
@@ -195,12 +196,16 @@ body{
 
 
 
-/* @media screen and (max-width: 800px){
-    .myimg{
-        width: 45%;
+ @media screen and (max-width: 700px){
+    .publicationscontainer {
+    
+    grid-template-columns: repeat(auto-fit,minmax(286px,1fr));
+   
     }
 }
 
+
+/*
 @media screen and (max-width: 500px){
     .myimg{
         width: 95%;

@@ -69,6 +69,8 @@ export class TimelineComponent implements OnInit {
 
                     this.total = response.total;
                     this.pages = response.pages;
+
+                    //no tiene ningún efecto
                     this.itemsPerPage = 2
 
                     //si no estamos pulsando viewMore
@@ -78,6 +80,10 @@ export class TimelineComponent implements OnInit {
 
                     } else {
                         this.publications = this.publications.concat(response.docs)
+
+                        if (this.page == this.pages) {
+                            this.noMore = true;
+                        }
 
                         //añadimos linea JQuery para que nos haga la animación de bajar
                         // le pasamos un objeto json como parametro
@@ -117,8 +123,9 @@ export class TimelineComponent implements OnInit {
         // dos primeras páginas, pero habría que arreglar la 
         // api para que te permita cargar las páginas que quieras
         // y de hecho crear un lazy load
-        this.getPublications(this.page, true);
-        this.viewMore();
+        this.getPublications(1, true);
+        this.getPublications(2, true)
+                
     }
 
 }
