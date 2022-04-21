@@ -1,10 +1,10 @@
 //#index.js
 
-const app = require('./conf');
-const { Sequelize } = require('./database');
+const app = require('./express-conf');
+const { Sequelize } = require('./config/database');
 const port = 3900;  
 
-const db = require('./database')
+const db = require('./config/database')
 
 async function startBackend() {
 

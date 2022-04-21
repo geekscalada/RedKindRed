@@ -11,8 +11,8 @@ const pvKey = require('../services/secret')
 // Database and sequelize
 const Sequelize = require('sequelize');
 const { DataTypes, Association } = require('sequelize')
-const sequelize = require('../database.js')
-const db = require('../database')
+const sequelize = require('../config/database.js')
+const db = require('../config/database')
 const associations = require('../associations')
 
 // Models

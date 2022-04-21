@@ -7,7 +7,7 @@ const moment = require('moment')
 // Database and sequelize
 const Sequelize = require('sequelize');
 const { DataTypes } = require('sequelize')
-const sequelize = require('../database.js')
+const sequelize = require('../config/database.js')
 
 
 // Models
