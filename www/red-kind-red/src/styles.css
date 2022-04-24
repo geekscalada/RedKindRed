@@ -11,3 +11,52 @@ img {
  @import "~bootstrap/dist/css/bootstrap.css" */
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Diseño modal -- start */
+
+.mywindow-class {    
+    background-color: black;
+    display: flex;
+}
+
+/* Div que trae el modal por 
+defecto */
+.modal-content {   
+     /* es probable que en algunos 
+     momentos se rompa, vigilar */
+    background-color: black;     
+}
+
+.mymodal-backdrop {
+    background-color: #000;
+    
+}
+
+.mymodal-backdrop.show {
+    opacity: 1.4;
+}
+
+
+.mymodal-dialog{  
+    margin: 0.1px auto;
+    padding: 3px;
+}
+
+
+
+@media (min-width: 576px) {
+
+    .mymodal-dialog {
+        max-width: 100%;
+        margin: 0.1px auto;
+        padding: 3px;
+    }
+
+
+}
+
+/* Diseño modal -- end */
+
+
+
+
