@@ -78,7 +78,7 @@
 
 <ng-template class="mycontent" #content let-c="close" let-d="dismiss">
          
-<image-cropper class="modal-img"
+<image-cropper class="modal-img-cropper"
 [imageChangedEvent]="imageChangedEvent"
 [aspectRatio]="4 / 4"
 format="png"
@@ -86,7 +86,7 @@ format="png"
 
 ></image-cropper> 
     
-    <div class="modal-footer">
+    <div class="modal-footer-cropper">
         <button type="button" class="mybtn-outline-dark" (click)="borrar()">Borrar</button>
         <button type="button" class="mybtn-outline-dark" (click)="c('Save click')">Guardar</button>
     </div>                            

@@ -131,7 +131,13 @@ export class UserEditComponent implements OnInit {
     }
 
     openModal(content :any) {        
-        this._modalService.open(content);
+        this._modalService.open(content, {            
+            backdropClass: 'mymodal-backdrop-cropper',
+            modalDialogClass: 'mymodal-dialog-cropper',
+            windowClass: "mywindow-class-cropper",            
+            centered: true,
+            scrollable: false
+        });
     }
 
 

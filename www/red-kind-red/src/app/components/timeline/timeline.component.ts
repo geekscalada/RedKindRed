@@ -55,7 +55,7 @@ export class TimelineComponent implements OnInit {
         this._modalService.open(content, {            
             backdropClass: 'mymodal-backdrop',
             modalDialogClass: 'mymodal-dialog',
-            windowClass: "mywindow-class",
+            windowClass: "mywindow-class",            
             centered: true,
             scrollable: false
         });

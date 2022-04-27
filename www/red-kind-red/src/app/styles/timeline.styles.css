@@ -5,63 +5,8 @@
     background-color: rgb(235 235 237);
 } */
 
-/* Use it to override css classes, but deprecated */
 
-/* ::ng-deep .modal-dialog_noworks {
-    display: flex;
-    max-width: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 92vh;
-} */
-
-/* ::ng-deep .modal-dialog_noworks{
-    height: 100%;
-} */
-
-
-/* .modal-content_no_works  { 
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: auto;
-
-    /* visualización imagenes override */
-    /*
-    max-width: 100%;
-    pointer-events: none;
-    background-color: #fff0;
-    background-clip: none;
-    border: 1px solid #0003;
-    border-radius: .3rem;
-    outline: none;
-    align-items: center;    
-    background-color: #000;     
-} */
-
-
-
-/* ::ng-deep .modal-backdrop_no_works {
-    background-color: #000;
-    
-}
-
-::ng-deep .modal-backdrop.show_noworks {
-    opacity: 1.4;
-}
-
-::ng-deep .modal-body_no_work {
-    position: relative;
-    flex: 1 1 auto;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center; 
-      
-  }
-
-  */
+/* Parte modal que no está en styles.css */
 
 .modal-footer {
     display: flex;

@@ -9,10 +9,12 @@
     --box-shadow: 6px 6px 10px rgba(0,0,0,.6);
     --width: 100%;
     --radius: 8px;
+    --cropper-overlay-color: black;
+
     
 }
 
- ::ng-deep .modal-dialog {
+ /* ::ng-deep .modal-dialog {
     display: flex;
     max-width: none;
     flex-direction: column;
@@ -20,52 +22,77 @@
     justify-content: center;
 }
 
+*/
 
-::ng-deep .modal-content  { 
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: auto;    
-    background-color: rgba(255, 255, 255, 0);
-    background-clip: none;
-    border: 1px solid #0003;
-    border-radius: 0.3rem;
-    outline: none;
-    align-items: center;
-    max-width: 57%;
-    background-color: #000;    
-}
-
-
-::ng-deep .modal-backdrop {
-    background-color: #000;
-}
-
-::ng-deep .modal-backdrop.show {
-    opacity: 1.4;
-  }
-
-::ng-deep .modal-body {
-    position: relative;
-    flex: 1 1 auto;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center; 
-      
-  }
-
-  ::ng-deep .modal-footer {
+.modal-footer-cropper {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     padding: 0.75rem;
     border-top: none;
     border-bottom-right-radius: none;
     border-bottom-left-radius: none;
-  }
-  
+    background-color: black;
+  } 
+
+/*  ------------- 
+Cuidado, mismo nombre en user-edit que en timeline, #TODO
+
+*/
+
+  .mybtn-outline-dark {    
+    display: block;
+    width: 166px;
+    margin: 4px;
+    font-size: 13px;
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: rgb(24, 22, 22);
+    padding: 15px 30px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 10px;
+    border-color: none;
+
+}
+
+.mybtn-outline-dark:active {    
+    display: block;
+    width: 166px;
+    margin: 4px;
+    font-size: 13px;
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: rgb(24, 22, 22);
+    padding: 15px 30px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 10px;
+    border-color: none;
+
+}
+
+.mybtn-outline-dark:hover{
+    background-image: linear-gradient(135deg, #667eea86 0%, #764ba28e 100%);;
+}
+
+.mybtn-outline-dark ::active ::before ::after{
+    background-image: red;
+}
+
+/*  -------------    */
+
+
+
+.modal-img-cropper {
+    max-width: 90vw;
+    max-height: 80vh;
+    
+}
+
+
+
 .mybtn-outline-dark {    
     display: block;
     width: 250px;
@@ -106,17 +133,19 @@
     background-image: red;
 }
 
-::ng-deep .modal-dialog{
-    height: 100%;
-}
 
-.modal-img {    
+/* ::ng-deep .modal-dialog{
+    height: 100%;
+} */
+
+/* .modal-img {    
     height: auto;
     width: auto;
-    max-width: 100%;
+    max-width: 85vw;
+    max-height: 85vh;
     border-radius: calc(0.3rem - 1px);
     border-radius: calc(0.3rem - 1px);        
-}  
+}   */
 
 
 /* Normal section */
