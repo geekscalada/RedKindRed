@@ -1,0 +1,33 @@
+version: '3'
+
+services:  
+  webserver:    
+    image: nginx:1.15.12-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /dist:/var/www/html
+      - ./nginxConf:/etc/nginx/conf.d
+      - ./certbot-etc:/etc/letsencrypt      
+    networks:
+      - app-network
+
+  certbot:
+    depends_on:
+      - webserver
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot-etc:/etc/letsencrypt
+      - /dist:/var/www/html
+    #command: certonly --webroot -w /var/www/html --email yourmail@mail.com --agree-tos --no-eff-email --staging -d yourdomain.com -d www.yourdomain.com
+    #command: certonly --webroot -w /var/www/html --email yourmail@mail.com --agree-tos --no-eff-email -d yourdomain.com -d www.yourdomain.com
+
+networks:
+  app-network:
+    driver: bridge
+
+    
