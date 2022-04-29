@@ -129,8 +129,12 @@ export class TimelineComponent implements OnInit {
         // dos primeras páginas, pero habría que arreglar la 
         // api para que te permita cargar las páginas que quieras
         // y de hecho crear un lazy load
-        this.getPublications(1, true);
+        console.log(this.page)
+        this.getPublications(1, true);        
+        console.log(this.page)
         this.getPublications(2, true)
+        this.page += 1
+        console.log(this.page)
                 
     }
 
