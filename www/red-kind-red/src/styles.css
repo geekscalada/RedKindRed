@@ -1,6 +1,6 @@
 html, body {
     background-color: #cacaef;
-    font-family: 'Raleway', sans-serif 
+    /* font-family: 'Raleway', sans-serif  */
 }
 
 /* Esto no rompe nada? Necesito quitarlo para que 
@@ -15,7 +15,7 @@ el cropper del user-edit funcione */
 /* 
  @import "~bootstrap/dist/css/bootstrap.css" */
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 
 /* Diseño modal -- start */
 
