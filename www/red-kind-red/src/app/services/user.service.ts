@@ -37,6 +37,9 @@ export class UserService{
 
     // Metodo para enviar mensajes entre componentes
 
+    //#TODO
+    // En principio hay que borrar esto, el messageSouce y el método sendmessage
+    // porque finalmente lo hice todo através de dataSource
     private subject = new Subject();
     public subject2 = new Subject();
     
