@@ -46,6 +46,19 @@ export class PublicationService{
 
     }
 
+    getImagePub(token:any, image :any):Observable<any> {        
+        
+        let imageToSend = JSON.parse(image)  
+                
+        let headers = new HttpHeaders().set('Content-type', 'Application/json')
+        //.set('Authorization', token)
+        
+        return this._http.get(this.url+'get-image-pub/'+imageToSend, {headers:headers, responseType: 'blob'})
+
+    }
+
+
+
     deletePublications(token:any, id:any):Observable<any> {
         let headers = new HttpHeaders().set('Content-type', 'Application/json')
         .set('Authorization', token)

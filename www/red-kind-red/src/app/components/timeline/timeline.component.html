@@ -2,8 +2,13 @@
     <div class="publicationscontainer">
         <div *ngFor="let publication of publications">
 
-            <img (click)="open(content)" class="myimg" src="{{ url + 'get-image-pub/'+ publication.file}}"
-                *ngIf="publication.file">
+            <img (click)="open(content)" class="myimg" [src]="publication.file"
+                *ngIf="publication.file.toString().includes('blob')">
+
+                <!-- este IF es para evitar que se trate de hacer get a un 
+                archivo que simplemente es un string y no existe aún, 
+                se tiene que hacer la petición al BE para que devuelva el blob -->
+
             <!-- <div class="mycard">
                 <div class="nameanddate">{{publication.name}}&nbsp;&nbsp;&nbsp;&nbsp; {{(publication.createdAt) |
                     amLocale: 'es' | amTimeAgo}}</div>
@@ -11,7 +16,7 @@
             </div> -->
 
             <ng-template class="mycontent" #content let-c="close" let-d="dismiss">
-                <img class="modal-img" src="{{ url + 'get-image-pub/'+ publication.file}}">               
+                <img class="modal-img" [src]="publication.file">               
                 
                 <div class="modal-footer">
                     <button type="button" class="mybtn-outline-dark" (click)="c('Save click')">Ver comentarios</button>
@@ -20,7 +25,7 @@
             </ng-template>
         </div>
 
-        <h1 *ngIf="publications.length==0" style="color:rgb(163, 163, 180)"> Vaya, parece que no hay ninguna publicación
+        <h1 *ngIf="showEmptyPublications" style="color:rgb(163, 163, 180)"> Vaya, parece que no hay ninguna publicación
             :( </h1>
 
 

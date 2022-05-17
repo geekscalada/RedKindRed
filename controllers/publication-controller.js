@@ -77,8 +77,9 @@ module.exports = class publicationController {
             }
         
             const { docs, pages, total } = await Publication.paginate(options)    
-                
-            //#cambiar #arreglar esto
+             
+            console.log("docs ----------------------------*****>>>>>>",docs)
+            //#TODO #cambiar #arreglar esto
             return res.status(200).send({             
                 docs,
                 pages,
@@ -92,20 +93,25 @@ module.exports = class publicationController {
             
         }
     }
-    
+
+   
     
     static async getImageFile(req, res) {
+                
+        let image = req.params.imageFile;
+        let mypath = './uploads/publicaciones/'+image // h-ExP8Coel-6MZC1vIUfuqqk.jpg'
         
-        let  image = req.params.imageFile;
-        let mypath = './uploads/publicaciones/'+image    
+        //arreglar extension
+
+        console.log("--------------->",mypath)
         
         fs.exists(mypath, (exists) => {
     
             if (exists) {
-                res.sendFile(path.resolve(mypath))
-            } else {
-                console.log("no existe iamgen???")
-                res.status(200).send({ message: 'No hay imagen' })
+                return res.sendFile(path.resolve(mypath))
+                
+            } else {                
+                return res.status(200).send({ message: 'No hay imagen' })
             }
         })
     }

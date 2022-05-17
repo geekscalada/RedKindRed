@@ -18,5 +18,4 @@ const middlewareUpload = multipart({uploadDir: './uploads/publicaciones'})
 api.post('/publication', [middlewareAuthentification.jwtAuth, middlewareUpload], publicationController.savePublication)
 api.get('/publications/:page?', middlewareAuthentification.jwtAuth, publicationController.getPublications)
 api.get('/get-image-pub/:imageFile', publicationController.getImageFile)
-
 module.exports = api;

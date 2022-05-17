@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, SecurityContext } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
 import { Publication } from "../../models/publication";
@@ -7,8 +7,9 @@ import { UploadService } from "../../services/upload.service"
 import { GLOBAL } from "../../services/global"
 import { PublicationService } from "../../services/publications.service";
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DomSanitizer } from "@angular/platform-browser";
 
+import { Sanitizer } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
 
 
 const $ = require('jquery')
@@ -33,14 +34,13 @@ export class TimelineComponent implements OnInit {
     public total: any;
     public itemsPerPage: any;
 
+    public newImage: any;
+
     // declaramos una propiedad en la que guardaremos
     // el array de publicaciones
     // = [] para indicarlo que partimos como vacío
-    public publications: Publication[] = []
+    public publications: Publication[] = []    
 
-    public newImage:any; //borrar, solo prueba
-
-    public showEmptyPublications:boolean = false;
 
     constructor(
 
@@ -57,6 +57,8 @@ export class TimelineComponent implements OnInit {
         this.token = this._userService.getToken();
     }
 
+
+    // Open modal
     open(content :any) {
         // console.log(content)
         this._modalService.open(content, {            
@@ -72,7 +74,7 @@ export class TimelineComponent implements OnInit {
     // adding es un parámetro que añadimos para 
     // paginar nuevas publicaciones
     // si no añadimos ese parámetro, es false
-    getPublications(page: any) {
+    getPublications(page: any, adding: any = false) {
         this._publicationService.getPublications(this.token, page).subscribe(
             (response) => {
                 try {
@@ -86,23 +88,31 @@ export class TimelineComponent implements OnInit {
                     //no tiene ningún efecto
                     this.itemsPerPage = 2
 
-                    if (response.docs.length == 0) {
-                        this.showEmptyPublications = true;
+                    //si no estamos pulsando viewMore
+                    if (adding) {
+
+                        this.publications = response.docs 
+
+                        this.iteratingImages();
+
+
+                    } else {
+
+                        this.publications = this.publications.concat(this.publications)
+
+                        if (this.page == this.pages) {
+                            this.noMore = true;
+                        }
+
+                        this.iteratingImages();
+
+                        //añadimos linea JQuery para que nos haga la animación de bajar
+                        // le pasamos un objeto json como parametro
+                        // con la propiedad del body de scrollTop y 500 milisegundos
+                        $("html, body").animate({ scrollTop: $('body').prop("scrollHeight") }, 500)
                     }
 
-                    
-                    let lengthPublications = this.publications.length
-
-                    this.publications = this.publications.concat(response.docs)
-
-                    if (this.page == this.pages) {
-                        this.noMore = true;
-                    }
-
-                    
-
-                    this.iterateImages(lengthPublications);
-                    
+                    console.log("this.publications ---->>", this.publications)
 
                 } catch (error) {
                     this.status = 'error'
@@ -116,17 +126,15 @@ export class TimelineComponent implements OnInit {
         )
     }
 
-    iterateImages(preindex: any) {
+    iteratingImages(){
 
-        console.log("***********estamos añadiendo")
+        for(let index in this.publications){
 
-        for (let index = preindex; index < this.publications.length; index++) {
-
-            console.log("***********estamos añadiendo")
             this.getImagePub(this.publications[index].file, index)
-        }
 
+        }
     }
+
 
     getImagePub(imageFile :any, index:any):any {
         this._publicationService.getImagePub(this.token, JSON.stringify(imageFile)).subscribe(
@@ -138,11 +146,11 @@ export class TimelineComponent implements OnInit {
                 
                 let newImage = this._sanitizer.bypassSecurityTrustUrl(newUrl)
                 
-                this.newImage = newImage; //esta variable es de pruebas, borrar
+                this.newImage = newImage;
 
                 this.publications[index].file = newImage;
 
-                console.log("Este es depues -->>>>>>>", this.publications[0].file )
+                console.log("mola la imagen")
 
             },
             (error) => {
@@ -152,7 +160,9 @@ export class TimelineComponent implements OnInit {
 
         )
 
+        
     }
+
 
     public noMore = false;
     viewMore() {
@@ -163,12 +173,8 @@ export class TimelineComponent implements OnInit {
             this.noMore = true;
         }
         console.log("ahora el this.page vale: ", this.page)
-        this.getPublications(this.page);
+        this.getPublications(this.page, true);
 
-        //añadimos linea JQuery para que nos haga la animación de bajar
-                        // le pasamos un objeto json como parametro
-                        // con la propiedad del body de scrollTop y 500 milisegundos
-                        $("html, body").animate({ scrollTop: $('body').prop("scrollHeight") }, 500)
     }
 
     ngOnInit() {
@@ -178,11 +184,11 @@ export class TimelineComponent implements OnInit {
         // api para que te permita cargar las páginas que quieras
         // y de hecho crear un lazy load
         console.log(this.page)
-        this.getPublications(1);        
+        this.getPublications(1, true);        
         console.log(this.page)
-        this.getPublications(2)
+        this.getPublications(2, true)
         this.page += 1
-        console.log(this.page)
+        console.log(this.page)        
                 
     }
 
