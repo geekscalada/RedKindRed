@@ -32,6 +32,13 @@ app.use(appcors({
 app.use('/api', user_rt);
 app.use('/api', publications_rt);
 
+app.use(function (req, res, next) {
+    res.setHeader(
+      'Content-Security-Policy',
+      "worker-src blob:; child-src blob: gap:; img-src 'self' blob: data:; default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:"
+    );    
+  });
+
 
 //exportamos
 module.exports = app; // exportamos el objeto app

@@ -82,28 +82,30 @@ export class TimelineComponent implements OnInit {
 
                     this.total = response.total;
                     this.pages = response.pages;
+                    console.log("response pages", response.pages)
 
                     //no tiene ningún efecto
-                    this.itemsPerPage = 2
-
+                    this.itemsPerPage = 2                  
                     
-                    //TODO
-                    // Arreglar esto porque cuando solo hay una página,
-                    // al hacer un getPublications para la pagina 2
-                    // hay un punto en el que tenemos length = 0
-
-                    if (response.docs.length == 0) {
-                        console.log("hemos hecho el true", response.docs.length )
-                        this.showEmptyPublications = true;
-                    }
 
                     
                     let lengthPublications = this.publications.length
 
                     this.publications = this.publications.concat(response.docs)
 
-                    if (this.page == this.pages) {
+
+
+                    if (this.page >= this.pages) {
                         this.noMore = true;
+                    }
+
+                    //TODO
+                    // Arreglar esto porque cuando solo hay una página,
+                    // al hacer un getPublications para la pagina 2
+                    // hay un punto en el que tenemos length = 0
+
+                    if (response.pages == 0) {
+                        this.showEmptyPublications = true;
                     }
 
                     this.iterateImages(lengthPublications);

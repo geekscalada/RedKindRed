@@ -103,7 +103,8 @@ module.exports = class publicationController {
         //arreglar extension
 
         console.log("--------------->",mypath)
-        
+
+               
         fs.exists(mypath, (exists) => {
     
             if (exists) {
