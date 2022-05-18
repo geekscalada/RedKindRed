@@ -78,7 +78,6 @@ module.exports = class publicationController {
         
             const { docs, pages, total } = await Publication.paginate(options)    
              
-            console.log("docs ----------------------------*****>>>>>>",docs)
             //#TODO #cambiar #arreglar esto
             return res.status(200).send({             
                 docs,

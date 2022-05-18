@@ -16,6 +16,8 @@ exports.jwtAuth = function(req, res, next){
         if (payload.exp <= moment().unix()){            
             return res.status(401).send({message: 'Expirado'})
         }
+
+
     } catch(e) {
         return res.status(404).send({message: 'Token fallado'})
     }

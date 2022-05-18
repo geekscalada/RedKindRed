@@ -86,7 +86,14 @@ export class TimelineComponent implements OnInit {
                     //no tiene ningún efecto
                     this.itemsPerPage = 2
 
+                    
+                    //TODO
+                    // Arreglar esto porque cuando solo hay una página,
+                    // al hacer un getPublications para la pagina 2
+                    // hay un punto en el que tenemos length = 0
+
                     if (response.docs.length == 0) {
+                        console.log("hemos hecho el true", response.docs.length )
                         this.showEmptyPublications = true;
                     }
 
@@ -99,10 +106,7 @@ export class TimelineComponent implements OnInit {
                         this.noMore = true;
                     }
 
-                    
-
                     this.iterateImages(lengthPublications);
-                    
 
                 } catch (error) {
                     this.status = 'error'
@@ -117,22 +121,21 @@ export class TimelineComponent implements OnInit {
     }
 
     iterateImages(preindex: any) {
-
-        console.log("***********estamos añadiendo")
+        
 
         for (let index = preindex; index < this.publications.length; index++) {
-
-            console.log("***********estamos añadiendo")
+            
             this.getImagePub(this.publications[index].file, index)
         }
 
     }
 
     getImagePub(imageFile :any, index:any):any {
+        console.log(this.token)
         this._publicationService.getImagePub(this.token, JSON.stringify(imageFile)).subscribe(
             (response) => {
 
-                console.log("Ejecutando el getImagePub", response)
+                
 
                 let newUrl = URL.createObjectURL(response)
                 
@@ -142,7 +145,7 @@ export class TimelineComponent implements OnInit {
 
                 this.publications[index].file = newImage;
 
-                console.log("Este es depues -->>>>>>>", this.publications[0].file )
+                
 
             },
             (error) => {
@@ -162,7 +165,7 @@ export class TimelineComponent implements OnInit {
         if (this.page == this.pages) {
             this.noMore = true;
         }
-        console.log("ahora el this.page vale: ", this.page)
+        
         this.getPublications(this.page);
 
         //añadimos linea JQuery para que nos haga la animación de bajar
