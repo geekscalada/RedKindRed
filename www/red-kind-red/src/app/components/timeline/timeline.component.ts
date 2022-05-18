@@ -37,8 +37,7 @@ export class TimelineComponent implements OnInit {
     // el array de publicaciones
     // = [] para indicarlo que partimos como vacío
     public publications: Publication[] = []
-
-    public newImage:any; //borrar, solo prueba
+   
 
     public showEmptyPublications:boolean = false;
 
@@ -86,8 +85,6 @@ export class TimelineComponent implements OnInit {
 
                     //no tiene ningún efecto
                     this.itemsPerPage = 2                  
-                    
-
                     
                     let lengthPublications = this.publications.length
 
@@ -137,18 +134,12 @@ export class TimelineComponent implements OnInit {
         this._publicationService.getImagePub(this.token, JSON.stringify(imageFile)).subscribe(
             (response) => {
 
-                
-
                 let newUrl = URL.createObjectURL(response)
                 
                 let newImage = this._sanitizer.bypassSecurityTrustUrl(newUrl)
+               
+                this.publications[index].file = newImage;                
                 
-                this.newImage = newImage; //esta variable es de pruebas, borrar
-
-                this.publications[index].file = newImage;
-
-                
-
             },
             (error) => {
                 console.log("Error en la petición de imagen", error)
