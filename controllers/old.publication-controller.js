@@ -4,10 +4,6 @@ const fs = require('fs')
 const moment = require('moment')
 
 
-const Blob = require('node-blob'); // borrar si finalmente no uso blob en la api (desinstalar tb)
-
-
-
 // Database and sequelize
 const Sequelize = require('sequelize');
 const { DataTypes } = require('sequelize')
@@ -107,7 +103,7 @@ module.exports = class publicationController {
     static async getImageFile(req, res) {
         
         let image = req.params.imageFile;
-        let mypath = './uploads/publicaciones/'+image  
+        let mypath = './uploads/publicaciones/'+image // h-ExP8Coel-6MZC1vIUfuqqk.jpg'        
 
 
         let myFriends = await Friend.findAll({
@@ -151,8 +147,7 @@ module.exports = class publicationController {
                 return res.status(200).send({ message: 'No hay imagen' })
             }
         })  
-    }    
-    
+    }
 }
 
 

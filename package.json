@@ -27,6 +27,7 @@
     "sequelize-cli": "^6.3.0"
   },
   "devDependencies": {
+    "node-blob": "0.0.2",
     "sequelize-paginate": "^1.1.6"
   }
 }
