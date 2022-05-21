@@ -3,6 +3,9 @@ const path = require('path')
 const fs = require('fs')
 const moment = require('moment')
 
+// para promisificar fs.exists
+const { promisify } = require('util')
+
 
 const Blob = require('node-blob'); // borrar si finalmente no uso blob en la api (desinstalar tb)
 
@@ -102,6 +105,50 @@ module.exports = class publicationController {
         }
     }
 
+
+    static async  getPublicationsv2(req, res) {        
+        
+        
+        let myFriends = await Friend.findAll({
+            where: {'IDtarget' : req.user.id, 'status' : 'accepted'}
+        })
+    
+        let myFriendsandme = []
+    
+        for(let idfriend in myFriends){
+    
+            myFriendsandme.push(myFriends[idfriend]['IDfriend'])
+    
+        }   
+    
+        myFriendsandme.push(req.user.id.toString())    
+    
+        try {           
+    
+            const options = {
+            
+                page: req.params.page, // Default 1
+                paginate: 4, // Default 25        
+                where: {userID: myFriendsandme}
+            }
+        
+            const { docs, pages, total } = await Publication.paginate(options)    
+             
+            //#TODO #cambiar #arreglar esto
+            return res.status(200).send({             
+                docs,
+                pages,
+                total
+            })
+    
+        } catch (error) {
+            return res.status(404).send({             
+                Message: 'Ha ocurrido un error en la petición'
+            })
+            
+        }
+    }
+
    
     
     static async getImageFile(req, res) {
@@ -151,7 +198,56 @@ module.exports = class publicationController {
                 return res.status(200).send({ message: 'No hay imagen' })
             }
         })  
-    }    
+    }
+    
+    static async getImageFilev2(req, res) {
+
+        console.log(req.body.idpub)
+                
+        let idPublication = req.body.idpub;
+        let idOrdered = req.user.id;
+        
+
+        let readFileAsync = promisify(fs.exists)
+        
+        
+        let publication = await Publication.findOne({
+            where : {'id' : idPublication}
+        })
+
+        if (!publication){
+            return res.status(404).send({ message: 'No hay publicacion' })            
+
+        }
+
+        let image = publication.file
+        let mypath = './uploads/publicaciones/'+image
+        let file = path.resolve(mypath);
+
+        let exists = await readFileAsync(mypath);
+
+        if (!exists) {
+            return res.status(200).send({ message: 'No hay imagen' })            
+        }
+
+        if(publication.userID == idOrdered) {
+            return res.sendFile(path.resolve(file))
+        }
+
+        let isMyFriendPub = await Friend.findOne({
+            where: {'IDtarget' : idOrdered, 'status' : 'accepted', 'IDfriend' : publication.userID }
+        })
+
+        if (!isMyFriendPub){
+
+            return res.status(404).send({ message: 'No tienes permiso para ver esta imagen' })            
+
+        } 
+
+        return res.sendFile(path.resolve(file))
+       
+
+    } 
     
 }
 
