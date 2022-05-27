@@ -91,12 +91,13 @@ body{
 
 .publicationscontainer{
     display: grid;
+    max-width: 800px;
     grid-template-columns: repeat(auto-fit,minmax(286px,0.25fr));
     grid-auto-rows: 296px;
     grid-gap: 13px;
     gap: 13px;
     width: 95%;
-    max-width: 1459px;    
+    max-width: 1183px;    
     min-height: 83%;
     align-content: center;
     margin: auto auto 10px;

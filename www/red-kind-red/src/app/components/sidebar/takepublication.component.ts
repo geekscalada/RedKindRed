@@ -43,6 +43,7 @@ export class TakePublicationComponent implements OnInit{
         this.url = GLOBAL.url
         this.publication = new Publication(
           "",
+          "",
           this.identity.surname,
           "",
             this.identity.id,

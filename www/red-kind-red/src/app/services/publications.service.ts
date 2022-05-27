@@ -45,15 +45,32 @@ export class PublicationService{
         return this._http.get(this.url+'publications/'+page, {headers:headers})
 
     }
+    
 
     getImagePub(token:any, image :any):Observable<any> {        
         
+        //falta por hacer el getImagePub2
+
         let imageToSend = JSON.parse(image)  
                 
         let headers = new HttpHeaders().set('Content-type', 'Application/json')
         .set('Authorization', token)
         
         return this._http.get(this.url+'get-image-pub/'+imageToSend, {headers:headers, responseType: 'blob'})
+
+    }
+
+    getImagePubv2(token:any, idpub :any):Observable<any> {
+       
+        let idpubToSend = JSON.parse(idpub)
+
+        let headers = new HttpHeaders()
+        .set('Content-type', 'Application/json')        
+        .set('Authorization', token)
+
+        console.log("idpub", this.url+'get-image-pubv2/'+JSON.parse(idpub))
+        
+        return this._http.get(this.url+'get-image-pubv2/'+idpubToSend , {headers:headers, responseType: 'blob'})
 
     }
 

@@ -22,7 +22,7 @@ app.use(appexpress.json());
 // esto es para escribir las cabeceras y habilitar el acceso CORS de manera que evitemos problemas
 // de las peticiones ajax
 app.use(appcors({
-    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
+    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH', 'HEAD'],
     origin: '*'
 }));
 
@@ -32,6 +32,8 @@ app.use(appcors({
 app.use('/api', user_rt);
 app.use('/api', publications_rt);
 
+
+// En principio no necesario, lo hace nginx. 
 app.use(function (req, res, next) {
     res.setHeader(
       'Content-Security-Policy',

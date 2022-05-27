@@ -62,8 +62,8 @@ module.exports = class publicationController {
     
     }
     
-    static async  getPublications(req, res) {        
-        
+    static async  getPublications(req, res) {
+              
         
         let myFriends = await Friend.findAll({
             where: {'IDtarget' : req.user.id, 'status' : 'accepted'}
@@ -84,16 +84,18 @@ module.exports = class publicationController {
             const options = {
             
                 page: req.params.page, // Default 1
-                paginate: 4, // Default 25        
+                paginate: 27, // Default 25        
                 where: {userID: myFriendsandme}
             }
         
             const { docs, pages, total } = await Publication.paginate(options)    
-             
+            
+            
             //#TODO #cambiar #arreglar esto
             return res.status(200).send({             
                 docs,
                 pages,
+                paginate : options.paginate, 
                 total
             })
     
@@ -106,9 +108,8 @@ module.exports = class publicationController {
     }
 
 
-    static async  getPublicationsv2(req, res) {        
-        
-        
+    static async  getPublicationsv2(req, res) {
+
         let myFriends = await Friend.findAll({
             where: {'IDtarget' : req.user.id, 'status' : 'accepted'}
         })
@@ -123,8 +124,7 @@ module.exports = class publicationController {
     
         myFriendsandme.push(req.user.id.toString())    
     
-        try {           
-    
+        try {
             const options = {
             
                 page: req.params.page, // Default 1
@@ -201,10 +201,11 @@ module.exports = class publicationController {
     }
     
     static async getImageFilev2(req, res) {
-
-        console.log(req.body.idpub)
+        
                 
-        let idPublication = req.body.idpub;
+        let idPublication = req.params.idpub;
+        
+
         let idOrdered = req.user.id;
         
 
@@ -221,6 +222,7 @@ module.exports = class publicationController {
         }
 
         let image = publication.file
+
         let mypath = './uploads/publicaciones/'+image
         let file = path.resolve(mypath);
 
@@ -228,9 +230,11 @@ module.exports = class publicationController {
 
         if (!exists) {
             return res.status(200).send({ message: 'No hay imagen' })            
-        }
+        }        
 
         if(publication.userID == idOrdered) {
+            console.log("estamos en este if")
+            console.log(file)
             return res.sendFile(path.resolve(file))
         }
 
