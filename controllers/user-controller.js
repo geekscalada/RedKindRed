@@ -32,7 +32,7 @@ module.exports = class userController {
     //registro
     static async saveUser(req, res) {
         let params = req.body;
-        console.log(params)
+        
         try {
             if (!params.name || !params.surname || !params.nick ||
                 !params.email || !params.password || !params.pvKey) {
@@ -41,8 +41,6 @@ module.exports = class userController {
                     message: 'Falta algún campo'
                 })
             }   
-
-            console.log(pvKey.pvKey);
 
             if (params.pvKey != pvKey.pvKey){
                 return res.status(404).send({
@@ -81,11 +79,9 @@ module.exports = class userController {
             let insertUser = await newUser.save();
 
             newUser.Key.key = undefined;
-            console.log(newUser)
             res.status(200).send({ newUser })
 
         } catch (error) {
-            console.log(error)
             return res.status(404).send({
                 message: 'Error en el intento de registro'
             })
@@ -131,7 +127,6 @@ module.exports = class userController {
 
                 if (req.body.gettoken) {
 
-                    console.log(userInBDD)
                     return res.status(200).send({
                         //generamos token                    
                         token: jwt.createToken(userInBDD),
@@ -145,13 +140,11 @@ module.exports = class userController {
 
                 }
             } else {
-                console.log("Contra incorrecta")
                 return res.status(404).send({
                     message: 'Contraseña incorrecta'
                 })
             }
         } catch (error) {
-            console.log(error)
             return res.status(404).send(
                 { message: error.message }
             )
@@ -184,7 +177,6 @@ module.exports = class userController {
 
     static async sendRequestToFriend(req, res) {
 
-        console.log("hola, estamos aqui")
         try {
 
 
@@ -270,7 +262,6 @@ module.exports = class userController {
                 )
             }
 
-            console.log(arrFriends)
             return res.status(200).send(
                 arrFriends
             )
@@ -286,13 +277,11 @@ module.exports = class userController {
     static async getMyReqFriends(req, res) {
 
         try {
-            console.log(req.user.id)
+            
             let friends = await Friend.findAll(
                 {
                     atributes: ['id'], where: { 'IDtarget': req.user.id.toString(), 'status': 'received' }
                 })
-            console.log("friends****************")      
-            console.log(friends)    
 
             let arrFriends = []
 
@@ -308,7 +297,6 @@ module.exports = class userController {
 
             //console.log(friends[0]['dataValues'])//['Friend'])//['id'])
         } catch (error) {
-            console.log("estamos en el error")
             console.log(error)
         }
     }
@@ -316,14 +304,11 @@ module.exports = class userController {
     static async getMyOwnReqFriends(req, res) {
 
         try {
-            console.log(req.user.id)
             let friends = await Friend.findAll(
                 {
                     atributes: ['id'], where: { 'IDfriend': req.user.id.toString(), 'status': 'received' }
                 })
-            console.log("My own friends****************")      
-            console.log(friends)    
-
+            
             let arrFriends = []
 
             for (let idFriend in friends) {
@@ -338,7 +323,6 @@ module.exports = class userController {
 
             //console.log(friends[0]['dataValues'])//['Friend'])//['id'])
         } catch (error) {
-            console.log("estamos en el error")
             console.log(error)
         }
     }
@@ -347,13 +331,8 @@ module.exports = class userController {
 
         try {
 
-            console.log(req.user)
-            console.log("asdfasdfasdfasd")
-            console.log(req.body)
-
             let userId = req.user.id;
             let update = req.body;
-            
 
             if (userId != update.id) {
                 return res.status(500).send({
@@ -384,8 +363,6 @@ module.exports = class userController {
 
             }
 
-            console.log(existsMail)
-
             if (existsNick || existsMail) {
                 return res.status(500).send({
                     message: 'Este email o nick ya existen'
@@ -413,8 +390,7 @@ module.exports = class userController {
     static async uploadImage(req, res) {
 
 
-        let userId = req.params.id
-        console.log(userId)
+        let userId = req.user.id
 
         // El req.files.iamge.size lo pongo yo
         if (req.files) {
@@ -423,17 +399,7 @@ module.exports = class userController {
             let fileSplit = path.split('\/');
 
             let fileName = fileSplit[(fileSplit.length) - 1] //archivo       
-
-            console.log(fileName)
-            //# ojo cambiar
-            if (userId != userId) {
-                // es importante este return y no solo llamar a la funcion, porque si no lo haces
-                // no salimos de la función, así que las siguientes instrucciones se ejecutan
-                // y te da un error de cabeceras porque se dice que no puedes setear (enviar?)
-                // cabeceras de nuevo una vez se han enviado al cliente
-                return removeFilesUploads(res, path, 'No tienes permisos')
-            }
-
+            
 
             try {
                 await User.update({
@@ -475,8 +441,6 @@ module.exports = class userController {
 
         const userInBDD = await User.findOne(
              { where: { email: email } })
-
-        console.log("++++++++++++++++",userInBDD)
 
         return res.status(200).send({ userInBDD })
     }

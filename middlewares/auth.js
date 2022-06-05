@@ -11,6 +11,8 @@ exports.jwtAuth = function(req, res, next){
     }
     let token = req.headers.authorization.replace(/['"]+/g, '')
 
+    console.log("my token", token);
+
     try {        
         var payload = jwtsimple.decode(token, secret);
         if (payload.exp <= moment().unix()){            

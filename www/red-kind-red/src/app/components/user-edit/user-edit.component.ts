@@ -62,7 +62,7 @@ export class UserEditComponent implements OnInit {
     //#TODO
     // mejorar un poco los métodos a nivel parámetros
     OnSubmit(form: any) {
-        let userId = this.identity.id;
+        
         if (this.user.nick == this.identity.nick &&
             this.user.email == this.identity.email) {
 
@@ -107,22 +107,17 @@ export class UserEditComponent implements OnInit {
     // Sopesar si hacemos un cambio por front del avatar para que se muestre más rápido al usuario. 
     // Y en background que se guarde en localstrorage
     updateAvatar() {
-        console.log("ejecutando update avatar")
-        let userId = this.identity.id;
+        
         let formData = new FormData();
-
 
         formData.append("files", base64ToFile(this.croppedImage),
             this.imageChangedEvent.target.files[0].name)
-
-        console.log(this.imageChangedEvent.target.files[0].name)
-
-        return this._userService.uploadAvatar(userId, formData)
+        
+        return this._userService.uploadAvatar(formData)
             .subscribe(
                 (response: any) => {
                     this.status = 'success'
                     this.dataService.sendMessage("Mensaje de Avatar cambiado");
-                    console.log("response", response)
                 })
     }
 

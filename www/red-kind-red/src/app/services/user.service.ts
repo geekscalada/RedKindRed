@@ -183,11 +183,11 @@ export class UserService{
 
     }
 
-    uploadAvatar(userId: String, formData: FormData ): Observable<any>{
-     
+    uploadAvatar(formData: FormData ): Observable<any>{
+
         let headers = new HttpHeaders()
-            .set('Authorization', JSON.stringify(this.getToken()))
-        return this._http.post(this.url + 'upload-image-user/' + userId, formData, { headers: headers })
+            .set('Authorization', this.getToken())
+        return this._http.post(this.url + 'upload-image-user' , formData, { headers: headers })
         
     }
 
