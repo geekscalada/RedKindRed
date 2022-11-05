@@ -2,7 +2,7 @@ import { ModuleWithProviders } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router"
 
 // Importamos componentes
-import { LoginComponent } from './components/loging/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NgbdModalConfig } from "./components/home/modal-config";
 import { UserEditComponent } from "./components/user-edit/user-edit.component";

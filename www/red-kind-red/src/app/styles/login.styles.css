@@ -16,7 +16,7 @@
     margin: 1px;
     padding: 1px;
     font-family: 'Raleway', sans-serif;
-    height: 90vh;
+    height: 80vh;
     width: auto;    
     background-size: cover;
     background-position: center;
@@ -25,7 +25,7 @@
 .form{
     width: 400px;
     background: rgb(65, 51, 143);
-    margin: 10em auto;
+    margin: 19vh auto;
     padding: 30px 20px 40px ;
     text-align: center;
     border-radius: var(--radius);

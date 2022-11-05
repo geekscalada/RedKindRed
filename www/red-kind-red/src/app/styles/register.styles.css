@@ -16,27 +16,44 @@
     margin: 1px;
     padding: 1px;
     font-family: 'Raleway', sans-serif;
-    height: 100vh;
+    height: 70vh;
     width: auto;    
     background-size: cover;
     background-position: center;
 }
 
-.form{
-    width: 550px;
+/* Not absolute position */
+/* .form{
+    width: 425px;
     height: auto;
-    background: rgb(65, 51, 143);
+    background: rgb(65, 51, 143);    
     margin: 1em auto;
     padding: 30px 20px 40px ;
     text-align: center;
     border-radius: var(--radius);
     box-shadow: var(--box-shadow);
     overflow: hidden;
+    color: white
+} */
+
+.form{
+    width: 400px;
+    background: rgb(65,51,143);
+    margin: 4vh auto;
+    padding: 30px 20px 40px;
+    text-align: center;
+    border-radius: var(--radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+}
+
+span{
+    color:#fff
 }
 
 .input{
     width: var(--width);
-    padding: 15px 5px;
+    padding: 10px 5px;
     display: block;
     margin-bottom: 20px;
     border: 1px solid #b39b9b;
@@ -48,8 +65,8 @@
 }
 
 .form__title{
-    margin-bottom: 40px;
-    font-size: 4rem;
+    margin-bottom: 30px;
+    font-size: 3rem;
     color: white;
     
 }

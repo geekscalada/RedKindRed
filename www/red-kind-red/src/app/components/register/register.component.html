@@ -17,7 +17,7 @@
             <span *ngIf="!name.valid && name.touched">
                 El nombre es obligatorio
             </span>
-
+            
             <input type="text" name="surname" placeholder="Apellidos: " #surname="ngModel" [(ngModel)]="user.surname" class="form__email input" required />
             <span *ngIf="!surname.valid && surname.touched">
                 Los apellidos son obligatorios
